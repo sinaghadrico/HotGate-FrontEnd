@@ -1,17 +1,39 @@
 @font-face {
-    font-family: "Lato";
-    src: url("../../assets/fonts/Lato-Regular.ttf");
-
-    font-weight: normal;
+    font-family: "Open Sauce One";
+    src: url("../../assets/fonts/OpenSauceOne-Regular.ttf") format("truetype");
     font-style: normal;
+    font-weight: normal;
+    // font-size: 18px;
+    // line-height: 22px;
     font-display: swap;
+    ;
+}
+
+@font-face {
+    font-family: "Open Sauce One";
+    src: url("../../assets/fonts/OpenSauceOne-Bold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: bold;
+    // font-size: 24px;
+    // line-height: 30px;
+    font-display: swap;
+
 }
 
 html {
+    // --font-size-xxl: 1.5rem;
+    // --font-size-xl: 1.25rem;
+    // --font-size-lg: 1.125rem;
+    // --font-size-md: 1rem;
+    // --font-size-sm: 0.875rem;
+    // --font-size-xs: 0.75rem;
+    // --font-size-xxs: 0.625rem;
+    // --font-size-xxs: 0.525rem;
+
     --font-size-xxl: 1.5rem;
-    --font-size-xl: 1.25rem;
-    --font-size-lg: 1.125rem;
-    --font-size-md: 1rem;
+    --font-size-xl: 18px;
+    --font-size-lg: 14px;
+    --font-size-md: 11px;
     --font-size-sm: 0.875rem;
     --font-size-xs: 0.75rem;
     --font-size-xxs: 0.625rem;

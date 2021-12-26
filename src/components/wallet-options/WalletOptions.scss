@@ -1,11 +1,8 @@
 @import "styles/mixin/theme";
 
-$themes: (
-    light: (
-        wallet-options-bg-color: var(--color-gray-2),
+$themes: (light: (wallet-options-bg-color: var(--color-gray-2),
     ),
-    dark: (
-        wallet-options-bg-color: var(--color-white),
+    dark: (wallet-options-bg-color: var(--color-white),
     ),
 );
 
@@ -19,10 +16,13 @@ $themes: (
     }
 
     button {
-        background: var(--color-gray-3);
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        font-size: var(--font-size-lg);
         padding: 10px 15px;
         margin-top: 10px;
-        border-radius: 8px;
+
         text-align: left;
         display: flex;
         justify-content: space-between;
