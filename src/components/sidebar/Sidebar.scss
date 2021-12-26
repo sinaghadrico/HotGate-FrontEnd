@@ -1,11 +1,8 @@
 @import "styles/mixin/theme";
 
-$themes: (
-    light: (
-        sidebar-bg-color: var(--color-white),
+$themes: (light: (sidebar-bg-color: var(--color-white),
     ),
-    dark: (
-        sidebar-bg-color: var(--color-black),
+    dark: (sidebar-bg-color: var(--color-black),
     ),
 );
 
@@ -18,11 +15,11 @@ $themes: (
     height: 100%;
 
     @media (min-width: 0) and (max-width: 1200px) {
-        width: 127px;
+        width: 250px;
     }
 
     @media (min-width: 1200px) {
-        width: 70px;
+        width: 250px;
     }
 
     li {

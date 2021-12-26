@@ -25,20 +25,22 @@ $themes: (light: (layout-bg-color: #121212,
     overflow-y: auto;
 
     &-main {
-
+        background-image: url("../../assets/images/Bg.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
 
         &-content {
-            background-image: url("../../assets/images/Bg.svg");
 
-            background-size: cover;
-            background-repeat: no-repeat;
+
+
 
             min-height: calc(100vh - 145px);
             padding: 0 25px;
 
             @media (min-width: 1200px) {
-                // max-width: 80%;
-                margin: auto;
+                max-width: calc(100% - 250px);
+                margin-left: 250px;
+                // margin: auto;
             }
         }
     }

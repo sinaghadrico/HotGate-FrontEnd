@@ -3,7 +3,8 @@ import { AccountDetails } from "./account-details";
 import { ConnectWallet } from "./connect-wallet";
 import { WalletOptions } from "components/wallet-options";
 import { Modal } from "ui-components";
-import { ReactComponent as TotemLogo } from "assets/icons/coins/totem.svg";
+import { MobileMenu } from "components/mobile-menu";
+import { ReactComponent as HotGateLogo } from "assets/icons/svgs/main-logo.svg";
 import { useGlobalState, useGlobalDispatch } from "states/globalContext";
 // import { ThemeSelector } from "./theme-selector";
 import "./Header.scss";
@@ -13,14 +14,15 @@ const Header: FC = () => {
     const globalDispatch = useGlobalDispatch();
     return (
         <div className="header">
+            <MobileMenu />
             <div className="header-title">
-                <TotemLogo width="50" /> Staking
+                <HotGateLogo width="150" />
             </div>
             <ConnectWallet>
                 <AccountDetails />
             </ConnectWallet>
             <Modal
-                title="Connect Wallet :"
+                title="Connect Wallet"
                 open={walletOptions}
                 width="30"
                 maxHeight="620"
