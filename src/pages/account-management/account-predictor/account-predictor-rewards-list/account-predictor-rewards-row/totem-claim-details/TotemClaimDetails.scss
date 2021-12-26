@@ -1,0 +1,69 @@
+.totem-claim-details {
+    background-color: #282d45f2;
+    width: calc(100%);
+    padding: 20px;
+    display: flex;
+    margin-top: -1em;
+    justify-content: center;
+    border-radius: 0 0 16px 16px !important;
+    -webkit-border-radius: 0 0 16px 16px !important;
+    -moz-border-radius: 0 0 16px 16px !important;
+    -ms-border-radius: 0 0 16px 16px !important;
+    -o-border-radius: 0 0 16px 16px !important;
+
+    >div {
+        // max-width: 1000px;
+        width: 100%;
+    }
+
+    @media (max-width: 500px) {
+        >div {
+            padding: 40px 0;
+        }
+    }
+
+    &-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-radius: 5px;
+        max-width: 345px;
+        background-color: #1F2641;
+        width: 100%;
+        text-align: left;
+    }
+
+    &-currency {
+        color: #6d7075;
+        font-size: 12px;
+    }
+
+    &-claim {
+        margin-top: 30px;
+        max-width: 325px;
+        width: 100%;
+
+        .ui-label {
+            display: flex;
+            justify-content: center;
+            margin: auto;
+            width: 100%;
+            max-width: 325px;
+        }
+
+        &-btn {
+            background-color: #ff7b03;
+            width: 100%;
+            height: 38px;
+            max-width: 325px;
+            padding: 7px 0;
+            border-radius: 10px;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        &-prize {
+            padding-top: 40px;
+        }
+    }
+}

@@ -1,0 +1,75 @@
+.ui-button {
+    color: #ffffff;
+    border-radius: 8px;
+    height: 37px;
+    font-size: 15px;
+    // font-weight: 700;
+    line-height: 100%;
+    text-align: center;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: fit-content;
+
+    &-secondary {
+        background: linear-gradient(180deg, #00CDE4 0%, #00CDE4 100%);
+    }
+
+    &-secondary-dark {
+        background: #222222;
+        color: #ffffff;
+    }
+
+    &-secondary-high {
+        background: #232831;
+        color: #8e9092;
+    }
+
+    &-outlined {
+        background: transparent;
+        line-height: 14px;
+    }
+
+    &-simple-outlined {
+        background: transparent;
+        border: solid white 2px;
+        padding: 10px 2px;
+    }
+
+    &-list-item {
+        width: 100% !important;
+        background: #222832;
+        text-align: left !important;
+    }
+
+    &.orange-theme {
+        &.ui-button-primary {
+            background: linear-gradient(96.02deg, #ED824E -12.08%, #ED2A2A 137.69%);
+            box-shadow: 0px 4px 61px rgba(237, 130, 78, 0.36), 0px 0px 25px rgba(237, 42, 42, 0.24);
+            border-radius: 4px;
+        }
+
+        &.ui-button-outlined {
+            border: solid 2px #ED2A2A;
+        }
+    }
+
+    &.purple-theme {
+        &.ui-button-primary {
+            background: linear-gradient(90deg, #9529d8 0%, #6b16c0 100%);
+        }
+
+        &.ui-button-outlined {
+            border: solid 2px #6b16c0;
+        }
+    }
+
+    &:disabled,
+    &[disabled] {
+        cursor: not-allowed;
+        border: 2px solid #979797;
+        background: #222222 !important;
+        color: white;
+    }
+}
