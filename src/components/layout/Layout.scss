@@ -1,19 +1,21 @@
 @import "styles/mixin/theme";
 
-$themes: (light: (layout-bg-color: #121212,
+$themes: (
+    light: (
+        layout-bg-color: #121212,
         layout-color: var(--color-gray-1),
     ),
-    dark: (layout-bg-color: #121212,
+    dark: (
+        layout-bg-color: #121212,
         layout-color: var(--color-white),
     ),
 );
 
 .layout {
-
     // @include themify() {
     //     background-color: themed("layout-bg-color");
     // }
-    background-color: #1f2641f0;
+    background-color: var(--color-background);
     display: flex;
     flex-direction: column;
 
@@ -30,16 +32,12 @@ $themes: (light: (layout-bg-color: #121212,
         background-repeat: no-repeat;
 
         &-content {
-
-
-
-
             min-height: calc(100vh - 145px);
             padding: 0 25px;
 
             @media (min-width: 1200px) {
-                max-width: calc(100% - 250px);
-                margin-left: 250px;
+                max-width: calc(100% - 270px);
+                margin-left: 270px;
                 // margin: auto;
             }
         }

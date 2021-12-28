@@ -1,6 +1,6 @@
-# Staking-TWA
+# Hotgate
 
-> Staking TWA 
+> Hotgate
 
 ## Getting Started
 

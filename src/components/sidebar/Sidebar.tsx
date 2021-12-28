@@ -1,9 +1,9 @@
 import account_logo from "assets/icons/svgs/account.svg";
-import totem_logo from "assets/icons/svgs/totem.svg";
+// import totem_logo from "assets/icons/svgs/totem.svg";
 import { Icon } from "components/icon";
 import { FC } from "react";
-import { useHistory } from "react-router-dom";
-import { ReactGAM } from "services/google-anlytics";
+import { NavLink, useHistory } from "react-router-dom";
+// import { ReactGAM } from "services/google-anlytics";
 import "./Sidebar.scss";
 
 const Sidebar: FC = () => {
@@ -12,19 +12,23 @@ const Sidebar: FC = () => {
     const activeLink = pathname === "/";
     return (
         <div className="sidebar">
-            <ul>
-                <li onClick={() => ReactGAM().trackPageView("prediction-list-page")}>
-                    <Icon src={totem_logo} link="/prediction-list" className={activeLink ? "active" : ""} />
-                </li>
+            <NavLink to="/exchange" replace={false} activeClassName="active" rel="noopener noreferrer">
+                <Icon src={account_logo} className={activeLink ? "active" : ""} />
+                Exchange
+            </NavLink>
 
-                <li onClick={() => ReactGAM().trackPageView("account-management-page")}>
-                    <Icon src={account_logo} link="/account-management" />
-                </li>
-
-                {/* <li>
-                    <Link to="/example">Example </Link>
-                </li> */}
-            </ul>
+            <NavLink to="/cross-chain-exchange" replace={false} activeClassName="active" rel="noopener noreferrer">
+                <Icon src={account_logo} /> Cross-Chain Exchange
+            </NavLink>
+            <NavLink to="/cross-chain-transfer" replace={false} activeClassName="active" rel="noopener noreferrer">
+                <Icon src={account_logo} /> Cross-Chain Transfer
+            </NavLink>
+            <NavLink to="/liquidity-pools" replace={false} activeClassName="active" rel="noopener noreferrer">
+                <Icon src={account_logo} /> Liquidity Pools
+            </NavLink>
+            <NavLink to="/tokens" replace={false} activeClassName="active" rel="noopener noreferrer">
+                <Icon src={account_logo} /> Tokens
+            </NavLink>
         </div>
     );
 };

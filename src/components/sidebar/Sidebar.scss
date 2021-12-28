@@ -1,37 +1,47 @@
 @import "styles/mixin/theme";
 
-$themes: (light: (sidebar-bg-color: var(--color-white),
+$themes: (
+    light: (
+        sidebar-bg-color: var(--color-white),
     ),
-    dark: (sidebar-bg-color: var(--color-black),
+    dark: (
+        sidebar-bg-color: var(--color-black),
     ),
 );
 
 .sidebar {
+    border-right: 1px solid #ffffff33;
+
     @media (min-width: 0) and (max-width: 1200px) {
         display: none;
     }
-
+    background-color: var(--color-background);
     position: fixed;
     height: 100%;
 
     @media (min-width: 0) and (max-width: 1200px) {
-        width: 250px;
+        width: 270px;
     }
 
     @media (min-width: 1200px) {
-        width: 250px;
+        width: 270px;
     }
 
-    li {
-        width: 59px;
-        height: 59px;
-        margin-bottom: 10px;
-        margin-left: 29px;
+    a {
+        max-width: 250px;
+        height: 43px;
+        margin-bottom: 15px;
+        margin-left: 30px;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
+        padding: 0 5px;
         align-items: center;
-        border-radius: 10px;
-        background-color: #222222;
+        &.active {
+            border-right: 5px solid var(--color-orange);
+        }
+        .ui-icon {
+            margin-right: 5px;
+        }
     }
 
     .active {
