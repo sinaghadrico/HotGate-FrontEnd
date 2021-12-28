@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { FC } from "react";
 
 // import { Helmet } from "react-helmet-async";
 import "./AccountManagement.scss";
 
 import { AccountPredictor } from "./account-predictor";
+import { Box } from "components/box";
 
 const AccountManagement: FC = () => {
     return (
@@ -12,6 +14,12 @@ const AccountManagement: FC = () => {
                 <title> Account Management </title>
                 <meta name="description" content="Account Management" />
             </Helmet> */}
+            <Box
+                title="Exchange"
+                description="Change your tokens to different tokens on the same chain."
+                submitTitle="Exchange"
+                onClickSetting={() => {}}
+            ></Box>
             <div className="account-management">
                 <div className="row  ">
                     <div className="col-md-12 ">
