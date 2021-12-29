@@ -5,5 +5,5 @@ export interface BoxProps {
     isLoading?: boolean;
     submitTitle?: string;
     onSubmit?: () => void;
-    onClickSetting?: () => void;
+    haveSetting?: boolean;
 }

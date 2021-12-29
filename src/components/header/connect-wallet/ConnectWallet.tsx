@@ -26,7 +26,6 @@ const ConnectWallet: FC<ConnectWalletProps> = ({ children, type = "button", them
             <div className={"connect-wallet connect-wallet-" + type}>
                 {type === "button" && (
                     <Button
-                        width={ButtonWidth.FIT_PARENT}
                         onClick={() => {
                             ReactGAM().trackEvent("click", "connect wallet");
                             globalDispatch({ type: "setWalletOptions", value: true });

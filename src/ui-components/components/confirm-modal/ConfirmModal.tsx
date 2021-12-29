@@ -14,6 +14,7 @@ const ConfirmModal = ({
     children,
     description,
     width,
+    style,
     confirmTitle,
     confirmStyles,
     cancelTitle,
@@ -30,6 +31,7 @@ const ConfirmModal = ({
         <Modal
             width={width}
             open={open}
+            style={style}
             onClose={onClose}
             isLoading={isLoading}
             iconLoadingComponent={iconLoadingComponent}
@@ -47,7 +49,7 @@ const ConfirmModal = ({
                         {cancelTitle && cancelTitle !== "" && (
                             <Button
                                 onClick={onCancel}
-                                buttonForm={ButtonForm.SECONDARY}
+                                buttonForm={ButtonForm.SIMPLE_OUTLINED}
                                 width={ButtonWidth.FIT_PARENT}
                                 style={cancelStyles}
                             >

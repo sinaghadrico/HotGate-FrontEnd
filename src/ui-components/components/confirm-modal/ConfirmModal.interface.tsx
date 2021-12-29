@@ -5,7 +5,8 @@ export interface ConfirmModalProps {
     iconComponent?: any;
     iconLoadingComponent?: any;
     width?: string;
-    description: string;
+    style?: any;
+    description?: string;
     confirmTitle: any;
     confirmStyles?: any;
     onConfirm?: () => void;

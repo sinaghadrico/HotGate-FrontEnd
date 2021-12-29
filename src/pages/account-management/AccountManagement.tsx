@@ -18,7 +18,7 @@ const AccountManagement: FC = () => {
                 title="Exchange"
                 description="Change your tokens to different tokens on the same chain."
                 submitTitle="Exchange"
-                onClickSetting={() => {}}
+                haveSetting
             ></Box>
             <div className="account-management">
                 <div className="row  ">
