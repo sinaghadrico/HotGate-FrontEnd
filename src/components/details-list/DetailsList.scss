@@ -1,0 +1,24 @@
+.details-list {
+    border: 2px solid rgba(189, 189, 189, 0.1);
+    border-radius: 10px;
+    margin: 15px 0;
+    &-items {
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+    }
+    &-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 3px;
+        margin: 3px;
+        &-value {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--font-size-md);
+        }
+        &-title {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: var(--font-size-md);
+        }
+    }
+}

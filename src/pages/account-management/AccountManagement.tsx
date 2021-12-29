@@ -9,6 +9,7 @@ import { Box } from "components/box";
 import { Input } from "ui-components";
 import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils/number";
 import TokenSelector from "components/token-selector/TokenSelector";
+import { DetailsList } from "components/details-list";
 
 const AccountManagement: FC = () => {
     const [form, setForm] = useState({
@@ -18,6 +19,12 @@ const AccountManagement: FC = () => {
         outputToken: { key: "bsc", value: "BSC" },
         receiverAddress: "",
     });
+    const detailsList = [
+        { title: "Swap Rate", value: "1.2038475" },
+        { title: "Minimum Received Amount", value: "1.234556" },
+        { title: "Price Impact", value: "1.234556" },
+        { title: "Exchange Fee", value: "1.234556" },
+    ];
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
         const value = parseValueToNumber("" + _value);
@@ -84,6 +91,8 @@ const AccountManagement: FC = () => {
                     onChange={handleChange}
                     autoComplete="off"
                 />
+
+                <DetailsList list={detailsList} />
             </Box>
             <div className="account-management">
                 <div className="row  ">
