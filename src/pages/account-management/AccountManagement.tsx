@@ -6,7 +6,7 @@ import "./AccountManagement.scss";
 
 import { AccountPredictor } from "./account-predictor";
 import { Box } from "components/box";
-import { Input } from "ui-components";
+import { Input, RadioButton, RadioGroup } from "ui-components";
 import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils/number";
 import TokenSelector from "components/token-selector/TokenSelector";
 import { DetailsList } from "components/details-list";
@@ -18,6 +18,7 @@ const AccountManagement: FC = () => {
         receivedAmount: 0,
         outputToken: { key: "bsc", value: "BSC" },
         receiverAddress: "",
+        transferType: 0,
     });
     const detailsList = [
         { title: "Swap Rate", value: "1.2038475" },
@@ -37,6 +38,11 @@ const AccountManagement: FC = () => {
             setForm({ ...form, [name]: value });
         }
     };
+    const transferTypes = [
+        { value: "Normal", key: 0 },
+        { value: "Fast", key: 1 },
+        { value: "Instant", key: 2 },
+    ];
     return (
         <>
             {/* <Helmet>
@@ -49,6 +55,24 @@ const AccountManagement: FC = () => {
                 submitTitle="Exchange"
                 haveSetting
             >
+                <div className="transfer-type">
+                    <span className="transfer-type-title">Transfer Type</span>
+                    <RadioGroup value={form.transferType} onChange={(event: any) => event} className="row">
+                        {transferTypes.map((type) => (
+                            <RadioButton
+                                value={type.key}
+                                key={type.value}
+                                onClick={handleChange}
+                                className="col-md-2"
+                                style={{ width: "fit-content" }}
+                                name="transferType"
+                            >
+                                {type.value}
+                            </RadioButton>
+                        ))}
+                    </RadioGroup>
+                </div>
+
                 <Input
                     prefix={
                         <TokenSelector

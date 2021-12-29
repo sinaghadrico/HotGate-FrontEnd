@@ -8,18 +8,20 @@
     }
 
     label {
-        color: var(--totem-ui-component-color-gray-1);
+        color: rgba(255, 255, 255, 0.8);
         text-align: center;
         display: inline-block;
         padding: 0.5em 0;
-        background-color: #55585e;
-        font-family: sans-serif, Arial;
+        background: rgba(250, 143, 107, 0.1);
         font-size: 0.75em;
-        border-radius: 0.666em;
-        width: 5em;
+        border-radius: 24px;
+        width: 6em;
+        cursor: pointer;
     }
 
     input:checked + label {
-        background-color: #ddd;
+        border: 1px solid #fa8f6b;
+
+        border-radius: 24px;
     }
 }
