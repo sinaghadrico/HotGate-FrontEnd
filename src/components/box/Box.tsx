@@ -32,6 +32,7 @@ const Box = ({ children, title, description, submitTitle, onSubmit, haveSetting,
                     open={openSetting}
                     onClose={() => setOpenSetting(false)}
                     onConfirm={() => setOpenSetting(false)}
+                    type="fast"
                 />
             )}
         </>

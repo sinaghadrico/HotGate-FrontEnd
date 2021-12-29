@@ -1,12 +1,22 @@
-import { ConfirmModal } from "ui-components";
+import { ConfirmModal, Input } from "ui-components";
 
 import { AdvancedSettingsProps } from "./AdvancedSettings.interface";
 
 import "./AdvancedSettings.scss";
 import { useState } from "react";
+import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils/number";
 
-const AdvancedSettings = ({ open, onClose, onConfirm }: AdvancedSettingsProps) => {
-    const [form, setForm] = useState({});
+const AdvancedSettings = ({ open, onClose, onConfirm, type = "normal" }: AdvancedSettingsProps) => {
+    const [form, setForm] = useState({ deadline: 0, slippage: 0, confirmations: 20 });
+    const handleChange = (event: any) => {
+        const { name, value: _value } = event.target;
+        const value = parseValueToNumber("" + _value);
+        const isValid = isValidNumber("" + _value);
+
+        if (isValid) {
+            setForm({ ...form, [name]: value });
+        }
+    };
     return (
         <ConfirmModal
             width="100"
@@ -18,7 +28,35 @@ const AdvancedSettings = ({ open, onClose, onConfirm }: AdvancedSettingsProps) =
             onConfirm={() => onConfirm(form)}
             confirmTitle="Save"
             cancelTitle="Cancel"
-        ></ConfirmModal>
+        >
+            <Input
+                className="my-10"
+                prefix="Exchange Deadline (Mins)"
+                value={formatNumberWithCommas(form?.deadline)}
+                name="deadline"
+                // label="Exchange Deadline (Mins)"
+                onChange={handleChange}
+                autoComplete="off"
+            />
+            <Input
+                className="my-10"
+                value={formatNumberWithCommas(form?.slippage)}
+                name="slippage"
+                prefix="Tolerated Slippage (%)"
+                onChange={handleChange}
+                autoComplete="off"
+            />
+            {type === "fast" && (
+                <Input
+                    className="my-10"
+                    value={formatNumberWithCommas(form?.confirmations)}
+                    name="confirmations"
+                    prefix="Confirmations Required"
+                    onChange={handleChange}
+                    autoComplete="off"
+                />
+            )}
+        </ConfirmModal>
     );
 };
 export default AdvancedSettings;

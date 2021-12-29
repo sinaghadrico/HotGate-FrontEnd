@@ -43,7 +43,7 @@ const ConfirmModal = ({
             {!isLoading ? (
                 <React.Fragment>
                     {iconComponent && <div className="ui-confirm-modal-icon">{iconComponent}</div>}
-                    <div className="ui-confirm-modal-description">{description}</div>
+                    {description && <div className="ui-confirm-modal-description">{description}</div>}
                     {children}
                     <div className="ui-confirm-modal-footer">
                         {cancelTitle && cancelTitle !== "" && (

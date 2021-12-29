@@ -9,6 +9,7 @@ const Input = ({
     className,
     placeHolder,
     onChange,
+    label,
     theme = "orange",
     ...rest
 }: InputProps) => {
@@ -17,6 +18,7 @@ const Input = ({
         <div className={_className}>
             {suffix && <div className="ui-input-suffix">{suffix}</div>}
             {prefix && <div className="ui-input-prefix">{prefix}</div>}
+            {label && <label className="ui-input-label">{label}</label>}
             <input type="string" style={style} {...rest} onChange={onChange} value={value} placeholder={placeHolder} />
         </div>
     );
