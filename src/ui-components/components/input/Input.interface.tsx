@@ -9,4 +9,5 @@ export interface InputProps {
     style?: object;
     placeHolder?: any;
     theme?: string;
+    haveDropdown?: boolean;
 }

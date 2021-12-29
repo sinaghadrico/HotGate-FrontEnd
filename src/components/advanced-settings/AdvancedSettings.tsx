@@ -31,10 +31,9 @@ const AdvancedSettings = ({ open, onClose, onConfirm, type = "normal" }: Advance
         >
             <Input
                 className="my-10"
-                prefix="Exchange Deadline (Mins)"
+                label="Exchange Deadline (Mins)"
                 value={formatNumberWithCommas(form?.deadline)}
                 name="deadline"
-                // label="Exchange Deadline (Mins)"
                 onChange={handleChange}
                 autoComplete="off"
             />
@@ -42,7 +41,7 @@ const AdvancedSettings = ({ open, onClose, onConfirm, type = "normal" }: Advance
                 className="my-10"
                 value={formatNumberWithCommas(form?.slippage)}
                 name="slippage"
-                prefix="Tolerated Slippage (%)"
+                label="Tolerated Slippage (%)"
                 onChange={handleChange}
                 autoComplete="off"
             />
@@ -51,7 +50,7 @@ const AdvancedSettings = ({ open, onClose, onConfirm, type = "normal" }: Advance
                     className="my-10"
                     value={formatNumberWithCommas(form?.confirmations)}
                     name="confirmations"
-                    prefix="Confirmations Required"
+                    label="Confirmations Required"
                     onChange={handleChange}
                     autoComplete="off"
                 />

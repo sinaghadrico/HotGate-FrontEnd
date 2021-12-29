@@ -5,36 +5,53 @@
     &-prefix,
     &-suffix {
         position: absolute;
+        // pointer-events: none;
+
+        color: rgba(255, 255, 255, 0.5);
+        font-size: var(--font-size-sm);
+    }
+    &-prefix {
+        left: 7px;
+        top: 10px;
+    }
+
+    &-suffix {
+        right: 10px;
+        top: 20px;
+    }
+
+    &-label {
+        position: absolute;
         pointer-events: none;
         top: 15px;
         transform: translateY(-50%);
         text-align: center;
         color: rgba(255, 255, 255, 0.5);
         font-size: var(--font-size-sm);
-    }
 
-    &-suffix {
-        position: absolute;
-        pointer-events: none;
-        right: 7px;
-    }
-
-    &-prefix {
-        left: 10px;
-    }
-    &-label {
-        color: rgba(255, 255, 255, 0.5);
+        &.left {
+            left: 10px;
+        }
+        &.right {
+            right: 10px;
+        }
     }
 
     input {
         border-radius: 10px;
         background: rgba(255, 255, 255, 0.1);
         width: 100%;
-        padding: 15px 10px 5px 10px !important;
+        padding: 15px 10px 5px 10px;
         color: rgba(255, 255, 255, 0.8);
         border: 0;
         height: 56px;
         font-size: 16px;
+        &.left {
+            text-align: left;
+        }
+        &.right {
+            text-align: right;
+        }
     }
 
     input:focus {

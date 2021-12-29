@@ -16,10 +16,18 @@ const Input = ({
     const _className = className ? `ui-input ${className + " " + theme + "-theme"}` : `ui-input ${theme + "-theme"}`;
     return (
         <div className={_className}>
-            {suffix && <div className="ui-input-suffix">{suffix}</div>}
             {prefix && <div className="ui-input-prefix">{prefix}</div>}
-            {label && <label className="ui-input-label">{label}</label>}
-            <input type="string" style={style} {...rest} onChange={onChange} value={value} placeholder={placeHolder} />
+            {suffix && <div className="ui-input-suffix">{suffix}</div>}
+            {label && <label className={`ui-input-label ${prefix ? "right" : "left"}`}>{label}</label>}
+            <input
+                {...rest}
+                type="string"
+                className={`${prefix ? "right" : "left"}`}
+                style={style}
+                onChange={onChange}
+                value={value}
+                placeholder={placeHolder}
+            />
         </div>
     );
 };
