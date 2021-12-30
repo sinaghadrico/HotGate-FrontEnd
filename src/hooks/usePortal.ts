@@ -29,11 +29,9 @@ type CustomEventHandlers = {
 };
 
 type EventListenerMap = { [K in keyof DOMAttributes<K>]: keyof GlobalEventHandlersEventMap };
-type EventListenersRef = MutableRefObject<
-    {
-        [K in keyof DOMAttributes<K>]?: (event: SyntheticEvent<any, Event>) => void;
-    }
->;
+type EventListenersRef = MutableRefObject<{
+    [K in keyof DOMAttributes<K>]?: (event: SyntheticEvent<any, Event>) => void;
+}>;
 
 export type UsePortalOptions = {
     closeOnOutsideClick?: boolean;

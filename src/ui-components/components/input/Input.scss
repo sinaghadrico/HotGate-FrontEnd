@@ -9,7 +9,6 @@
 
     &-prefix,
     &-suffix {
-
         // pointer-events: none;
 
         color: rgba(255, 255, 255, 0.5);
@@ -46,7 +45,6 @@
     }
 
     input {
-
         background: rgba(255, 255, 255, 0);
         width: 100%;
         padding: 15px 10px 0px 10px;
@@ -72,8 +70,6 @@
             -ms-border-radius: 0 10px 10px 0;
             -o-border-radius: 0 10px 10px 0;
         }
-
-
     }
 
     input:focus {

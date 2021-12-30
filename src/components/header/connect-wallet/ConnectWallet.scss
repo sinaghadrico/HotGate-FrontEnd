@@ -1,8 +1,11 @@
 @import "styles/mixin/theme";
 
-$themes: (light: (connect-wallet-bg-color: var(--modal-confirm-btn-background),
+$themes: (
+    light: (
+        connect-wallet-bg-color: var(--modal-confirm-btn-background),
     ),
-    dark: (connect-wallet-bg-color: var(--modal-confirm-btn-background),
+    dark: (
+        connect-wallet-bg-color: var(--modal-confirm-btn-background),
     ),
 );
 
@@ -17,10 +20,10 @@ $themes: (light: (connect-wallet-bg-color: var(--modal-confirm-btn-background),
                 min-width: 150px;
             }
 
-
             height: 45px;
         }
     }
 
-    &.connect-wallet-popup {}
+    &.connect-wallet-popup {
+    }
 }

@@ -1,9 +1,12 @@
 @import "styles/mixin/theme";
 
-$themes: (light: (account-details-bg-color: #222222,
+$themes: (
+    light: (
+        account-details-bg-color: #222222,
         account-details-address-bg-color: rgba(0, 0, 0, 0.1),
     ),
-    dark: (account-details-bg-color: #222222,
+    dark: (
+        account-details-bg-color: #222222,
         account-details-address-bg-color: rgba(35, 27, 43, 1),
     ),
 );

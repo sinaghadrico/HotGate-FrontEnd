@@ -19,7 +19,7 @@
         cursor: pointer;
     }
 
-    input:checked+label {
+    input:checked + label {
         border: 1px solid #fa8f6b;
 
         border-radius: 24px;

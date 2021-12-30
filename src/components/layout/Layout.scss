@@ -1,9 +1,12 @@
 @import "styles/mixin/theme";
 
-$themes: (light: (layout-bg-color: #121212,
+$themes: (
+    light: (
+        layout-bg-color: #121212,
         layout-color: var(--color-gray-1),
     ),
-    dark: (layout-bg-color: #121212,
+    dark: (
+        layout-bg-color: #121212,
         layout-color: var(--color-white),
     ),
 );
