@@ -8,5 +8,5 @@ package.json
 
 # every{directory|file} include pattern 
 # src/**/*.ts
-src/**/*.tsx
+# src/**/*.tsx
 src/serviceWorkerRegistration.ts
