@@ -1,0 +1,74 @@
+.pool-box {
+    max-width: 364px;
+    max-height: 296px;
+    border-radius: 24px;
+    padding: 30px 40px;
+    background-color: var(--color-main);
+
+    &-header {
+        display: flex;
+        align-items: center;
+
+
+        &-logo {}
+
+        &-title {
+            font-size: var(--font-size-xl);
+            font-weight: bold;
+            line-height: 30px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+
+    }
+
+    &-body {
+        padding-top: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: space-between;
+        justify-content: space-between;
+
+
+        &-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: var(--font-size-md);
+            padding: 5px 0;
+            font-weight: normal;
+            line-height: 19px;
+
+            &-title {
+                display: flex;
+                align-items: center;
+                color: rgba(255, 255, 255, 0.5);
+                font-size: var(--font-size-md);
+
+                .pair-coin {
+                    padding: 0 5px 0px 0;
+                }
+            }
+
+            &-value {
+                color: rgba(255, 255, 255, 0.8);
+                font-size: var(--font-size-md);
+            }
+
+
+        }
+    }
+
+    &-footer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding-top: 15px;
+
+        button {
+            height: 44px;
+            max-width: 135px;
+        }
+    }
+}

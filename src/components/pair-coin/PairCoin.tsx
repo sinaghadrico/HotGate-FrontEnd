@@ -45,7 +45,7 @@ const PairCoin = ({ supCoin, subCoin, size = 24 }: PairCoinProps) => {
 
     const SupIcon: any = supCoin?.includes("http") ? null : getIcon(supCoin);
     const cssSize = `${size}px`;
-    const translateSup = supCoin && subCoin ? `translate(${-1 * 32}px, -4px)` : `translate(0px)`;
+    const translateSup = supCoin && subCoin ? `translate(${-1 * 24}px, 0px)` : `translate(0px)`;
     const translateSub = supCoin && subCoin ? `translate(${24 - 24 / 5}px, 0px)` : `translate(0px)`;
 
     return (
@@ -76,7 +76,7 @@ const PairCoin = ({ supCoin, subCoin, size = 24 }: PairCoinProps) => {
                     }}
                 />
             ) : (
-                supCoin && <SupIcon style={{ width: 32, height: 32, transform: translateSup }} />
+                supCoin && <SupIcon style={{ width: 24, height: 24, transform: translateSup }} />
             )}
         </span>
     );

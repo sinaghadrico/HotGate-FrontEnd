@@ -1,5 +1,5 @@
 import { Button, ButtonWidth } from "ui-components";
-import { ReactComponent as SetttingLogo } from "assets/icons/svgs/setting.svg";
+import { ReactComponent as SettingLogo } from "assets/icons/svgs/setting.svg";
 import { BoxProps } from "./Box.interface";
 
 import "./Box.scss";
@@ -14,7 +14,7 @@ const Box = ({ children, title, description, submitTitle, onSubmit, haveSetting,
                 <div className="ui-box-header">
                     <div className="ui-box-header-title">{title}</div>
                     <div className="ui-box-header-setting" title="Advanced Settings">
-                        {haveSetting && <SetttingLogo onClick={() => setOpenSetting(true)} />}
+                        {haveSetting && <SettingLogo onClick={() => setOpenSetting(true)} />}
                     </div>
                 </div>
                 <div className="ui-box-body">

@@ -10,6 +10,7 @@ import { Input, RadioButton, RadioGroup } from "ui-components";
 import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils/number";
 import TokenSelector from "components/token-selector/TokenSelector";
 import { DetailsList } from "components/details-list";
+import { PoolBox } from "components/pool-box";
 
 const AccountManagement: FC = () => {
     const [form, setForm] = useState({
@@ -77,7 +78,7 @@ const AccountManagement: FC = () => {
                     prefix={
                         <TokenSelector
                             title="Input Token"
-                            onChanageValue={(token: any) => {
+                            onChangeValue={(token: any) => {
                                 handleChange({ target: { name: "inputToken", value: token } });
                             }}
                             token={form?.inputToken}
@@ -94,7 +95,7 @@ const AccountManagement: FC = () => {
                     prefix={
                         <TokenSelector
                             title="Output Token"
-                            onChanageValue={(token: any) => {
+                            onChangeValue={(token: any) => {
                                 handleChange({ target: { name: "outputToken", value: token } });
                             }}
                             token={form?.outputToken}
@@ -118,13 +119,23 @@ const AccountManagement: FC = () => {
 
                 <DetailsList list={detailsList} />
             </Box>
-            <div className="account-management">
+            <PoolBox
+                data={{
+                    title: "Bitcoin-Ether",
+                    inputToken: { title: "BTC", value: 100 },
+                    outputToken: { title: "BNB", value: 10 },
+                    tvl: "103.30",
+                    volume: "103.30",
+                }}
+            />
+
+            {/* <div className="account-management">
                 <div className="row  ">
                     <div className="col-md-12 ">
                         <AccountPredictor />
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 };

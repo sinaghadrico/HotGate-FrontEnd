@@ -7,7 +7,7 @@ import { ReactComponent as SearchLogo } from "assets/icons/svgs/search.svg";
 import "./TokenSelector.scss";
 import { useState } from "react";
 
-const TokenSelector = ({ onChanageValue, title = "Input Token", token }: TokenSelectorProps) => {
+const TokenSelector = ({ onChangeValue, title = "Input Token", token }: TokenSelectorProps) => {
     const [openSelector, setOpenSelector] = useState(false);
     const [form, setForm] = useState({ search: null, contractAddress: "" });
     const [selectedTab, setSelectedTab] = useState(0);
@@ -42,12 +42,12 @@ const TokenSelector = ({ onChanageValue, title = "Input Token", token }: TokenSe
                 <div
                     className="token-selector-value mt-5"
                     onClick={() => {
-                        setOpenSelector(true);
+                        onChangeValue && setOpenSelector(true);
                     }}
                 >
                     {token?.value}
                     <span className="token-selector-expand">
-                        <ExpandLogo width={40} height={40} />
+                        {onChangeValue && <ExpandLogo width={40} height={40} />}
                     </span>
                 </div>
             </div>
@@ -87,7 +87,7 @@ const TokenSelector = ({ onChanageValue, title = "Input Token", token }: TokenSe
                                     <div
                                         className="token-selector-list-item"
                                         onClick={() => {
-                                            onChanageValue(item);
+                                            onChangeValue && onChangeValue(item);
                                             setOpenSelector(false);
                                         }}
                                         key={item.key}

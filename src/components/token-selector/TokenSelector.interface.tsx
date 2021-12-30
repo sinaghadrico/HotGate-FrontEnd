@@ -1,5 +1,5 @@
 export interface TokenSelectorProps {
-    onChanageValue: (data: any) => void;
+    onChangeValue?: (data: any) => void;
     title?: string;
     token: any;
 }
