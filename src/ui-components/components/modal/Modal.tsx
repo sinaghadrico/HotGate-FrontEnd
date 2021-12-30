@@ -7,6 +7,7 @@ import { ReactComponent as CloseIcon } from "assets/icons/svgs/close.svg";
 import { Loading } from "./../../components/loading";
 import useOnClickOutside from "hooks/useOnClickOutside";
 import useWindowSize from "hooks/useWindowSize";
+import usePortal from "hooks/usePortal";
 
 const Modal = ({
     open,
@@ -22,6 +23,10 @@ const Modal = ({
     minHeight,
     maxHeight,
 }: ModalProps) => {
+    const { Portal } = usePortal({
+        bindTo: (document && document.getElementById("root")) || undefined,
+    });
+
     const ref = React.useRef(null);
     const [show, setShow] = React.useState(open);
     useOnClickOutside(ref, () => {
@@ -57,51 +62,53 @@ const Modal = ({
 
     if (!show) return null;
     return (
-        <div className={showHideClassName}>
-            <div
-                ref={ref}
-                style={{
-                    ...style,
-                    width: `${_width}%`,
-                }}
-                className={classnames(className, "ui-modal-main")}
-            >
-                {title && (
-                    <div className="ui-modal-header">
-                        <label>{title}</label>
-                        <a>
-                            <CloseIcon
-                                onClick={handleCloseBtn}
-                                fill="#6D7075"
-                                style={{ color: "white" }}
-                                color={"white"}
-                            />
-                        </a>
-                    </div>
-                )}
+        <Portal>
+            <div className={showHideClassName}>
                 <div
-                    className="ui-modal-body"
+                    ref={ref}
                     style={{
-                        maxHeight: maxHeight ? `${maxHeight}px` : "",
-                        minHeight: minHeight ? `${minHeight}px` : "",
+                        ...style,
+                        width: `${_width}%`,
                     }}
+                    className={classnames(className, "ui-modal-main")}
                 >
-                    {!title && (
-                        <div className="ui-modal-header-no-title">
+                    {title && (
+                        <div className="ui-modal-header">
+                            <label>{title}</label>
                             <a>
                                 <CloseIcon
                                     onClick={handleCloseBtn}
-                                    fill="#b6b6b4"
+                                    fill="#6D7075"
                                     style={{ color: "white" }}
                                     color={"white"}
                                 />
                             </a>
                         </div>
                     )}
-                    {isLoading ? iconLoadingComponent ? iconLoadingComponent : <Loading /> : children}
+                    <div
+                        className="ui-modal-body"
+                        style={{
+                            maxHeight: maxHeight ? `${maxHeight}px` : "",
+                            minHeight: minHeight ? `${minHeight}px` : "",
+                        }}
+                    >
+                        {!title && (
+                            <div className="ui-modal-header-no-title">
+                                <a>
+                                    <CloseIcon
+                                        onClick={handleCloseBtn}
+                                        fill="#b6b6b4"
+                                        style={{ color: "white" }}
+                                        color={"white"}
+                                    />
+                                </a>
+                            </div>
+                        )}
+                        {isLoading ? iconLoadingComponent ? iconLoadingComponent : <Loading /> : children}
+                    </div>
                 </div>
             </div>
-        </div>
+        </Portal>
     );
 };
 export default Modal;

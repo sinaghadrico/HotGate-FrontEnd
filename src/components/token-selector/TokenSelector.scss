@@ -1,19 +1,26 @@
 .token-selector {
-    padding: 0px 10px 0px 0px;
+    margin: 10px 0px 0px 10px;
     border-right: 1px solid rgba(255, 255, 255, 0.5);
-    min-width: 150px;
+    min-width: 120px;
     cursor: pointer;
-    &-title {
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &-title {}
+
     &-value {
         display: flex;
         justify-content: space-between;
+        width: 100%;
         font-size: 16px;
         color: rgba(255, 255, 255, 0.8);
     }
+
     &-expand {
         margin-top: -20px;
     }
+
     &-list {
         &-title {
             display: flex;
@@ -27,6 +34,7 @@
             max-height: 300px;
             overflow-y: auto;
         }
+
         &-item {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
@@ -38,11 +46,13 @@
         }
     }
 }
+
 .token-add {
     &-placholder {
         min-height: 250px;
         width: 100%;
     }
+
     &-fotter {
         width: 100%;
     }

@@ -39,15 +39,7 @@ const Deposit = ({ open, onClose, onConfirm }: DepositProps) => {
             cancelTitle="Cancel"
         >
             <Input
-                prefix={
-                    <TokenSelector
-                        title="Input Token"
-                        onChangeValue={(token: any) => {
-                            handleChange({ target: { name: "inputToken", value: token } });
-                        }}
-                        token={form?.inputToken}
-                    />
-                }
+                prefix={<TokenSelector title="Input Token" token={form?.inputToken} />}
                 className="my-10"
                 label="Amount"
                 value={formatNumberWithCommas(form?.amount)}
@@ -56,17 +48,9 @@ const Deposit = ({ open, onClose, onConfirm }: DepositProps) => {
                 autoComplete="off"
             />
             <Input
-                prefix={
-                    <TokenSelector
-                        title="Output Token"
-                        onChangeValue={(token: any) => {
-                            handleChange({ target: { name: "outputToken", value: token } });
-                        }}
-                        token={form?.outputToken}
-                    />
-                }
+                prefix={<TokenSelector title="Output Token" token={form?.outputToken} />}
                 className="my-10"
-                label="Expected Received Amount"
+                label="Amount"
                 value={formatNumberWithCommas(form?.receivedAmount)}
                 name="receivedAmount"
                 onChange={handleChange}

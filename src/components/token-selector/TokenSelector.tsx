@@ -45,7 +45,7 @@ const TokenSelector = ({ onChangeValue, title = "Input Token", token }: TokenSel
                         onChangeValue && setOpenSelector(true);
                     }}
                 >
-                    {token?.value}
+                    <span>{token?.value}</span>
                     <span className="token-selector-expand">
                         {onChangeValue && <ExpandLogo width={40} height={40} />}
                     </span>
