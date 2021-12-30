@@ -8,6 +8,7 @@ const AccountPredictor = ({ data }: AccountPredictorProps) => {
     return (
         <div className="account-predictor">
             <div className="row  ">
+                <div>Tokens</div>
                 <div className="col-md-12 ">
                     <AccountPredictorRewardsList />
                 </div>

@@ -3,7 +3,7 @@ import { Status } from "./status";
 
 export type PoolType = "fox" | "wolf" | "owl" | "featured";
 export interface PredictionPoolData {
-    pools: PredictionPool[];
+    pools: any[];
     total: number;
     page?: number;
 }

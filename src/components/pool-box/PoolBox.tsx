@@ -48,7 +48,11 @@ const PoolBox = ({ data }: PoolBoxProps) => {
                     </div>
                 </div>
                 <div className="pool-box-footer">
-                    <Button onClick={() => setOpenDeposit(true)} width={ButtonWidth.FIT_PARENT}>
+                    <Button
+                        onClick={() => setOpenDeposit(true)}
+                        width={ButtonWidth.FIT_PARENT}
+                        buttonForm={ButtonForm.SECONDARY_HIGH}
+                    >
                         Deposit
                     </Button>
                     <Button

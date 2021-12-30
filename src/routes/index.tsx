@@ -3,6 +3,12 @@ import { Router, Route, Switch } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { createBrowserHistory } from "history";
 import { AnimatePresence } from "framer-motion";
+const Exchange = lazy(() => import("../pages/exchange/Exchange"));
+const CrossChainExchange = lazy(() => import("../pages/cross-chain-exchange/CrossChainExchange"));
+const CrossChainTransfer = lazy(() => import("../pages/cross-chain-transfer/CrossChainTransfer"));
+const LiquidityPools = lazy(() => import("../pages/liquidity-pools/LiquidityPools"));
+const Tokens = lazy(() => import("../pages/account-management/AccountManagement"));
+
 const AccountManagement = lazy(() => import("../pages/account-management/AccountManagement"));
 const NotFoundPage = lazy(() => import("../pages/not-found-page/NotFoundPage"));
 
@@ -21,8 +27,14 @@ const RoutesBase: React.FC<RouteComponentProps> = () => {
     const authenticatedRoutes: {
         [path: string]: React.ComponentType;
     } = {
+        [Paths.Exchange]: Exchange,
+        [Paths.CrossChainExchange]: CrossChainExchange,
+        [Paths.CrossChainTransfer]: CrossChainTransfer,
+        [Paths.LiquidityPools]: LiquidityPools,
+        [Paths.Tokens]: Tokens,
+
         [Paths.AccountManagement]: AccountManagement,
-        [Paths.Home]: AccountManagement,
+        [Paths.Home]: Exchange,
         [Paths.NotFound]: NotFoundPage,
     };
 

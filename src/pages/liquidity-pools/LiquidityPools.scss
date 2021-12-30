@@ -1,0 +1,26 @@
+.liquidity-pools {
+    max-width: 1230px;
+    margin: 55px auto;
+
+
+    &-button {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        button {
+            max-width: 400px;
+            min-height: 18px;
+            font-size: 15px;
+            margin-left: 7.5px;
+        }
+    }
+
+    &-empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 450px;
+        width: 100%;
+    }
+}

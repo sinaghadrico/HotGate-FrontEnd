@@ -11,7 +11,7 @@ $themes: (light: (),
         }
     }
 
-    height: 90px;
+    height: 70px;
 
     &.ui-table-row {
         border-bottom: 0;
@@ -69,6 +69,7 @@ $themes: (light: (),
 
         .pair-coin {
             display: flex;
+            padding-right: 10px;
         }
 
         // h1 {

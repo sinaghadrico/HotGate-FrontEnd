@@ -2,8 +2,9 @@ import { useReducer, createContext, useContext } from "react";
 
 const initialState = {
     walletOptions: false,
-    poolsFilters: { label: "Status", value: "All" },
-    poolsOrderBy: "maturity_time",
+    poolsFilters: { label: "Normal", value: 0 },
+    poolsOrderBy: "",
+    poolInputSearch: "",
 };
 
 const GlobalStateContext = createContext(initialState as any);
@@ -16,6 +17,8 @@ const globalReducer = (state: any, action: any) => {
         case "toggleWalletOptions":
             return { ...state, walletOptions: !state.walletOptions };
         case "setPoolFilters":
+            return { ...state, poolsFilters: action.value };
+        case "setPoolInputSearch":
             return { ...state, poolsFilters: action.value };
         case "setPoolsOrderBy":
             return { ...state, poolsOrderBy: action.value };

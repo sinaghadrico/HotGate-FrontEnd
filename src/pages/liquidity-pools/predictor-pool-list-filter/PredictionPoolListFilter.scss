@@ -1,0 +1,68 @@
+.predictor-pool-list-filter {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 12.5px 0px 12.5px;
+
+    &-header {
+        display: flex;
+
+        @media (min-width: 1200px) {
+            justify-content: space-between;
+        }
+
+        @media (max-width: 1200px) {
+            flex-direction: column;
+            // align-items: center;
+        }
+
+        &-title {
+            margin: 10px 0;
+        }
+
+        &-pool {
+            display: flex;
+
+            .ui-input {
+                height: 45px;
+
+                .ui-input-suffix {
+
+                    top: 15px;
+                }
+            }
+        }
+    }
+
+
+
+
+    @media (min-width: 0) and (max-width: 767px) {
+        flex-direction: column;
+        align-items: center;
+
+        >div {
+            padding-top: 10px;
+        }
+    }
+
+    &-filter {
+        flex: 60;
+        text-align: left;
+
+        button {
+            height: 35px;
+        }
+
+        .ui-button-secondary-dark {
+            color: #8e9092;
+        }
+
+        .ui-button-secondary-high {
+            color: #fff;
+        }
+    }
+
+
+
+}

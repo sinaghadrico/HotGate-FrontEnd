@@ -1,0 +1,16 @@
+.cross-chain-transfer {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .transfer-type {
+        margin-top: 25px;
+
+        &-title {
+            font-size: 12px;
+            margin: 5px 0;
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+}

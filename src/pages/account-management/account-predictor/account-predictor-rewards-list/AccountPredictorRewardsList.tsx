@@ -12,11 +12,11 @@ import AccountPredictorRewardsListWrapper from "./AccountPredictorRewardsListWra
 
 const AccountPredictorRewardsList: FC = () => {
     const columns: Column[] = [
-        { title: "Asset", description: null },
-        { title: "APY", description: null },
+        { title: "Token", description: null },
+        { title: "Price", description: null },
+        { title: "Price Change", description: null },
         { title: "TVL", description: null },
-        { title: "Rewards", description: null },
-        { title: "Details", description: null },
+        { title: "Volume (24h)", description: null },
     ];
 
     const pageSize = 6;
@@ -64,7 +64,7 @@ const AccountPredictorRewardsList: FC = () => {
                                         colSpan={columns.length}
                                         style={{ height: 530, textAlign: "center", display: "revert" }}
                                     >
-                                        There is no available stake
+                                        There is no available Token
                                     </TableCell>
                                 </TableRow>
                             ) : (

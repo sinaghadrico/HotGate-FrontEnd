@@ -1,6 +1,6 @@
 export class DropDownMenuItem {
     label!: string;
-    value!: string | undefined;
+    value!: any | undefined;
     link?: string;
     target?: string;
     onClick?: () => void;
