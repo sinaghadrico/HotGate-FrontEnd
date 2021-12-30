@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { FC, useState } from "react";
+import { FC } from "react";
 
 import { Helmet } from "react-helmet-async";
 import "./AccountManagement.scss";

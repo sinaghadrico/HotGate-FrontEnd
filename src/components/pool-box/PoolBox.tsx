@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Button, ButtonForm, ButtonWidth } from "ui-components";
 import { PoolBoxProps } from "./PoolBox.interface";

@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Box } from "components/box";
-import { Input, RadioButton, RadioGroup } from "ui-components";
+import { Input } from "ui-components";
 import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils/number";
 import TokenSelector from "components/token-selector/TokenSelector";
 import { DetailsList } from "components/details-list";
