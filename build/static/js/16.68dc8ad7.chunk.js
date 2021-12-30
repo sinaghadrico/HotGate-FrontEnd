@@ -1,0 +1,1 @@
+(this.webpackJsonphotgate=this.webpackJsonphotgate||[]).push([[16],{1353:function(t,n,e){},1618:function(t,n,e){"use strict";e.r(n);e(1353);var c=e(0);n.default=function(){return Object(c.jsx)("div",{className:"not-found-page",children:Object(c.jsx)("p",{children:" Page not found!"})})}}}]);
