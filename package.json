@@ -96,11 +96,9 @@
         }
     },
     "lint-staged": {
-        "*.{js,jsx,ts,tsx}": "yarn run lint:fix"
+        
     },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
+  
     "browserslist": {
         "production": [
             ">0.2%",
