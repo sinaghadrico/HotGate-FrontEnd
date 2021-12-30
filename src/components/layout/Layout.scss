@@ -1,12 +1,9 @@
 @import "styles/mixin/theme";
 
-$themes: (
-    light: (
-        layout-bg-color: #121212,
+$themes: (light: (layout-bg-color: #121212,
         layout-color: var(--color-gray-1),
     ),
-    dark: (
-        layout-bg-color: #121212,
+    dark: (layout-bg-color: #121212,
         layout-color: var(--color-white),
     ),
 );
@@ -27,7 +24,7 @@ $themes: (
     overflow-y: auto;
 
     &-main {
-        background-image: url("../../assets/images/Bg.svg");
+        background-image: url("../../assets/images/Bg.png");
         background-size: cover;
         background-repeat: no-repeat;
 

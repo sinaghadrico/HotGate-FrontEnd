@@ -29,8 +29,8 @@ const LiquidityPools: FC = () => {
     return (
         <div className="liquidity-pools row">
             <Helmet>
-                <title>Predictor - Pool List </title>
-                <meta name="description" content="Predictor - Pool List" />
+                <title> Liquidity Pools </title>
+                <meta name="description" content="Liquidity Pools" />
             </Helmet>
             <div className="row">
                 <PredictorPoolListFilter />

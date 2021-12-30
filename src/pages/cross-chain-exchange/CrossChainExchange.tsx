@@ -42,8 +42,8 @@ const CrossChainExchange: FC = () => {
     return (
         <div className="cross-chain-exchange">
             <Helmet>
-                <title> CrossChainExchange </title>
-                <meta name="description" content="CrossChainExchange" />
+                <title> Cross-Chain Exchange </title>
+                <meta name="description" content="Cross-Chain Exchange" />
             </Helmet>
             <Box
                 title="Cross-Chain Exchange"

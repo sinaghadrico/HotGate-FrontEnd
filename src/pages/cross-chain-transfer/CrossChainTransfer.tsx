@@ -37,8 +37,8 @@ const CrossChainTransfer: FC = () => {
     return (
         <div className="cross-chain-transfer">
             <Helmet>
-                <title> CrossChainTransfer </title>
-                <meta name="description" content="CrossChainTransfer" />
+                <title> Cross-Chain Transfer </title>
+                <meta name="description" content="Cross-Chain Transfer" />
             </Helmet>
             <Box
                 title="Cross-Chain Transfer"
