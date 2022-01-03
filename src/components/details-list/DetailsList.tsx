@@ -7,8 +7,8 @@ const DetailsList = ({ list }: DetailsListProps) => {
         <>
             <div className="details-list">
                 <div className="details-list-items">
-                    {list?.map((item) => (
-                        <div className="details-list-item" key={item.value}>
+                    {list?.map((item, index) => (
+                        <div className="details-list-item" key={index}>
                             <div className="details-list-item-title">{item.title}</div>
                             <div className="details-list-item-value">{item.value}</div>
                         </div>

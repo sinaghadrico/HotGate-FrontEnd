@@ -28,6 +28,8 @@ import {
     // magic,
     // portis,
     torus,
+    onewallet,
+    mathwallet,
 } from "./connectors";
 
 enum ConnectorNames {
@@ -44,6 +46,8 @@ enum ConnectorNames {
     // Magic = "Magic",
     // Portis = "Portis",
     Torus = "Torus",
+    OneWallet = "OneWallet",
+    MathWallet = "MathWallet",
 }
 
 const connectorsByName: { [connectorName in ConnectorNames]: any } = {
@@ -60,6 +64,8 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
     // [ConnectorNames.Magic]: magic,
     // [ConnectorNames.Portis]: portis,
     [ConnectorNames.Torus]: torus,
+    [ConnectorNames.OneWallet]: onewallet,
+    [ConnectorNames.MathWallet]: mathwallet,
 };
 
 function getErrorMessage(error: any) {
