@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import { ConnectorUpdate } from "@web3-react/types";
@@ -36,7 +37,7 @@ export abstract class HarmonyAbstractConnector extends AbstractConnector {
         let url;
         let chainId: ChainID;
         let chainType: ChainType;
-
+        let harmony: Harmony;
         switch (this.chainId) {
             case 1:
                 url = "https://api.s0.t.hmny.io";
@@ -56,7 +57,7 @@ export abstract class HarmonyAbstractConnector extends AbstractConnector {
                 chainId = ChainID.HmyMainnet;
         }
 
-        const harmony = new Harmony(url, {
+        harmony = new Harmony(url, {
             chainType: chainType,
             chainId: chainId,
         });
@@ -84,20 +85,19 @@ export abstract class HarmonyAbstractConnector extends AbstractConnector {
 
     private async retrieveAccount(): Promise<null | string> {
         let account: null | string = null;
-        debugger;
+
         if (this.address) {
             account = this.address;
         } else {
             try {
                 const windowObject = await this.getWindowObject();
-                debugger;
+
                 account = await windowObject.getAccount().then((acc: any): string => acc.address);
-                debugger;
+
                 if (account) {
                     this.bech32Address = account;
                     this.address = fromBech32(account);
                     account = this.address;
-                    debugger;
                 }
             } catch (error: any) {
                 if (error.message === "User rejected the provision of an Identity") {
@@ -119,11 +119,12 @@ export abstract class HarmonyAbstractConnector extends AbstractConnector {
     }
 
     private async getWindowObject(): Promise<any> {
-        debugger;
         let windowObject = window[this.windowKey];
+        debugger;
         if (!windowObject) {
             await this.timeout(500);
             windowObject = window[this.windowKey];
+            debugger;
         }
 
         if (!windowObject) {

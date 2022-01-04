@@ -2104,7 +2104,7 @@
     "@harmony-js/transaction" "0.1.56"
     "@harmony-js/utils" "0.1.56"
 
-"@harmony-js/core@0.1.57", "@harmony-js/core@^0.1.57":
+"@harmony-js/core@0.1.57", "@harmony-js/core@^0.1.55":
   version "0.1.57"
   resolved "https://registry.yarnpkg.com/@harmony-js/core/-/core-0.1.57.tgz#bf10eb017f0086868fa8aefab097894e7b36acb3"
   integrity sha512-4d48MoR/3xabsoiV0fXjVwtL4u9AeNO72+UZWSZl2ZzrPvij2ucn14wvIZwCL69xJwD4bsqgy68Ju+DRLFVW3A==
@@ -2172,7 +2172,38 @@
     "@types/bn.js" "^4.11.3"
     bn.js "^4.11.8"
 
-"@harmony-react/types@^1.0.2":
+"@harmony-react/abstract-connector@latest":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@harmony-react/abstract-connector/-/abstract-connector-1.0.2.tgz#911e46c5426ced6c3463d8023231bd31ca86f710"
+  integrity sha512-EDvFxQc1Qao1r6ryOIj06neOt8VSH+sY7Flq9V9eEXSf2Gck1hvTDNQX2jvLgBdVPt1BPc3dzczEX5P2aVf8dA==
+  dependencies:
+    "@harmony-js/core" "^0.1.55"
+    "@harmony-react/types" latest
+    "@web3-react/abstract-connector" latest
+    "@web3-react/types" latest
+    tiny-warning "^1.0.3"
+
+"@harmony-react/mathwallet-connector@latest":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@harmony-react/mathwallet-connector/-/mathwallet-connector-1.0.2.tgz#c10e87b9fa4981ff83a6393600e62b74798a1be4"
+  integrity sha512-gHPnB/j2zuQhCn9K+tL7EwAi+2R8v0day+aFiBNszv8z+gm6GfUJJqJeMEmzj/dMofwQN/0b44v6vFPPHr1zow==
+  dependencies:
+    "@harmony-js/core" "^0.1.55"
+    "@harmony-react/abstract-connector" latest
+    "@web3-react/types" latest
+    tiny-warning "^1.0.3"
+
+"@harmony-react/onewallet-connector@latest":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@harmony-react/onewallet-connector/-/onewallet-connector-1.0.2.tgz#1cfa2c7c94423364334857113ec9bb8229f752df"
+  integrity sha512-wZHXBZ8FecA1pRh8Ap7aKwLTI5cwBcHodKo+K5Q+YDljlw47oUsljwYCpawtYuM5rLHGjaX/38lM8xd82KKV4A==
+  dependencies:
+    "@harmony-js/core" "^0.1.55"
+    "@harmony-react/abstract-connector" latest
+    "@web3-react/types" latest
+    tiny-warning "^1.0.3"
+
+"@harmony-react/types@latest":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@harmony-react/types/-/types-1.0.2.tgz#aaa7c11b68ced71f6a742759d5172aa6c4336684"
   integrity sha512-AyqsMFOfEVyakYqylRoPpyYMlbr8JrNkD2LizJnFe3GA3NlixJYXdZ68UU+ct+C4XaXAXt53zPkPo6TOqsy9Pg==
@@ -4723,7 +4754,7 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-react/abstract-connector@^6.0.7":
+"@web3-react/abstract-connector@^6.0.7", "@web3-react/abstract-connector@latest":
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/@web3-react/abstract-connector/-/abstract-connector-6.0.7.tgz#401b3c045f1e0fab04256311be49d5144e9badc6"
   integrity sha512-RhQasA4Ox8CxUC0OENc1AJJm8UTybu/oOCM61Zjg6y0iF7Z0sqv1Ai1VdhC33hrQpA8qSBgoXN9PaP8jKmtdqg==
@@ -4817,12 +4848,12 @@
     "@web3-react/abstract-connector" "^6.0.7"
     "@web3-react/types" "^6.0.7"
 
-"@web3-react/types@^6.0.7":
+"@web3-react/types@^6.0.7", "@web3-react/types@latest":
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/@web3-react/types/-/types-6.0.7.tgz#34a6204224467eedc6123abaf55fbb6baeb2809f"
   integrity sha512-ofGmfDhxmNT1/P/MgVa8IKSkCStFiyvXe+U5tyZurKdrtTDFU+wJ/LxClPDtFerWpczNFPUSrKcuhfPX1sI6+A==
 
-"@web3-react/walletconnect-connector@^6.2.0":
+"@web3-react/walletconnect-connector@^6.2.8":
   version "6.2.8"
   resolved "https://registry.yarnpkg.com/@web3-react/walletconnect-connector/-/walletconnect-connector-6.2.8.tgz#069d27df226464775de25248e71e8c407c374cc7"
   integrity sha512-HENFuGw+inlYHPdZc1vKKVVYzJ/h/JJIXZVzXC2UPQ+c14cX1t0WSnQ7ywUYHkgRqYWMsngTDZTKRMU2+4O1Tg==
@@ -4832,7 +4863,7 @@
     "@web3-react/types" "^6.0.7"
     tiny-invariant "^1.0.6"
 
-"@web3-react/walletlink-connector@^6.2.3":
+"@web3-react/walletlink-connector@^6.2.8":
   version "6.2.8"
   resolved "https://registry.yarnpkg.com/@web3-react/walletlink-connector/-/walletlink-connector-6.2.8.tgz#aaf7f413229f58d8087a15e0d049bbcbe5e0bd49"
   integrity sha512-pSGufPz5JntSUvy88XcOrn5VN3qmX+ZVQ2lXAeWWb7YS2wTlAStPghZbln8t1li7jr1NUJ0w/gMDVpAwjwq4ZA==

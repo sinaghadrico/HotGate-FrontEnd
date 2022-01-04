@@ -42,21 +42,21 @@ export function useInactiveListener(suppress = false) {
         if (ethereum && ethereum.on && !active && !error && !suppress) {
             const handleConnect = (res: any) => {
                 // console.log("Handling 'connect' event");
-                // activate(injected);
+                activate(injected);
             };
             const handleChainChanged = (chainId: string | number) => {
                 // console.log("Handling 'chainChanged' event with payload", chainId);
-                // activate(injected);
+                activate(injected);
             };
             const handleAccountsChanged = (accounts: string[]) => {
                 // console.log("Handling 'accountsChanged' event with payload", accounts);
                 if (accounts.length > 0) {
-                    // activate(injected);
+                    activate(injected);
                 }
             };
             const handleNetworkChanged = (networkId: string | number) => {
-                // console.log("Handling 'networkChanged' event with payload", networkId);
-                // activate(injected);
+                console.log("Handling 'networkChanged' event with payload", networkId);
+                activate(injected);
             };
 
             ethereum.on("connect", handleConnect);

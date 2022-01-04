@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 import React from "react";
+import { Harmony } from "@harmony-js/core";
 import { Web3ReactProvider, useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 import {
     NoEthereumProviderError,
@@ -9,7 +11,7 @@ import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } fro
 import { UserRejectedRequestError as UserRejectedRequestErrorFrame } from "@web3-react/frame-connector";
 import { Web3Provider } from "@ethersproject/providers";
 import { formatEther } from "@ethersproject/units";
-
+import { toBech32 } from "@harmony-js/crypto";
 import { WebWalletProvider } from "./webWalletContext";
 
 import { useEagerConnect, useInactiveListener } from "./hooks";
@@ -31,6 +33,7 @@ import {
     onewallet,
     mathwallet,
 } from "./connectors";
+import { BigNumber } from "@ethersproject/bignumber";
 
 enum ConnectorNames {
     Injected = "Injected",
@@ -89,9 +92,15 @@ function getErrorMessage(error: any) {
     }
 }
 
-function getLibrary(provider: any): Web3Provider {
-    const library = new Web3Provider(provider);
-    library.pollingInterval = 12000;
+function getLibrary(provider: any): Web3Provider | Harmony {
+    let library: Web3Provider | Harmony;
+    debugger;
+    if (provider?.chainType === "hmy") {
+        library = provider.blockchain;
+    } else {
+        library = new Web3Provider(provider);
+        library.pollingInterval = 12000;
+    }
     return library;
 }
 function UseWebWalletProviderWrapper(props: any) {
@@ -106,18 +115,28 @@ function useGetBlockNumber() {
     const { chainId, library } = useWeb3React();
 
     const [blockNumber, setBlockNumber] = React.useState<number | null>();
+
+    const isHmyLibrary = library?.messenger?.chainType === "hmy";
+
     React.useEffect((): any => {
         if (library) {
             let stale = false;
-
+            debugger;
             library
                 .getBlockNumber()
                 .then((blockNumber: number) => {
+                    const _blockNumber: any = blockNumber;
+                    debugger;
+                    if (isHmyLibrary) {
+                        debugger;
+                        blockNumber = BigNumber.from(_blockNumber?.result).toNumber();
+                    }
                     if (!stale) {
                         setBlockNumber(blockNumber);
                     }
                 })
-                .catch(() => {
+                .catch((error: any) => {
+                    debugger;
                     if (!stale) {
                         setBlockNumber(null);
                     }
@@ -130,7 +149,11 @@ function useGetBlockNumber() {
 
             return () => {
                 stale = true;
-                library.removeListener("block", updateBlockNumber);
+                debugger;
+                if (library.on) {
+                    library.removeListener("block", updateBlockNumber);
+                }
+
                 setBlockNumber(undefined);
             };
         }
@@ -141,15 +164,22 @@ function useGetBlockNumber() {
 
 function useGetBalance() {
     const { account, library, chainId } = useWeb3React();
+    const isHmyLibrary = library?.messenger?.chainType === "hmy";
 
     const [balance, setBalance] = React.useState<string | null>();
     React.useEffect((): any => {
         if (!!account && !!library) {
             let stale = false;
+            debugger;
+            const accountArgs = isHmyLibrary ? { address: toBech32(account) } : account;
 
             library
-                .getBalance(account)
+                .getBalance(accountArgs)
                 .then((balance: any) => {
+                    if (isHmyLibrary) {
+                        debugger;
+                        balance = balance.result;
+                    }
                     if (!stale) {
                         setBalance(balance);
                     }
@@ -164,6 +194,9 @@ function useGetBalance() {
                 stale = true;
                 setBalance(undefined);
             };
+        }
+        if (library) {
+            debugger;
         }
     }, [account, library, chainId]); // ensures refresh if referential identity of library doesn't change across chainIds
 
