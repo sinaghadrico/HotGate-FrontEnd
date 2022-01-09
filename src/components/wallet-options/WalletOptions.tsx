@@ -12,6 +12,10 @@ import { ReactGAM } from "services/google-anlytics";
 import { useGlobalDispatch } from "states/globalContext";
 import "./WalletOptions.scss";
 
+import { Client } from "@liquality/client";
+import { BitcoinRpcProvider } from "@liquality/bitcoin-rpc-provider";
+// import { BitcoinNetworks } from "@liquality/bitcoin-networks";
+
 const WalletOptions: FC = () => {
     const {
         active,
@@ -66,6 +70,50 @@ const WalletOptions: FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [error]);
 
+    const handleBTCWallet = async () => {
+        debugger;
+        const _window: any = window;
+        await _window?.bitcoin?.enable();
+        // const bitcoin = new Client();
+
+        // const btcConfig: any = {
+        //     rpc: {
+        //         username: "bitcoin",
+        //         password: "local321",
+        //         url: "https://liquality.io/bitcointestnetrpc/",
+        //         addressType: "bech32",
+        //         wallet: true,
+        //     },
+        //     network: "bitcoin_regtest",
+        //     swapMode: "p2wsh",
+        //     feeNumberOfBlocks: 2,
+        // };
+
+        // bitcoin.addProvider(
+        //     new BitcoinRpcProvider({
+        //         uri: btcConfig.rpc.url,
+        //         username: btcConfig.rpc.username,
+        //         password: btcConfig.rpc.password,
+        //         feeBlockConfirmations: btcConfig.feeNumberOfBlocks,
+        //         network: btcConfig.network,
+        //     }),
+        // );
+        debugger;
+        // // bitcoin.addProvider(new BitcoinLedgerProvider({ network: BitcoinNetworks.bitcoin_testnet }));
+
+        // // Fetch addresses from Ledger wallet using a single-unified API
+        // const [bitcoinAddress] = await bitcoin.wallet.getAddresses(0, 1);
+        // debugger;
+        // Sign a message
+        // const signedMessageBitcoin = await bitcoin.wallet.signMessage(
+        //     "The Times 3 January 2009 Chancellor on brink of second bailout for banks",
+        //     bitcoinAddress,
+        // );
+
+        // Send a transaction
+        // await bitcoin.chain.sendTransaction("", 1000);
+    };
+
     return (
         <div className="wallet-options">
             <div className="wallet-options-list">
@@ -98,6 +146,7 @@ const WalletOptions: FC = () => {
                 })}
                 {(active || error) && <button onClick={handleDeActive}>Deactivate</button>}
                 {/* <button onClick={() => switchNetwork(56)}>Switch Network</button> */}
+                <button onClick={() => handleBTCWallet()}>BTC</button>
             </div>
             {error && <h4 className="wallet-options-errors">{getErrorMessage(error)}</h4>}
         </div>
