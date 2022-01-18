@@ -10,18 +10,18 @@ import { useState } from "react";
 const TokenSelector = ({ onChangeValue, title = "Input Token", token }: TokenSelectorProps) => {
     const [openSelector, setOpenSelector] = useState(false);
     const [form, setForm] = useState({ search: null, contractAddress: "" });
-    const [selectedTab, setSelectedTab] = useState(0);
+    const [selectedTab, setSelectedTab] = useState("list");
 
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
         setForm({ ...form, [name]: _value });
     };
 
-    const handleChangeTab = (value: number) => {
+    const handleChangeTab = (value: any) => {
         setSelectedTab(value);
     };
 
-    const handleAddToken = () => {};
+    const handleAddToken = () => { };
 
     const tokenList = [
         { key: "bsc", value: "BSC", balance: 0 },
@@ -63,10 +63,10 @@ const TokenSelector = ({ onChangeValue, title = "Input Token", token }: TokenSel
                     }}
                 >
                     <Tabs hasBorder={true} value={selectedTab} onChange={handleChangeTab}>
-                        <Tab>ERC-20</Tab>
-                        <Tab>Add Token</Tab>
+                        <Tab value="list">ERC-20</Tab>
+                        <Tab value="add">Add Token</Tab>
                     </Tabs>
-                    <TabPanel value={selectedTab} index={0}>
+                    <TabPanel value={selectedTab} name="list">
                         <Input
                             className="my-10"
                             placeHolder="Search"
@@ -99,7 +99,7 @@ const TokenSelector = ({ onChangeValue, title = "Input Token", token }: TokenSel
                             </div>
                         </div>
                     </TabPanel>
-                    <TabPanel value={selectedTab} index={1}>
+                    <TabPanel value={selectedTab} name="add">
                         <Input
                             className="my-10"
                             label="Contract Address"

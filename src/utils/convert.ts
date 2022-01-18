@@ -5,6 +5,15 @@ const expToken = BigNumber.from(10).pow(18);
 const expPrice = BigNumber.from(10).pow(8);
 // const expIdoToken = BigNumber.from(10).pow(6);
 
+
+const parseValue = (amount: any): number => {
+    return BigNumber.from(amount?._hex).toNumber();
+    // if (amount === "0x00" || amount === 0) {
+    //     return 0;
+    // } else {
+    //     return BigNumber.from(amount?._hex).toNumber();
+    // }
+};
 const parseTokenValue = (amount: BigNumberish): number => {
     if (amount === "0x00" || amount === 0) {
         return 0;
@@ -112,4 +121,5 @@ export {
     expToken,
     expPrice,
     setDigit,
+    parseValue,
 };

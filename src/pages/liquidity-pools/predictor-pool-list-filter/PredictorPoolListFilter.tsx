@@ -2,11 +2,14 @@ import { Tabs, Tab, Input, Button, ButtonWidth } from "ui-components";
 import { DropDownMenuItem } from "components/drop-down-menu";
 import { useGlobalDispatch, useGlobalState } from "states/globalContext";
 import { ReactComponent as SearchLogo } from "assets/icons/svgs/search.svg";
+import { useLiquidityPoolFactory } from "services/predictor/contract/useLiquidityPoolFactoryContract";
 import "./PredictionPoolListFilter.scss";
 
 const PredictionPoolListFilter = () => {
     const GlobalDispatch = useGlobalDispatch();
     const { poolsFilters, poolInputSearch } = useGlobalState();
+
+    const liquidityPoolFactory = useLiquidityPoolFactory();
 
     const handleChange = (event: any) => {
         const { value } = event.target;
@@ -15,6 +18,14 @@ const PredictionPoolListFilter = () => {
             type: "setPoolFilters",
             value: value,
         });
+    };
+
+    const handleCreatePool = () => {
+        // const tokenA = process.env.REACT_APP_ERC20_POLKADOT_TARGET_ADDRESS || "";
+        const tokenA = process.env.REACT_APP_ERC20_CHAINLINK_TARGET_ADDRESS || "";
+        const tokenB = process.env.REACT_APP_HOTGATE_TOKEN_ADDRESS || "";
+
+        liquidityPoolFactory.createLiquidityPool(tokenA, tokenB);
     };
 
     const filterItems: DropDownMenuItem[] = [
@@ -47,7 +58,7 @@ const PredictionPoolListFilter = () => {
                         autoComplete="off"
                         style={{ padding: "5px 10px" }}
                     />
-                    <Button onClick={handleChange} width={ButtonWidth.FIT_PARENT}>
+                    <Button onClick={handleCreatePool} width={ButtonWidth.FIT_PARENT}>
                         Create New Pool
                     </Button>
                 </div>

@@ -41,13 +41,7 @@ const LiquidityPools: FC = () => {
                         return (
                             <div className="col-md-4 col-lg-4 col-xl-4 my-10" key={index}>
                                 <PoolBox
-                                    data={{
-                                        title: "Bitcoin-Ether",
-                                        inputToken: { title: "BTC", value: 100 },
-                                        outputToken: { title: "BNB", value: 10 },
-                                        tvl: "103.30",
-                                        volume: "103.30",
-                                    }}
+                                    data={pool}
                                 />
                             </div>
                         );
@@ -60,11 +54,11 @@ const LiquidityPools: FC = () => {
                             <div className="col-md-4 col-lg-4 col-xl-4 mb-15" key={item + "-PredictPoolBoxLoader"}>
                                 <PoolBox
                                     data={{
-                                        title: "Bitcoin-Ether",
-                                        inputToken: { title: "BTC", value: 100 },
-                                        outputToken: { title: "BNB", value: 10 },
-                                        tvl: "103.30",
-                                        volume: "103.30",
+                                        title: "_-_",
+                                        inputToken: { title: "_", value: 0 },
+                                        outputToken: { title: "_", value: 0 },
+                                        tvl: "0",
+                                        volume: "0",
                                     }}
                                 />
                             </div>

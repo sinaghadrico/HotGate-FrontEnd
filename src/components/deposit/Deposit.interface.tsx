@@ -3,4 +3,5 @@ export interface DepositProps {
     onConfirm: (data: any) => void;
     onClose: () => void;
     type?: string;
+    data: any
 }

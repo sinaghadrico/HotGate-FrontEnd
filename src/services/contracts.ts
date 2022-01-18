@@ -19,6 +19,8 @@ import {
     CCTransferRouter__factory,
     LiquidityPoolFactory,
     LiquidityPoolFactory__factory,
+    LiquidityPool,
+    LiquidityPool__factory,
     FastRouter,
     FastRouter__factory,
 } from "contracts/types";
@@ -26,6 +28,11 @@ import { useContract, useContractFromAddress } from "./contract";
 
 export const useUsdContract = (): WrappedERC20Token | undefined => {
     return useContract(WrappedERC20Token__factory.connect, "USDCToken");
+};
+
+export const useLiquidityPoolContract = (): LiquidityPool | undefined => {
+    const address: any = process.env.REACT_APP_LIQUIDITY_POOL_FACTORY_ADDRESS;
+    return useContractFromAddress(LiquidityPool__factory.connect, address);
 };
 
 export const useLiquidityPoolFactoryContract = (): LiquidityPoolFactory | undefined => {

@@ -3,4 +3,5 @@ export interface WithdrawProps {
     onConfirm: (data: any) => void;
     onClose: () => void;
     type?: string;
+    data: any
 }

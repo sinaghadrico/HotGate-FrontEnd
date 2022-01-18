@@ -13,31 +13,31 @@ const PoolBox = ({ data }: PoolBoxProps) => {
     const [openWithdraw, setOpenWithdraw] = useState(false);
     const { title, inputToken, outputToken, tvl, volume } = data;
 
-    const handelWithdraw = () => {};
-    const handelDeposit = () => {};
+    const handelWithdraw = () => { };
+    const handelDeposit = () => { };
     return (
         <>
             <div className="pool-box">
                 <div className="pool-box-header">
                     <div className="predictor-pool-box-header-logo">
-                        <PairCoin subCoin={inputToken?.title} supCoin={outputToken?.title} />
+                        <PairCoin subCoin={inputToken?.symbol} supCoin={outputToken?.symbol} />
                     </div>
                     <div className="pool-box-header-title">{title}</div>
                 </div>
                 <div className="pool-box-body">
                     <div className="pool-box-body-item">
                         <div className="pool-box-body-item-title">
-                            <PairCoin subCoin={inputToken?.title} />
+                            <PairCoin subCoin={inputToken?.symbol} />
                             {inputToken?.title} Amount
                         </div>
-                        <div className="pool-box-body-item-value">{inputToken?.value}</div>
+                        <div className="pool-box-body-item-value">{inputToken?.amount}</div>
                     </div>
                     <div className="pool-box-body-item">
                         <div className="pool-box-body-item-title">
-                            <PairCoin subCoin={outputToken?.title} />
+                            <PairCoin subCoin={outputToken?.symbol} />
                             {outputToken?.title} Amount
                         </div>
-                        <div className="pool-box-body-item-value">{outputToken?.value}</div>
+                        <div className="pool-box-body-item-value">{outputToken?.amount}</div>
                     </div>
                     <div className="pool-box-body-item">
                         <div className="pool-box-body-item-title">TVL</div>
@@ -68,6 +68,7 @@ const PoolBox = ({ data }: PoolBoxProps) => {
             {openDeposit && (
                 <Deposit
                     open={openDeposit}
+                    data={data}
                     onClose={() => setOpenDeposit(false)}
                     onConfirm={() => setOpenDeposit(false)}
                 />
@@ -75,6 +76,7 @@ const PoolBox = ({ data }: PoolBoxProps) => {
             {openWithdraw && (
                 <Withdraw
                     open={openWithdraw}
+                    data={data}
                     onClose={() => setOpenWithdraw(false)}
                     onConfirm={() => setOpenWithdraw(false)}
                 />

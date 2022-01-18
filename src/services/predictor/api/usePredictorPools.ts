@@ -1,7 +1,8 @@
 import { useLiquidityPoolFactory } from "./../contract/useLiquidityPoolFactoryContract";
 import useWebWallet from "hooks/use-web-wallet/useWebWallet";
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { PredictionPool } from "models";
+
 import { useInfiniteQuery } from "react-query";
 
 import { parsePredictorOffChainPool, parsePredictorPool } from "utils/pool";
@@ -9,7 +10,7 @@ import { parsePredictorOffChainPool, parsePredictorPool } from "utils/pool";
 import { useRequest } from "hooks";
 import { PredictionPoolData } from "models/predictionPool";
 import { intervalDataUpdate } from "utils/configs";
-import { DropDownMenuItem } from "components/drop-down-menu";
+
 
 // Field|Value|Operator;AND/OR; ..... ; ....
 
@@ -22,6 +23,7 @@ import { DropDownMenuItem } from "components/drop-down-menu";
 const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "launch_date") => {
     const offchainRequest = useRequest("predictor");
     const { account } = useWebWallet();
+
     const liquidityPoolFactory = useLiquidityPoolFactory();
 
     // const filterItems: DropDownMenuItem[] = [
@@ -43,54 +45,59 @@ const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "lau
     return useInfiniteQuery(
         [`get-predictor-pools`, perPage, orderBy, filter],
         async ({ pageParam = 0 }) => {
-            const dataPool = await liquidityPoolFactory.getAllLiquidityPools();
+
+            const liquidityPools: any[] = await liquidityPoolFactory.getAllLiquidityPools();
+
+            debugger
+
 
             const result: PredictionPoolData = {
-                pools: [
-                    {
-                        title: "Bitcoin-Ether",
-                        inputToken: { title: "BTC", value: 100 },
-                        outputToken: { title: "BNB", value: 10 },
-                        tvl: "103.30",
-                        volume: "103.30",
-                    },
-                    {
-                        title: "Bitcoin-Ether",
-                        inputToken: { title: "BTC", value: 100 },
-                        outputToken: { title: "BNB", value: 10 },
-                        tvl: "103.30",
-                        volume: "103.30",
-                    },
-                    {
-                        title: "Bitcoin-Ether",
-                        inputToken: { title: "BTC", value: 100 },
-                        outputToken: { title: "BNB", value: 10 },
-                        tvl: "103.30",
-                        volume: "103.30",
-                    },
-                    {
-                        title: "Bitcoin-Ether",
-                        inputToken: { title: "BTC", value: 100 },
-                        outputToken: { title: "BNB", value: 10 },
-                        tvl: "103.30",
-                        volume: "103.30",
-                    },
-                    {
-                        title: "Bitcoin-Ether",
-                        inputToken: { title: "BTC", value: 100 },
-                        outputToken: { title: "BNB", value: 10 },
-                        tvl: "103.30",
-                        volume: "103.30",
-                    },
-                    {
-                        title: "Bitcoin-Ether",
-                        inputToken: { title: "BTC", value: 100 },
-                        outputToken: { title: "BNB", value: 10 },
-                        tvl: "103.30",
-                        volume: "103.30",
-                    },
-                ],
-                total: 6,
+                pools: liquidityPools,
+                // pools: [
+                //     {
+                //         title: "Bitcoin-Ether",
+                //         inputToken: { symbol: "BTC", amount: 100 },
+                //         outputToken: { symbol: "BNB", amount: 10 },
+                //         tvl: "103.30",
+                //         volume: "103.30",
+                //     },
+                //     {
+                //         title: "Bitcoin-Ether",
+                //         inputToken: { symbol: "BTC", amount: 100 },
+                //         outputToken: { symbol: "BNB", amount: 10 },
+                //         tvl: "103.30",
+                //         volume: "103.30",
+                //     },
+                //     {
+                //         title: "Bitcoin-Ether",
+                //         inputToken: { symbol: "BTC", amount: 100 },
+                //         outputToken: { symbol: "BNB", amount: 10 },
+                //         tvl: "103.30",
+                //         volume: "103.30",
+                //     },
+                //     {
+                //         title: "Bitcoin-Ether",
+                //         inputToken: { symbol: "BTC", amount: 100 },
+                //         outputToken: { symbol: "BNB", amount: 10 },
+                //         tvl: "103.30",
+                //         volume: "103.30",
+                //     },
+                //     {
+                //         title: "Bitcoin-Ether",
+                //         inputToken: { symbol: "BTC", amount: 100 },
+                //         outputToken: { symbol: "BNB", amount: 10 },
+                //         tvl: "103.30",
+                //         volume: "103.30",
+                //     },
+                //     {
+                //         title: "Bitcoin-Ether",
+                //         inputToken: { symbol: "BTC", amount: 100 },
+                //         outputToken: { symbol: "BNB", amount: 10 },
+                //         tvl: "103.30",
+                //         volume: "103.30",
+                //     },
+                // ],
+                total: liquidityPools?.length,
                 page: pageParam,
             };
 

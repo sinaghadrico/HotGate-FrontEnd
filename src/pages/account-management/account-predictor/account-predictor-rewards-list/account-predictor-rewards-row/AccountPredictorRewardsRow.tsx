@@ -38,7 +38,7 @@ const AccountPredictorRewardsRow: FC<AccountPredictorRewardsRowProps> = ({
     columns,
     refetchPoolData,
 }: AccountPredictorRewardsRowProps) => {
-    const { id, price, token, change, tvl, volume } = data;
+    const { address, price, symbol, change = "0", tvl, amount } = data;
     const isLoading = false;
     const isExpand = false;
     return (
@@ -50,8 +50,8 @@ const AccountPredictorRewardsRow: FC<AccountPredictorRewardsRowProps> = ({
             >
                 <TableCell dataHead={columns[0]?.title}>
                     <div className="account-predictor-rewards-row-title">
-                        <PairCoin size={24} subCoin={token} />
-                        {token}
+                        <PairCoin size={24} subCoin={symbol} />
+                        {symbol}
                     </div>
                 </TableCell>
 
@@ -120,7 +120,7 @@ const AccountPredictorRewardsRow: FC<AccountPredictorRewardsRowProps> = ({
                             <rect x="5" y="0" rx="3" ry="3" width="100" height="6" />
                         </ContentLoader>
                     ) : (
-                        <span>{volume} </span>
+                        <span>{amount} </span>
                     )}
                 </TableCell>
             </TableRow>
