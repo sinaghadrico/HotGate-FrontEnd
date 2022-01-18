@@ -13,11 +13,7 @@ import { FortmaticConnector } from "@web3-react/fortmatic-connector";
 import { PortisConnector } from "@web3-react/portis-connector";
 import { TorusConnector } from "@web3-react/torus-connector";
 
-// import { OneWalletConnector } from "@harmony-react/onewallet-connector";
-import { MathWalletConnector } from "@harmony-react/mathwallet-connector";
-
 import { networks, rpcUrls } from "utils/configs";
-// import { MathWalletConnector } from "./mathwallet-connector";
 
 const supportedChainIds: number[] = Object.keys(networks).map((key) => parseInt(key));
 const _rpcUrls: any = rpcUrls;
@@ -70,9 +66,3 @@ export const lattice = new LatticeConnector({
 // });
 
 export const torus = new TorusConnector({ chainId: selectedChainId });
-
-// export const onewallet = new OneWalletConnector({ chainId: selectedChainId }); // 1 = Mainnet, 2 = Testnet
-// export const mathwallet = new MathWalletConnector({ chainId: selectedChainId }); // 1 = Mainnet, 2 = Testnet
-
-export const onewallet = new InjectedConnector({ supportedChainIds });
-export const mathwallet = new MathWalletConnector({ chainId: 2 });

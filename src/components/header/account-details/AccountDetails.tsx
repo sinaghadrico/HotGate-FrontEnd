@@ -3,22 +3,15 @@ import { FC } from "react";
 import { useWebWallet } from "hooks/use-web-wallet/useWebWallet";
 import { useGlobalDispatch } from "states/globalContext";
 import { Icon } from "components/icon";
-import { toBech32 } from "@harmony-js/crypto";
 import "./AccountDetails.scss";
 
 // import { useQuery } from "react-query";
 import logo from "assets/icons/svgs/totem.svg";
-import { useWeb3React } from "@web3-react/core";
 // import { formatNumberWithCommas } from "utils/number";
 // import { useUsdcToken } from "services/useUsdcToken";
 
 const AccountDetails: FC = () => {
     let { active, account } = useWebWallet();
-    const { library } = useWeb3React();
-
-    const isHmyLibrary = library?.messenger?.chainType === "hmy";
-    account = isHmyLibrary && account ? toBech32(account) : account;
-
     // const token = useUsdcToken();
     // const { data: balance } = useQuery(["token-balance", account], () => token.getBalance(account), {
     //     enabled: !!token.contract,

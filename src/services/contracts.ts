@@ -1,10 +1,32 @@
-import { WrappedToken, WrappedToken__factory, BitcoinRelay, BitcoinRelay__factory, WETH, WETH__factory, ERC20, ERC20__factory, ExchangeRouter, ExchangeRouter__factory, InstantRouter, InstantRouter__factory, WrappedERC20Token__factory, WrappedERC20Token, CCExchangeRouter, CCExchangeRouter__factory, CCTransferRouter, CCTransferRouter__factory, LiquidityPoolFactory, LiquidityPoolFactory__factory, FastRouter, FastRouter__factory } from "contracts/types";
+import {
+    WrappedToken,
+    WrappedToken__factory,
+    BitcoinRelay,
+    BitcoinRelay__factory,
+    WETH,
+    WETH__factory,
+    ERC20,
+    ERC20__factory,
+    ExchangeRouter,
+    ExchangeRouter__factory,
+    InstantRouter,
+    InstantRouter__factory,
+    WrappedERC20Token__factory,
+    WrappedERC20Token,
+    CCExchangeRouter,
+    CCExchangeRouter__factory,
+    CCTransferRouter,
+    CCTransferRouter__factory,
+    LiquidityPoolFactory,
+    LiquidityPoolFactory__factory,
+    FastRouter,
+    FastRouter__factory,
+} from "contracts/types";
 import { useContract, useContractFromAddress } from "./contract";
 
 export const useUsdContract = (): WrappedERC20Token | undefined => {
     return useContract(WrappedERC20Token__factory.connect, "USDCToken");
 };
-
 
 export const useLiquidityPoolFactoryContract = (): LiquidityPoolFactory | undefined => {
     const address: any = process.env.REACT_APP_LIQUIDITY_POOL_FACTORY_ADDRESS;
@@ -24,12 +46,10 @@ export const useInstantRouterContract = (): InstantRouter | undefined => {
     return useContractFromAddress(InstantRouter__factory.connect, address);
 };
 
-
 export const useCCExchangeRouterContract = (): CCExchangeRouter | undefined => {
     const address: any = process.env.REACT_APP_CC_EXCHANGE_ROUTER_ADDRESS;
     return useContractFromAddress(CCExchangeRouter__factory.connect, address);
 };
-
 
 export const useCCTransferRouterContract = (): CCTransferRouter | undefined => {
     const address: any = process.env.REACT_APP_CC_TRANSFER_ROUTER_ADDRESS;

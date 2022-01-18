@@ -43,8 +43,6 @@ const WalletOptions: FC = () => {
         { connector: connectorsByName[ConnectorNames.Torus], value: "Torus", icon: Torus },
         { connector: connectorsByName[ConnectorNames.WalletConnect], value: "WalletConnect", icon: WalletConnect },
         { connector: connectorsByName[ConnectorNames.WalletLink], value: "WalletLink", icon: WalletLink },
-        { connector: connectorsByName[ConnectorNames.OneWallet], value: "OneWallet", icon: Metamask },
-        { connector: connectorsByName[ConnectorNames.MathWallet], value: "MathWallet", icon: Metamask },
     ];
 
     const handleActive = (_connector: any) => {

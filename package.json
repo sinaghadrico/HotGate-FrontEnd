@@ -29,8 +29,6 @@
         "@web3-react/torus-connector": "^6.1.9",
         "@web3-react/walletconnect-connector": "^6.2.8",
         "@web3-react/walletlink-connector": "^6.2.8",
-        "@harmony-react/mathwallet-connector": "latest",
-        "@harmony-react/onewallet-connector": "latest",
         "axios": "^0.21.1",
         "classnames": "^2.3.1",
         "ethers": "^5.4.0",
@@ -71,8 +69,8 @@
         "@liquality/bitcoin-networks": "^1.11.2"
 
 
-       
-            
+
+
     },
     "scripts": {
         "start": "npm run  start:test",

@@ -11,7 +11,8 @@
         "4": "https://rinkeby.infura.io/v3/84842078b09946638c03157f83405213"
     },
     "networks": {
-        "97": "bsc_testnet"
+        "97": "bsc_testnet",
+        "6000": "bsc_testnet"
     },
     "rpcUrls": {
         "97": "https://data-seed-prebsc-1-s1.binance.org:8545/"

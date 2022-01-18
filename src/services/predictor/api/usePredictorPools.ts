@@ -1,3 +1,5 @@
+import { useLiquidityPoolFactory } from "./../contract/useLiquidityPoolFactoryContract";
+import useWebWallet from "hooks/use-web-wallet/useWebWallet";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PredictionPool } from "models";
 import { useInfiniteQuery } from "react-query";
@@ -19,6 +21,8 @@ import { DropDownMenuItem } from "components/drop-down-menu";
 
 const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "launch_date") => {
     const offchainRequest = useRequest("predictor");
+    const { account } = useWebWallet();
+    const liquidityPoolFactory = useLiquidityPoolFactory();
 
     const filterItems: DropDownMenuItem[] = [
         {
@@ -39,6 +43,8 @@ const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "lau
     return useInfiniteQuery(
         [`get-predictor-pools`, perPage, orderBy, filter],
         async ({ pageParam = 0 }) => {
+            const dataPool = await liquidityPoolFactory.getAllLiquidityPools();
+
             const result: PredictionPoolData = {
                 pools: [
                     {
@@ -92,6 +98,7 @@ const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "lau
         {
             refetchInterval: intervalDataUpdate,
             // refetchOnWindowFocus: false,
+            enabled: !!account && !!liquidityPoolFactory?.contract,
             getNextPageParam: (lastData: any) =>
                 (lastData?.page || 0) + 1 < Math.ceil(lastData?.total / perPage) ? (lastData.page || 0) + 1 : undefined,
         },

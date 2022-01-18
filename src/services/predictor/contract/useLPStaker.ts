@@ -17,7 +17,6 @@ export const useLPStaker = (address: string) => {
                 ?.claim()
                 .call()
                 .then((transaction: ContractTransaction) => {
-                    debugger;
                     notification.success("claim confirmed");
                     // transaction.wait(1).then(() => {
                     //     notification.success("claim confirmed");
