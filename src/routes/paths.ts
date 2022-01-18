@@ -2,7 +2,7 @@ export const Paths = {
     Exchange: "/Exchange",
     CrossChainExchange: "/cross-chain-exchange",
     CrossChainTransfer: "/cross-chain-transfer",
-    LiquidityPools: "/liquidity-pools",
+    LiquidityPools: "/pools",
     Tokens: "/tokens",
     AccountManagement: "/AccountManagement",
     Home: "/",

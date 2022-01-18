@@ -19,16 +19,16 @@ const PredictionPoolListFilter = () => {
 
     const filterItems: DropDownMenuItem[] = [
         {
-            label: "Normal",
-            value: 0,
+            label: "Liquidity",
+            value: "liquidity",
         },
         {
             label: "Fast",
-            value: 1,
+            value: "fast",
         },
         {
             label: "Instant",
-            value: 2,
+            value: "instant",
         },
     ];
 
@@ -58,7 +58,7 @@ const PredictionPoolListFilter = () => {
                     <Tabs
                         hasBorder={true}
                         value={poolsFilters?.value}
-                        onChange={(value: Number) => {
+                        onChange={(value: any) => {
                             const findItem = filterItems.find((item) => item.value === value);
                             GlobalDispatch({
                                 type: "setPoolFilters",
@@ -67,7 +67,7 @@ const PredictionPoolListFilter = () => {
                         }}
                     >
                         {filterItems.map((filter: any, index) => (
-                            <Tab key={index}>{filter.label}</Tab>
+                            <Tab key={index} value={filter?.value}>{filter.label}</Tab>
                         ))}
                     </Tabs>
                 </div>

@@ -11,14 +11,14 @@ interface Props {
     hasBorder?: boolean;
 }
 const Tabs = ({ children, value, onChange, style, className, hasBorder }: Props) => {
-    let childIndex = 0;
+
     const _children = React.Children.map(children, (child: any) => {
-        const childValue = childIndex;
-        const selected = childValue === value;
-        childIndex += 1;
+
+        const selected = child?.props?.value === value;
+
         return React.cloneElement(child, {
             onChange: onChange,
-            value: childValue,
+            value: child?.props?.value,
             selected,
             hasBorder,
         });

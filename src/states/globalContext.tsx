@@ -2,7 +2,7 @@ import { useReducer, createContext, useContext } from "react";
 
 const initialState = {
     walletOptions: false,
-    poolsFilters: { label: "Normal", value: 0 },
+    poolsFilters: { label: "Liquidity", value: "liquidity" },
     poolsOrderBy: "",
     poolInputSearch: "",
 };

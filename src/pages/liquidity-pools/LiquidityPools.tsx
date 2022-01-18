@@ -15,7 +15,7 @@ const LiquidityPools: FC = () => {
     useEffect(() => {
         GlobalDispatch({
             type: "setPoolFilters",
-            value: { label: "Normal", value: 0 },
+            value: { label: "Liquidity", value: "liquidity" },
         });
     }, []);
 
@@ -29,8 +29,8 @@ const LiquidityPools: FC = () => {
     return (
         <div className="liquidity-pools row">
             <Helmet>
-                <title> Liquidity Pools </title>
-                <meta name="description" content="Liquidity Pools" />
+                <title> Pools </title>
+                <meta name="description" content="Pools" />
             </Helmet>
             <div className="row">
                 <PredictorPoolListFilter />

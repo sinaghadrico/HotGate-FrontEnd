@@ -8,36 +8,42 @@ import { Helmet } from "react-helmet-async";
 import "./Tokens.scss";
 
 const Tokens: FC = () => {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<any>({
         amount: 0,
         inputToken: { key: "bsc", value: "BSC" },
         receivedAmount: 0,
         outputToken: { key: "bsc", value: "BSC" },
         receiverAddress: "",
-        transferType: 0,
+        transferType: "normal",
     });
     const detailsList = [
         { title: "Swap Rate", value: "1.2038475" },
         { title: "Minimum Received Amount", value: "1.234556" },
         { title: "Price Impact", value: "1.234556" },
-        { title: "Exchange Fee", value: "1.234556" },
+        { title: "Fee", value: "1.234556" },
     ];
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
-        const value = parseValueToNumber("" + _value);
-        const isValid = isValidNumber("" + _value);
 
-        if (name === "receiverAddress" || name === "inputToken" || name === "outputToken") {
+
+        if (name === "receiverAddress" || name === "inputToken" || name === "outputToken" || name === "transferType") {
             setForm({ ...form, [name]: _value });
+
         }
-        if (isValid) {
-            setForm({ ...form, [name]: value });
+        else {
+            const value = parseValueToNumber("" + _value);
+            const isValid = isValidNumber("" + _value);
+
+            if (isValid) {
+                setForm({ ...form, [name]: value });
+            }
         }
+
     };
     const transferTypes = [
-        { value: "Normal", key: 0 },
-        { value: "Fast", key: 1 },
-        { value: "Instant", key: 2 },
+        { value: "Normal", key: "normal" },
+        { value: "Fast", key: "fast" },
+        { value: "Instant", key: "instant" },
     ];
     return (
         <div className="tokens">
@@ -50,9 +56,10 @@ const Tokens: FC = () => {
                 description="Change your tokens to different tokens on the same chain."
                 submitTitle="Exchange"
                 haveSetting
+                typeSetting={form.transferType}
             >
                 <div className="transfer-type">
-                    <span className="transfer-type-title">Transfer Type</span>
+                    <span className="transfer-type-title">Exchange Type</span>
                     <RadioGroup value={form.transferType} onChange={(event: any) => event} className="row">
                         {transferTypes.map((type) => (
                             <RadioButton

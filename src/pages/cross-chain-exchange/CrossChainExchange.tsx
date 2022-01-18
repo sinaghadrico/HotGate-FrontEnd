@@ -8,36 +8,45 @@ import { Helmet } from "react-helmet-async";
 import "./CrossChainExchange.scss";
 
 const CrossChainExchange: FC = () => {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<any>({
         amount: 0,
         inputToken: { key: "bsc", value: "BSC" },
         receivedAmount: 0,
         outputToken: { key: "bsc", value: "BSC" },
         receiverAddress: "",
-        transferType: 0,
+        transferType: "normal",
     });
     const detailsList = [
         { title: "Swap Rate", value: "1.2038475" },
         { title: "Minimum Received Amount", value: "1.234556" },
         { title: "Price Impact", value: "1.234556" },
         { title: "Fees", value: "1.234556" },
+        { title: "Tx Status", value: "mined" }
     ];
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
-        const value = parseValueToNumber("" + _value);
-        const isValid = isValidNumber("" + _value);
 
-        if (name === "receiverAddress" || name === "inputToken" || name === "outputToken") {
+
+        if (name === "receiverAddress" || name === "inputToken" || name === "outputToken" || name === "transferType") {
+            debugger
             setForm({ ...form, [name]: _value });
+
         }
-        if (isValid) {
-            setForm({ ...form, [name]: value });
+
+        else {
+            const value = parseValueToNumber("" + _value);
+            const isValid = isValidNumber("" + _value);
+
+            if (isValid) {
+                setForm({ ...form, [name]: value });
+            }
         }
+
     };
     const transferTypes = [
-        { value: "Normal", key: 0 },
-        { value: "Fast", key: 1 },
-        { value: "Instant", key: 2 },
+        { value: "Normal", key: "normal" },
+        { value: "Fast", key: "fast" },
+        { value: "Instant", key: "instant" },
     ];
     return (
         <div className="cross-chain-exchange">
@@ -50,9 +59,10 @@ const CrossChainExchange: FC = () => {
                 description="Exchange tokens from [[Chain A]] to tokens in [[Chain B]]"
                 submitTitle="Cross-Chain Exchange"
                 haveSetting
+                typeSetting={form.transferType}
             >
                 <div className="transfer-type">
-                    <div className="transfer-type-title">Transfer Type</div>
+                    <div className="transfer-type-title">Exchange Type</div>
                     <RadioGroup value={form.transferType} onChange={(event: any) => event} className="row">
                         {transferTypes.map((type) => (
                             <RadioButton

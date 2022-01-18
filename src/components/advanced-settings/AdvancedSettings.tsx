@@ -45,7 +45,7 @@ const AdvancedSettings = ({ open, onClose, onConfirm, type = "normal" }: Advance
                 onChange={handleChange}
                 autoComplete="off"
             />
-            {type === "fast" && (
+            {type !== "normal" && (
                 <Input
                     className="my-10"
                     value={formatNumberWithCommas(form?.confirmations)}

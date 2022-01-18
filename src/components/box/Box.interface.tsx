@@ -6,4 +6,5 @@ export interface BoxProps {
     submitTitle?: string;
     onSubmit?: () => void;
     haveSetting?: boolean;
+    typeSetting?: "normal" | "fast" | "instant"
 }

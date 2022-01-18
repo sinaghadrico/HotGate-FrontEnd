@@ -1,6 +1,6 @@
 export interface RadioGroupProps {
     children?: React.ReactNode;
     onChange?: any;
-    value: number;
+    value: number | string;
     className?: string;
 }

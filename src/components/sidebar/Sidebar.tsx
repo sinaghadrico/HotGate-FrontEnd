@@ -23,8 +23,8 @@ const Sidebar: FC = () => {
             <NavLink to="/cross-chain-transfer" replace={false} activeClassName="active" rel="noopener noreferrer">
                 <Icon src={account_logo} /> Cross-Chain Transfer
             </NavLink>
-            <NavLink to="/liquidity-pools" replace={false} activeClassName="active" rel="noopener noreferrer">
-                <Icon src={account_logo} /> Liquidity Pools
+            <NavLink to="/pools" replace={false} activeClassName="active" rel="noopener noreferrer">
+                <Icon src={account_logo} />  Pools
             </NavLink>
             <NavLink to="/tokens" replace={false} activeClassName="active" rel="noopener noreferrer">
                 <Icon src={account_logo} /> Tokens

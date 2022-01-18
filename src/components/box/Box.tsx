@@ -6,7 +6,7 @@ import "./Box.scss";
 import { useState } from "react";
 import { AdvancedSettings } from "components/advanced-settings";
 
-const Box = ({ children, title, description, submitTitle, onSubmit, haveSetting, isLoading }: BoxProps) => {
+const Box = ({ children, title, description, submitTitle, onSubmit, haveSetting, typeSetting = "normal", isLoading }: BoxProps) => {
     const [openSetting, setOpenSetting] = useState(false);
     return (
         <>
@@ -32,7 +32,7 @@ const Box = ({ children, title, description, submitTitle, onSubmit, haveSetting,
                     open={openSetting}
                     onClose={() => setOpenSetting(false)}
                     onConfirm={() => setOpenSetting(false)}
-                    type="fast"
+                    type={typeSetting}
                 />
             )}
         </>

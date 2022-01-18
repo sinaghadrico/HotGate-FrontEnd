@@ -29,6 +29,7 @@ const Tab = ({
         selected,
     );
     const handleClick = (event: any) => {
+
         if (onChange) {
             onChange(value, event);
         }

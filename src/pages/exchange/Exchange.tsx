@@ -8,28 +8,33 @@ import { Helmet } from "react-helmet-async";
 import "./Exchange.scss";
 
 const Exchange: FC = () => {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<any>({
         amount: 0,
         inputToken: { key: "bsc", value: "BSC" },
         receivedAmount: 0,
         outputToken: { key: "bsc", value: "BSC" },
         receiverAddress: "",
-        transferType: 0,
+        transferType: "normal",
     });
     const detailsList = [
         { title: "Swap Rate", value: "1.2038475" },
         { title: "Minimum Received Amount", value: "1.234556" },
         { title: "Price Impact", value: "1.234556" },
-        { title: "Exchange Fee", value: "1.234556" },
+        { title: "Fee", value: "1.234556" },
+        { title: "Tx Status", value: "mined" }
     ];
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
+
+
+        if (name === "receiverAddress" || name === "inputToken" || name === "outputToken" || name === "transferType") {
+            setForm({ ...form, [name]: _value });
+            return null
+        }
+
         const value = parseValueToNumber("" + _value);
         const isValid = isValidNumber("" + _value);
 
-        if (name === "receiverAddress" || name === "inputToken" || name === "outputToken") {
-            setForm({ ...form, [name]: _value });
-        }
         if (isValid) {
             setForm({ ...form, [name]: value });
         }
@@ -46,6 +51,7 @@ const Exchange: FC = () => {
                 description="Change your tokens to different tokens on the same chain."
                 submitTitle="Exchange"
                 haveSetting
+                typeSetting={form.transferType}
             >
                 <Input
                     prefix={

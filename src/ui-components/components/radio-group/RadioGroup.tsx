@@ -5,7 +5,7 @@ import "./RadioGroup.scss";
 
 const RadioGroup = ({ children, onChange, value, className }: RadioGroupProps) => {
     const _children = React.Children.map(children, (child: any) => {
-        const checked = child.props.value === Number(value);
+        const checked = child.props.value === value;
         return React.cloneElement(child, {
             onChange: onChange,
             checked,

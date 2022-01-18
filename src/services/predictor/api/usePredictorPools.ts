@@ -24,20 +24,20 @@ const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "lau
     const { account } = useWebWallet();
     const liquidityPoolFactory = useLiquidityPoolFactory();
 
-    const filterItems: DropDownMenuItem[] = [
-        {
-            label: "Normal",
-            value: 0,
-        },
-        {
-            label: "Fast",
-            value: 1,
-        },
-        {
-            label: "Instant",
-            value: 2,
-        },
-    ];
+    // const filterItems: DropDownMenuItem[] = [
+    //     {
+    //         label: "Liquidity",
+    //         value: "liquidity",
+    //     },
+    //     {
+    //         label: "Fast",
+    //         value: "fast",
+    //     },
+    //     {
+    //         label: "Instant",
+    //         value: "instant",
+    //     },
+    // ];
 
     // const tempFilter = filterItems?.find((item) => item.label === filter.value)?.value || "";
     return useInfiniteQuery(
@@ -93,6 +93,7 @@ const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "lau
                 total: 6,
                 page: pageParam,
             };
+
             return result;
         },
         {

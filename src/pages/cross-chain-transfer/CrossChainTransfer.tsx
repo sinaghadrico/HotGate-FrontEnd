@@ -8,31 +8,38 @@ import { Helmet } from "react-helmet-async";
 import "./CrossChainTransfer.scss";
 
 const CrossChainTransfer: FC = () => {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<any>({
         amount: 0,
         inputToken: { key: "bsc", value: "BSC" },
         receivedAmount: 0,
         outputToken: { key: "bsc", value: "BSC" },
         receiverAddress: "",
-        transferType: 0,
+        transferType: "normal",
     });
     const detailsList = [{ title: "Keeper Fee", value: "1.234556" }];
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
-        const value = parseValueToNumber("" + _value);
-        const isValid = isValidNumber("" + _value);
 
-        if (name === "receiverAddress" || name === "inputToken" || name === "outputToken") {
+
+        if (name === "receiverAddress" || name === "inputToken" || name === "outputToken" || name === "transferType") {
+            debugger
             setForm({ ...form, [name]: _value });
+
+        } else {
+            const value = parseValueToNumber("" + _value);
+            const isValid = isValidNumber("" + _value);
+
+            if (isValid) {
+                setForm({ ...form, [name]: value });
+            }
         }
-        if (isValid) {
-            setForm({ ...form, [name]: value });
-        }
+
+
     };
     const transferTypes = [
-        { value: "Normal", key: 0 },
-        { value: "Fast", key: 1 },
-        { value: "Instant", key: 2 },
+        { value: "Normal", key: "normal" },
+        { value: "Fast", key: "fast" },
+        { value: "Instant", key: "instant" },
     ];
     return (
         <div className="cross-chain-transfer">
@@ -45,14 +52,15 @@ const CrossChainTransfer: FC = () => {
                 description="Send tokens from [[Chain A]] to [[Chain B]]."
                 submitTitle="Transfer"
                 haveSetting
+                typeSetting={form.transferType}
             >
                 <div className="transfer-type">
-                    <span className="transfer-type-title">Transfer Type</span>
+                    <span className="transfer-type-title">Exchange Type</span>
                     <RadioGroup value={form.transferType} onChange={(event: any) => event} className="row">
                         {transferTypes.map((type) => (
                             <RadioButton
                                 value={type.key}
-                                key={type.value}
+                                key={type.key}
                                 onClick={handleChange}
                                 className="col-md-2"
                                 style={{ width: "fit-content" }}
