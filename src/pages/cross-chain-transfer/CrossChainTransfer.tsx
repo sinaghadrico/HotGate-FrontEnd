@@ -21,19 +21,27 @@ const CrossChainTransfer: FC = () => {
         const { name, value: _value } = event.target;
 
 
-        if (name === "receiverAddress" || name === "inputToken" || name === "outputToken" || name === "transferType") {
-            debugger
+        if (name === "receiverAddress" || name === "transferType") {
             setForm({ ...form, [name]: _value });
-
-        } else {
-            const value = parseValueToNumber("" + _value);
-            const isValid = isValidNumber("" + _value);
-
-            if (isValid) {
-                setForm({ ...form, [name]: value });
-            }
+            return null
         }
 
+        if (name === "inputToken") {
+            setForm({ ...form, [name]: _value, amount: _value.balance, outputToken: { key: "bsc", value: "BSC" }, receivedAmount: 0 });
+            return null
+        }
+        if (name === "outputToken") {
+            setForm({ ...form, [name]: _value, receivedAmount: _value.balance });
+            return null
+        }
+
+
+        const value = parseValueToNumber("" + _value);
+        const isValid = isValidNumber("" + _value);
+
+        if (isValid) {
+            setForm({ ...form, [name]: value });
+        }
 
     };
     const transferTypes = [

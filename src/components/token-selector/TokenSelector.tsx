@@ -4,13 +4,18 @@ import { Modal, Input, Tabs, Tab, TabPanel, Button, ButtonWidth } from "ui-compo
 import { TokenSelectorProps } from "./TokenSelector.interface";
 import { ReactComponent as ExpandLogo } from "assets/icons/svgs/expand.svg";
 import { ReactComponent as SearchLogo } from "assets/icons/svgs/search.svg";
+
+import usePredictorStakes from "services/predictor/api/usePredictorStakes";
+
 import "./TokenSelector.scss";
 import { useState } from "react";
 
-const TokenSelector = ({ onChangeValue, title = "Input Token", token }: TokenSelectorProps) => {
+const TokenSelector = ({ onChangeValue, title = "Input Token", token, hiddenToken }: TokenSelectorProps) => {
     const [openSelector, setOpenSelector] = useState(false);
     const [form, setForm] = useState({ search: null, contractAddress: "" });
     const [selectedTab, setSelectedTab] = useState("list");
+
+    const { data, isLoading, isFetching } = usePredictorStakes(0, 10);
 
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
@@ -23,18 +28,28 @@ const TokenSelector = ({ onChangeValue, title = "Input Token", token }: TokenSel
 
     const handleAddToken = () => { };
 
-    const tokenList = [
-        { key: "bsc", value: "BSC", balance: 0 },
-        { key: "bnb", value: "BNB", balance: 0 },
-        { key: "bsc", value: "BSC", balance: 0 },
-        { key: "bsc", value: "BSC", balance: 0 },
-        { key: "bsc", value: "BSC", balance: 0 },
-        { key: "bsc", value: "BSC", balance: 0 },
-        { key: "bsc", value: "BSC", balance: 0 },
-        { key: "bsc", value: "BSC", balance: 0 },
-        { key: "bsc", value: "BSC", balance: 0 },
-        { key: "bsc", value: "BSC", balance: 0 },
-    ];
+    // const tokenList = [
+    //     { key: "bsc", value: "BSC", balance: 0 },
+    //     { key: "bnb", value: "BNB", balance: 0 },
+    //     { key: "bsc", value: "BSC", balance: 0 },
+    //     { key: "bsc", value: "BSC", balance: 0 },
+    //     { key: "bsc", value: "BSC", balance: 0 },
+    //     { key: "bsc", value: "BSC", balance: 0 },
+    //     { key: "bsc", value: "BSC", balance: 0 },
+    //     { key: "bsc", value: "BSC", balance: 0 },
+    //     { key: "bsc", value: "BSC", balance: 0 },
+    //     { key: "bsc", value: "BSC", balance: 0 },
+    // ];
+    const tokenList: any = ((hiddenToken ? data?.stakes?.find((tokenItem): any => tokenItem?.symbol === hiddenToken?.value)?.connectionTokens || [] : (data?.stakes || [])) || [])?.
+        // filter((tokenItem: any) => tokenItem.symbol !== hiddenToken?.value).
+        map((tokenItem: any) => {
+
+            return (
+                {
+                    key: tokenItem.symbol.toLowerCase(), value: tokenItem.symbol, balance: tokenItem.balance
+                });
+        })
+    debugger
     return (
         <>
             <div className="token-selector">
@@ -83,7 +98,7 @@ const TokenSelector = ({ onChangeValue, title = "Input Token", token }: TokenSel
                                 <span>Balance</span>
                             </div>
                             <div className="token-selector-list-items">
-                                {tokenList?.map((item) => (
+                                {tokenList?.map((item: any) => (
                                     <div
                                         className="token-selector-list-item"
                                         onClick={() => {

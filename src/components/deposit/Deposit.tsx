@@ -1,5 +1,5 @@
 import { ConfirmModal, Input } from "ui-components";
-
+import useWebWallet from "hooks/use-web-wallet/useWebWallet";
 import { DepositProps } from "./Deposit.interface";
 
 import "./Deposit.scss";
@@ -9,13 +9,14 @@ import TokenSelector from "components/token-selector/TokenSelector";
 
 const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
     const { inputToken, outputToken } = data;
+    const { account } = useWebWallet();
 
     const [form, setForm] = useState({
-        amount: 0,
+        amount: inputToken?.balance,
         inputToken: { key: inputToken?.symbol?.toLowerCase(), value: inputToken?.symbol },
-        receivedAmount: 0,
+        receivedAmount: outputToken?.balance,
         outputToken: { key: outputToken?.symbol?.toLowerCase(), value: outputToken?.symbol },
-        receiverAddress: "",
+        receiverAddress: account,
 
     });
 

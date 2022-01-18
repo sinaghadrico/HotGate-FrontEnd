@@ -10,7 +10,7 @@ import { LiquidityPool__factory, WrappedERC20Token__factory } from "contracts/ty
 import { useLiquidityPoolFactoryContract } from "services/contracts";
 
 export const useLiquidityPoolFactory = () => {
-    const { library } = useWebWallet();
+    const { library, account } = useWebWallet();
     const notification = useNotification();
     const contractMethod: any = useLiquidityPoolFactoryContract();
 
@@ -60,7 +60,7 @@ export const useLiquidityPoolFactory = () => {
 
         let liquidityPools = [];
 
-        if (signer) {
+        if (signer && account) {
 
             const allLiquidityPoolsLength = await contractMethod.allLiquidityPoolsLength()
             for (let i = 0; i < allLiquidityPoolsLength; i++) {
@@ -79,17 +79,22 @@ export const useLiquidityPoolFactory = () => {
                 const tokenSymbol0 = await deployedToken0.symbol();
                 const tokenSymbol1 = await deployedToken1.symbol();
 
+                const tokenBalance0 = await deployedToken0.balanceOf(account);
+                const tokenBalance1 = await deployedToken1.balanceOf(account);
+
                 const returnedArray = await deployedLiquidityPool.getReserves();
 
                 const tokenAmount0 = parseValue(returnedArray[0]);
                 const tokenAmount1 = parseValue(returnedArray[1]);
+
+
 
                 const tokenPrice0 = 1;
                 const tokenPrice1 = 1;
 
                 const tvl = (tokenAmount0) * tokenPrice0 + (tokenAmount1) * tokenPrice1
 
-                liquidityPools.push({ title: `${tokenSymbol0}-${tokenSymbol1}`, tvl: tvl, volume: 0, inputToken: { name: tokenName0, address: tokenAddress0, symbol: tokenSymbol0, amount: tokenAmount0, price: tokenPrice0 }, outputToken: { name: tokenName1, address: tokenAddress1, symbol: tokenSymbol1, amount: tokenAmount1, price: tokenPrice1 } })
+                liquidityPools.push({ title: `${tokenSymbol0}-${tokenSymbol1}`, tvl: tvl, volume: 0, inputToken: { name: tokenName0, address: tokenAddress0, symbol: tokenSymbol0, amount: tokenAmount0, price: tokenPrice0, balance: parseValue(tokenBalance0) }, outputToken: { name: tokenName1, address: tokenAddress1, symbol: tokenSymbol1, amount: tokenAmount1, price: tokenPrice1, balance: parseValue(tokenBalance1) } })
 
             }
 
@@ -118,20 +123,20 @@ export const useLiquidityPoolFactory = () => {
 
 
             if (findInputTokenIndex < 0) {
-                tokens.push({ ...inputToken, tvl: token.tvl })
+                tokens.push({ ...inputToken, tvl: token.tvl, connectionTokens: [outputToken] })
             }
             else {
-                tokens[findInputTokenIndex] = { ...tokens[findInputTokenIndex], tvl: (tokens[findInputTokenIndex].amount + inputToken.amount) * inputToken.price }
+                tokens[findInputTokenIndex] = { ...tokens[findInputTokenIndex], tvl: (tokens[findInputTokenIndex].amount + inputToken.amount) * inputToken.price, connectionTokens: [...tokens[findInputTokenIndex].connectionTokens, outputToken] }
             }
 
             const findOutputTokenIndex = tokens?.findIndex((i: any) => i.name === outputToken.name)
 
             if (findOutputTokenIndex < 0) {
-                tokens.push({ ...outputToken, tvl: token.tvl })
+                tokens.push({ ...outputToken, tvl: token.tvl, connectionTokens: [inputToken] })
             }
             else {
 
-                tokens[findOutputTokenIndex] = { ...tokens[findOutputTokenIndex], tvl: (tokens[findOutputTokenIndex].amount + outputToken.amount) * outputToken.price }
+                tokens[findOutputTokenIndex] = { ...tokens[findOutputTokenIndex], tvl: (tokens[findOutputTokenIndex].amount + outputToken.amount) * outputToken.price, connectionTokens: [...tokens[findOutputTokenIndex].connectionTokens, inputToken] }
             }
 
 
