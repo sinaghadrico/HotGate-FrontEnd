@@ -32,13 +32,13 @@ const PoolBox = ({ data }: PoolBoxProps) => {
                         </div>
                         <div className="pool-box-body-item-value">{inputToken?.amount}</div>
                     </div>
-                    <div className="pool-box-body-item">
+                    {outputToken && <div className="pool-box-body-item">
                         <div className="pool-box-body-item-title">
                             <PairCoin subCoin={outputToken?.symbol} />
                             {outputToken?.title} Amount
                         </div>
                         <div className="pool-box-body-item-value">{outputToken?.amount}</div>
-                    </div>
+                    </div>}
                     <div className="pool-box-body-item">
                         <div className="pool-box-body-item-title">TVL</div>
                         <div className="pool-box-body-item-value">{tvl}</div>

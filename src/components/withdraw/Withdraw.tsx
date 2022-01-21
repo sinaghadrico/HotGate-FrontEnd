@@ -13,9 +13,9 @@ const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
 
     const [form, setForm] = useState({
         amount: inputToken?.balance,
-        inputToken: { key: inputToken?.symbol?.toLowerCase(), value: inputToken?.symbol },
-        receivedAmount: outputToken?.balance,
-        outputToken: { key: outputToken?.symbol?.toLowerCase(), value: outputToken?.symbol },
+        inputToken: inputToken,
+        receivedAmount: 0,
+        outputToken: outputToken,
         receiverAddress: account,
 
     });
@@ -57,15 +57,17 @@ const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
                 onChange={handleChange}
                 autoComplete="off"
             />
-            <Input
-                prefix={<TokenSelector title="Output Token" token={form?.outputToken} />}
-                className="my-10"
-                label="Amount"
-                value={formatNumberWithCommas(form?.receivedAmount)}
-                name="receivedAmount"
-                onChange={handleChange}
-                autoComplete="off"
-            />
+            {outputToken &&
+                <Input
+                    prefix={<TokenSelector title="Output Token" token={form?.outputToken} />}
+                    className="my-10"
+                    label="Amount"
+                    value={formatNumberWithCommas(form?.receivedAmount)}
+                    name="receivedAmount"
+                    onChange={handleChange}
+                    autoComplete="off"
+                />
+            }
             <Input
                 className="my-10"
                 label="Receiver Address"

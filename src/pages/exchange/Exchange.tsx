@@ -1,28 +1,27 @@
 import { FC, useState } from "react";
 import { Box } from "components/box";
 import { Input } from "ui-components";
+import useWebWallet from "hooks/use-web-wallet/useWebWallet";
 import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils/number";
 import TokenSelector from "components/token-selector/TokenSelector";
 import { DetailsList } from "components/details-list";
+import { useQuery, useMutation } from "react-query";
 import { Helmet } from "react-helmet-async";
 import "./Exchange.scss";
+import { useExchangeRouter } from "services/predictor/contract/useExchangeRouter";
 
 const Exchange: FC = () => {
+    const { account } = useWebWallet();
+    const exchangeRouter = useExchangeRouter();
     const [form, setForm] = useState<any>({
         amount: 0,
-        inputToken: { key: "bsc", value: "BSC" },
+        inputToken: { symbol: "BSC" },
         receivedAmount: 0,
-        outputToken: { key: "bsc", value: "BSC" },
-        receiverAddress: "",
+        outputToken: { symbol: "BSC" },
+        receiverAddress: account,
         transferType: "normal",
     });
-    const detailsList = [
-        { title: "Swap Rate", value: "1.2038475" },
-        { title: "Minimum Received Amount", value: "1.234556" },
-        { title: "Price Impact", value: "1.234556" },
-        { title: "Fee", value: "1.234556" },
-        { title: "Tx Status", value: "mined" }
-    ];
+
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
 
@@ -50,6 +49,30 @@ const Exchange: FC = () => {
         }
     };
 
+    const { data: amountOut } = useQuery(["amountOut", account, form], () => exchangeRouter.getAmountOut(form?.amount, form?.inputToken?.amount, form?.outputToken?.amount), {
+        enabled: !!exchangeRouter.contract,
+    });
+
+
+
+    const mutationSwap = useMutation((_form: any): any => {
+        return exchangeRouter?.swapExactTokensForTokens(_form?.inputToken.address, _form?.outputToken.address, _form?.amount, amountOut);
+    });
+
+    const handleSwap = () => {
+        if (!mutationSwap?.isSuccess) {
+            mutationSwap.mutate(
+                form,
+                {
+                    // onSuccess: () => { },
+                },
+            );
+        }
+    };
+
+
+    const swapRate = amountOut / form?.amount;
+
     return (
         <div className="exchange">
             <Helmet>
@@ -62,6 +85,7 @@ const Exchange: FC = () => {
                 submitTitle="Exchange"
                 haveSetting
                 typeSetting={form.transferType}
+                onSubmit={handleSwap}
             >
                 <Input
                     prefix={
@@ -94,10 +118,12 @@ const Exchange: FC = () => {
                     }
                     className="my-10"
                     label="Expected Received Amount"
-                    value={formatNumberWithCommas(form?.receivedAmount)}
+                    value={formatNumberWithCommas(amountOut)}
                     name="receivedAmount"
                     onChange={handleChange}
                     autoComplete="off"
+                    readOnly
+
                 />
                 <Input
                     className="my-10"
@@ -106,9 +132,15 @@ const Exchange: FC = () => {
                     name="receiverAddress"
                     onChange={handleChange}
                     autoComplete="off"
+                    readOnly
                 />
 
-                <DetailsList list={detailsList} />
+                <DetailsList list={[
+                    { title: "Swap Rate", value: swapRate },
+                    { title: "Minimum Received Amount", value: amountOut },
+                    { title: "Price Impact", value: "1.234556" },
+                    { title: "Fee", value: "%0.3" }
+                ]} />
             </Box>
         </div>
     );

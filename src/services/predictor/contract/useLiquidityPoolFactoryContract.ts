@@ -2,7 +2,7 @@
 /* eslint-disable prefer-const */
 import { ContractTransaction } from "ethers";
 import useWebWallet, { getErrorMessage } from "hooks/use-web-wallet/useWebWallet";
-import { parseValue } from "utils/convert";
+import { parseTokenValue } from "utils/convert";
 import useNotification from "hooks/useNotification";
 
 import { LiquidityPool__factory, WrappedERC20Token__factory } from "contracts/types";
@@ -24,13 +24,14 @@ export const useLiquidityPoolFactory = () => {
                 ?.createLiquidityPool(tokenA, tokenB)
                 .then((transaction: ContractTransaction) => {
                     debugger;
-                    transaction.wait(1).then(() => {
+                    transaction.wait(1).then((transactionE) => {
                         debugger;
                         notification.success("Liquidity Pool Creted.");
                         resolve(transaction);
                     });
                 })
                 .catch((error: any) => {
+                    debugger
                     notification.error(getErrorMessage(error));
                     reject(error);
                 });
@@ -45,7 +46,7 @@ export const useLiquidityPoolFactory = () => {
             .allLiquidityPoolsLength()
             .then((data: any) => {
 
-                return parseValue(data)
+                return parseTokenValue(data)
 
             })
             .catch((error: any) => {
@@ -53,6 +54,16 @@ export const useLiquidityPoolFactory = () => {
                 notification.error(getErrorMessage(error));
             });
     };
+
+    // Get  liquidity pool 
+    const getLiquidityPool = async (tokenA: string, tokenB: string): Promise<any> => {
+
+        const liquidityPool = await contractMethod.getLiquidityPool(tokenA, tokenB)
+        debugger;
+
+        return liquidityPool
+    };
+
     // Get all liquidity pools 
     const getAllLiquidityPools = async (): Promise<any[]> => {
 
@@ -62,8 +73,12 @@ export const useLiquidityPoolFactory = () => {
 
         if (signer && account) {
 
+
             const allLiquidityPoolsLength = await contractMethod.allLiquidityPoolsLength()
+
+
             for (let i = 0; i < allLiquidityPoolsLength; i++) {
+
                 const dataPooLAddress = await contractMethod.allLiquidityPools(i)
                 const deployedLiquidityPool = LiquidityPool__factory.connect(dataPooLAddress, signer);
 
@@ -84,8 +99,8 @@ export const useLiquidityPoolFactory = () => {
 
                 const returnedArray = await deployedLiquidityPool.getReserves();
 
-                const tokenAmount0 = parseValue(returnedArray[0]);
-                const tokenAmount1 = parseValue(returnedArray[1]);
+                const tokenAmount0 = parseTokenValue(returnedArray[0]);
+                const tokenAmount1 = parseTokenValue(returnedArray[1]);
 
 
 
@@ -94,7 +109,7 @@ export const useLiquidityPoolFactory = () => {
 
                 const tvl = (tokenAmount0) * tokenPrice0 + (tokenAmount1) * tokenPrice1
 
-                liquidityPools.push({ title: `${tokenSymbol0}-${tokenSymbol1}`, tvl: tvl, volume: 0, inputToken: { name: tokenName0, address: tokenAddress0, symbol: tokenSymbol0, amount: tokenAmount0, price: tokenPrice0, balance: parseValue(tokenBalance0) }, outputToken: { name: tokenName1, address: tokenAddress1, symbol: tokenSymbol1, amount: tokenAmount1, price: tokenPrice1, balance: parseValue(tokenBalance1) } })
+                liquidityPools.push({ title: `${tokenSymbol0}-${tokenSymbol1}`, tvl: tvl, volume: 0, inputToken: { name: tokenName0, address: tokenAddress0, symbol: tokenSymbol0, amount: tokenAmount0, price: tokenPrice0, balance: parseTokenValue(tokenBalance0) }, outputToken: { name: tokenName1, address: tokenAddress1, symbol: tokenSymbol1, amount: tokenAmount1, price: tokenPrice1, balance: parseTokenValue(tokenBalance1) } })
 
             }
 
@@ -152,6 +167,7 @@ export const useLiquidityPoolFactory = () => {
     return {
         getAllLiquidityPoolsLength,
         getAllLiquidityPools,
+        getLiquidityPool,
         getAllTokens,
 
 

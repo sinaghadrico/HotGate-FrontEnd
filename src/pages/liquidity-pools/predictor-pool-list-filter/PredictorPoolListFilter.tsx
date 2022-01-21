@@ -20,12 +20,16 @@ const PredictionPoolListFilter = () => {
         });
     };
 
-    const handleCreatePool = () => {
+    const handleCreatePool = async () => {
         // const tokenA = process.env.REACT_APP_ERC20_POLKADOT_TARGET_ADDRESS || "";
-        const tokenA = process.env.REACT_APP_ERC20_CHAINLINK_TARGET_ADDRESS || "";
+        // const tokenA = process.env.REACT_APP_WRAPPED_BITCOIN_ADDRESS || ""
+        const tokenA = process.env.REACT_APP_WETH_ADDRESS || ""
+        // const tokenA = process.env.REACT_APP_ERC20_CHAINLINK_TARGET_ADDRESS || "";
         const tokenB = process.env.REACT_APP_HOTGATE_TOKEN_ADDRESS || "";
 
-        liquidityPoolFactory.createLiquidityPool(tokenA, tokenB);
+        const liquidityPoolExist = await liquidityPoolFactory.getLiquidityPool(tokenA, tokenB);
+
+        liquidityPoolExist === "0x0000000000000000000000000000000000000000" && liquidityPoolFactory.createLiquidityPool(tokenA, tokenB);
     };
 
     const filterItems: DropDownMenuItem[] = [
@@ -47,7 +51,7 @@ const PredictionPoolListFilter = () => {
         <div className="predictor-pool-list-filter">
             <div className="predictor-pool-list-filter-header">
                 <div className="predictor-pool-list-filter-header-title">My Pools</div>
-                <div className="predictor-pool-list-filter-header-pool">
+                {poolsFilters?.value === "liquidity" && <div className="predictor-pool-list-filter-header-pool">
                     <Input
                         className="mx-10 h-45"
                         placeHolder="Search"
@@ -61,7 +65,8 @@ const PredictionPoolListFilter = () => {
                     <Button onClick={handleCreatePool} width={ButtonWidth.FIT_PARENT}>
                         Create New Pool
                     </Button>
-                </div>
+                </div>}
+
             </div>
 
             <div className="predictor-pool-list-filter-filter">

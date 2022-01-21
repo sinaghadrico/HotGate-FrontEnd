@@ -1,21 +1,32 @@
 import { ConfirmModal, Input } from "ui-components";
 import useWebWallet from "hooks/use-web-wallet/useWebWallet";
 import { DepositProps } from "./Deposit.interface";
+import { useGlobalState } from "states/globalContext";
 
 import "./Deposit.scss";
 import { useState } from "react";
 import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils/number";
 import TokenSelector from "components/token-selector/TokenSelector";
+import { useExchangeRouter } from "services/predictor/contract/useExchangeRouter";
+import { useFastRouter } from "services/predictor/contract/useFastRouter";
+import { useInstantRouter } from "services/predictor/contract/useInstantRouter";
+
+
+import { useMutation } from "react-query";
 
 const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
     const { inputToken, outputToken } = data;
+    const { poolsFilters } = useGlobalState();
     const { account } = useWebWallet();
 
+    const exchangeRouter = useExchangeRouter();
+    const fastRouter = useFastRouter();
+    const istantRouter = useInstantRouter();
     const [form, setForm] = useState({
         amount: inputToken?.balance,
-        inputToken: { key: inputToken?.symbol?.toLowerCase(), value: inputToken?.symbol },
-        receivedAmount: outputToken?.balance,
-        outputToken: { key: outputToken?.symbol?.toLowerCase(), value: outputToken?.symbol },
+        inputToken: inputToken,
+        receivedAmount: 0,
+        outputToken: outputToken,
         receiverAddress: account,
 
     });
@@ -33,8 +44,70 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
         const isValid = isValidNumber("" + _value);
 
         if (isValid) {
+            if (name === "amount") {
+                setForm({ ...form, [name]: _value, receivedAmount: 1 * _value / 1 });
+                return null;
+            }
+            if (name === "receivedAmount") {
+                setForm({ ...form, [name]: _value, amount: form.inputToken.amount * _value / form.outputToken.amount });
+                return null;
+            }
             setForm({ ...form, [name]: value });
         }
+    };
+
+    const mutationNormlDeposit = useMutation((_form: any): any => {
+        return exchangeRouter?.deposit(_form?.inputToken?.address, _form?.outputToken?.address, _form?.amount, _form?.receivedAmount);
+    });
+
+    const mutationFastDeposit = useMutation((_form: any): any => {
+        return fastRouter?.deposit(_form?.amount);
+    });
+    const mutationInstantDeposit = useMutation((_form: any): any => {
+        return istantRouter?.deposit(_form?.amount);
+    });
+
+    const handleDeposit = () => {
+        if (poolsFilters?.value === "liquidity") {
+            if (!mutationNormlDeposit?.isSuccess) {
+                mutationNormlDeposit.mutate(
+                    form,
+                    {
+                        onSuccess: () => {
+                            onConfirm(form)
+                        },
+
+                    },
+                );
+            }
+        }
+        else if (poolsFilters?.value === "fast") {
+            if (!mutationFastDeposit?.isSuccess) {
+                mutationFastDeposit.mutate(
+                    form,
+                    {
+                        onSuccess: () => {
+                            onConfirm(form)
+                        },
+
+                    },
+                );
+            }
+        }
+        else if (poolsFilters?.value === "instant") {
+            if (!mutationInstantDeposit?.isSuccess) {
+                mutationInstantDeposit.mutate(
+                    form,
+                    {
+                        onSuccess: () => {
+                            onConfirm(form)
+                        },
+
+                    },
+                );
+            }
+        }
+
     };
 
     return (
@@ -45,7 +118,7 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
             open={open}
             onClose={onClose}
             onCancel={onClose}
-            onConfirm={() => onConfirm(form)}
+            onConfirm={handleDeposit}
             confirmTitle="Deposit"
             cancelTitle="Cancel"
         >
@@ -58,7 +131,7 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
                 onChange={handleChange}
                 autoComplete="off"
             />
-            <Input
+            {outputToken && <Input
                 prefix={<TokenSelector title="Output Token" token={form?.outputToken} />}
                 className="my-10"
                 label="Amount"
@@ -66,7 +139,8 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
                 name="receivedAmount"
                 onChange={handleChange}
                 autoComplete="off"
-            />
+            />}
+
         </ConfirmModal>
     );
 };

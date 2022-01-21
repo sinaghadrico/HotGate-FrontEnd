@@ -1,11 +1,13 @@
 import { useLiquidityPoolFactory } from "./../contract/useLiquidityPoolFactoryContract";
+import { useFastRouter } from "./../contract/useFastRouter";
+import { useInstantRouter } from "./../contract/useInstantRouter";
 import useWebWallet from "hooks/use-web-wallet/useWebWallet";
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { useInfiniteQuery } from "react-query";
 
-import { parsePredictorOffChainPool, parsePredictorPool } from "utils/pool";
+
 
 import { useRequest } from "hooks";
 import { PredictionPoolData } from "models/predictionPool";
@@ -25,6 +27,8 @@ const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "lau
     const { account } = useWebWallet();
 
     const liquidityPoolFactory = useLiquidityPoolFactory();
+    const fastRouter = useFastRouter();
+    const instantRouter = useInstantRouter();
 
     // const filterItems: DropDownMenuItem[] = [
     //     {
@@ -46,13 +50,28 @@ const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "lau
         [`get-predictor-pools`, perPage, orderBy, filter],
         async ({ pageParam = 0 }) => {
 
-            const liquidityPools: any[] = await liquidityPoolFactory.getAllLiquidityPools();
+            let pools: any[] = []
+            if (filter.value === "liquidity") {
+                pools = await liquidityPoolFactory.getAllLiquidityPools();
+            }
+            else if (filter.value === "fast") {
+                const pool = await fastRouter.getBitcoinFastPool();
+
+                pools = [pool]
+            }
+            else if (filter.value === "instant") {
+                const pool = await instantRouter.getBitcoinInstantPool();
+
+                pools = [pool]
+            }
+
+
 
             debugger
 
 
             const result: PredictionPoolData = {
-                pools: liquidityPools,
+                pools: pools,
                 // pools: [
                 //     {
                 //         title: "Bitcoin-Ether",
@@ -97,7 +116,7 @@ const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "lau
                 //         volume: "103.30",
                 //     },
                 // ],
-                total: liquidityPools?.length,
+                total: pools?.length,
                 page: pageParam,
             };
 
@@ -105,7 +124,7 @@ const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "lau
         },
         {
             refetchInterval: intervalDataUpdate,
-            // refetchOnWindowFocus: false,
+            refetchOnWindowFocus: false,
             enabled: !!account && !!liquidityPoolFactory?.contract,
             getNextPageParam: (lastData: any) =>
                 (lastData?.page || 0) + 1 < Math.ceil(lastData?.total / perPage) ? (lastData.page || 0) + 1 : undefined,

@@ -14,6 +14,17 @@ const parseValue = (amount: any): number => {
     //     return BigNumber.from(amount?._hex).toNumber();
     // }
 };
+
+const toValue = (amount: string): BigNumberish => {
+    const dotIndex = amount?.toString()?.indexOf(".");
+    const realDecimal = dotIndex > 0 ? amount?.toString()?.substring(dotIndex + 1).length : 0;
+
+    const amountTemp = ~~(Number(amount) * Math.pow(10, realDecimal));
+    return BigNumber.from(10)
+        .pow(1 - realDecimal)
+        .mul(amountTemp);
+};
+
 const parseTokenValue = (amount: BigNumberish): number => {
     if (amount === "0x00" || amount === 0) {
         return 0;
@@ -21,7 +32,7 @@ const parseTokenValue = (amount: BigNumberish): number => {
         // return BigNumber.from(amount).div(expToken).toNumber();
 
         try {
-            return setDigit(parseFloat(formatUnits(amount, 16)) / 100);
+            return parseFloat(formatUnits(amount, 16)) / 100;
         } catch (e) {
             return 0;
         }
@@ -122,4 +133,5 @@ export {
     expPrice,
     setDigit,
     parseValue,
+    toValue,
 };

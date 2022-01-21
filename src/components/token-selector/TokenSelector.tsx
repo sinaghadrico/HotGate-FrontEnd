@@ -28,28 +28,8 @@ const TokenSelector = ({ onChangeValue, title = "Input Token", token, hiddenToke
 
     const handleAddToken = () => { };
 
-    // const tokenList = [
-    //     { key: "bsc", value: "BSC", balance: 0 },
-    //     { key: "bnb", value: "BNB", balance: 0 },
-    //     { key: "bsc", value: "BSC", balance: 0 },
-    //     { key: "bsc", value: "BSC", balance: 0 },
-    //     { key: "bsc", value: "BSC", balance: 0 },
-    //     { key: "bsc", value: "BSC", balance: 0 },
-    //     { key: "bsc", value: "BSC", balance: 0 },
-    //     { key: "bsc", value: "BSC", balance: 0 },
-    //     { key: "bsc", value: "BSC", balance: 0 },
-    //     { key: "bsc", value: "BSC", balance: 0 },
-    // ];
-    const tokenList: any = ((hiddenToken ? data?.stakes?.find((tokenItem): any => tokenItem?.symbol === hiddenToken?.value)?.connectionTokens || [] : (data?.stakes || [])) || [])?.
-        // filter((tokenItem: any) => tokenItem.symbol !== hiddenToken?.value).
-        map((tokenItem: any) => {
+    const tokenList: any = ((hiddenToken ? data?.stakes?.find((tokenItem): any => tokenItem?.symbol === hiddenToken?.symbol)?.connectionTokens || [] : (data?.stakes || [])) || []);
 
-            return (
-                {
-                    key: tokenItem.symbol.toLowerCase(), value: tokenItem.symbol, balance: tokenItem.balance
-                });
-        })
-    debugger
     return (
         <>
             <div className="token-selector">
@@ -60,7 +40,7 @@ const TokenSelector = ({ onChangeValue, title = "Input Token", token, hiddenToke
                         onChangeValue && setOpenSelector(true);
                     }}
                 >
-                    <span>{token?.value}</span>
+                    <span>{token?.symbol}</span>
                     <span className="token-selector-expand">
                         {onChangeValue && <ExpandLogo width={40} height={40} />}
                     </span>
@@ -105,9 +85,9 @@ const TokenSelector = ({ onChangeValue, title = "Input Token", token, hiddenToke
                                             onChangeValue && onChangeValue(item);
                                             setOpenSelector(false);
                                         }}
-                                        key={item.key}
+                                        key={item?.symbol?.toLowerCase()}
                                     >
-                                        <div className="oken-selector-list-item-title">{item.value}</div>
+                                        <div className="oken-selector-list-item-title">{item.symbol}</div>
                                         <div className="oken-selector-list-item-value">{item.balance}</div>
                                     </div>
                                 ))}
