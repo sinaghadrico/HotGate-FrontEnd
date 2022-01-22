@@ -6,8 +6,8 @@ import "./AdvancedSettings.scss";
 import { useState } from "react";
 import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils/number";
 
-const AdvancedSettings = ({ open, onClose, onConfirm, type = "normal" }: AdvancedSettingsProps) => {
-    const [form, setForm] = useState({ deadline: 0, slippage: 0, confirmations: 20 });
+const AdvancedSettings = ({ open, onClose, onConfirm, type = "normal", defaultSetting }: AdvancedSettingsProps) => {
+    const [form, setForm] = useState(defaultSetting ? defaultSetting : { deadline: 0, slippage: 0, confirmations: 20 });
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
         const value = parseValueToNumber("" + _value);
@@ -25,7 +25,7 @@ const AdvancedSettings = ({ open, onClose, onConfirm, type = "normal" }: Advance
             open={open}
             onClose={onClose}
             onCancel={onClose}
-            onConfirm={() => onConfirm(form)}
+            onConfirm={() => onConfirm && onConfirm(form)}
             confirmTitle="Save"
             cancelTitle="Cancel"
         >

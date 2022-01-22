@@ -15,6 +15,9 @@ const CrossChainTransfer: FC = () => {
         outputToken: { key: "bsc", value: "BSC" },
         receiverAddress: "",
         transferType: "normal",
+        deadline: 0,
+        slippage: 0,
+        confirmations: 20
     });
     const detailsList = [{ title: "Keeper Fee", value: "1.234556" }];
     const handleChange = (event: any) => {
@@ -59,7 +62,11 @@ const CrossChainTransfer: FC = () => {
                 title="Cross-Chain Transfer"
                 description="Send tokens from [[Chain A]] to [[Chain B]]."
                 submitTitle="Transfer"
-                haveSetting
+                defaultSetting={{
+                    deadline: form.deadline,
+                    slippage: form.slippage,
+                    confirmations: form.confirmations,
+                }}
                 typeSetting={form.transferType}
             >
                 <div className="transfer-type">

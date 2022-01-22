@@ -15,6 +15,9 @@ const Tokens: FC = () => {
         outputToken: { key: "bsc", value: "BSC" },
         receiverAddress: "",
         transferType: "normal",
+        deadline: 0,
+        slippage: 0,
+        confirmations: 20
     });
     const detailsList = [
         { title: "Swap Rate", value: "1.2038475" },
@@ -55,7 +58,11 @@ const Tokens: FC = () => {
                 title="Exchange"
                 description="Change your tokens to different tokens on the same chain."
                 submitTitle="Exchange"
-                haveSetting
+                defaultSetting={{
+                    deadline: form.deadline,
+                    slippage: form.slippage,
+                    confirmations: form.confirmations,
+                }}
                 typeSetting={form.transferType}
             >
                 <div className="transfer-type">

@@ -6,7 +6,7 @@ import "./Box.scss";
 import { useState } from "react";
 import { AdvancedSettings } from "components/advanced-settings";
 
-const Box = ({ children, title, description, submitTitle, onSubmit, haveSetting, typeSetting = "normal", isLoading }: BoxProps) => {
+const Box = ({ children, title, description, submitTitle, onSubmit, defaultSetting, typeSetting = "normal", isLoading, onChangeSetting }: BoxProps) => {
     const [openSetting, setOpenSetting] = useState(false);
     return (
         <>
@@ -14,7 +14,7 @@ const Box = ({ children, title, description, submitTitle, onSubmit, haveSetting,
                 <div className="ui-box-header">
                     <div className="ui-box-header-title">{title}</div>
                     <div className="ui-box-header-setting" title="Advanced Settings">
-                        {haveSetting && <SettingLogo onClick={() => setOpenSetting(true)} />}
+                        {defaultSetting && <SettingLogo onClick={() => setOpenSetting(true)} />}
                     </div>
                 </div>
                 <div className="ui-box-body">
@@ -31,8 +31,12 @@ const Box = ({ children, title, description, submitTitle, onSubmit, haveSetting,
                 <AdvancedSettings
                     open={openSetting}
                     onClose={() => setOpenSetting(false)}
-                    onConfirm={() => setOpenSetting(false)}
+                    onConfirm={(settings) => {
+                        setOpenSetting(false)
+                        onChangeSetting && onChangeSetting(settings)
+                    }}
                     type={typeSetting}
+                    defaultSetting={defaultSetting}
                 />
             )}
         </>

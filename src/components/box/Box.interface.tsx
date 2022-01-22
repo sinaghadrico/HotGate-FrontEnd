@@ -5,6 +5,7 @@ export interface BoxProps {
     isLoading?: boolean;
     submitTitle?: string;
     onSubmit?: () => void;
-    haveSetting?: boolean;
+    onChangeSetting?: (form: any) => void;
+    defaultSetting?: any;
     typeSetting?: "normal" | "fast" | "instant"
 }

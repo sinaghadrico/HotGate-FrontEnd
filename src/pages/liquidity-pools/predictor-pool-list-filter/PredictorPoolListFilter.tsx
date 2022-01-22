@@ -22,12 +22,12 @@ const PredictionPoolListFilter = () => {
 
     const handleCreatePool = async () => {
         // const tokenA = process.env.REACT_APP_ERC20_POLKADOT_TARGET_ADDRESS || "";
+        //const tokenA = process.env.REACT_APP_ERC20_CHAINLINK_TARGET_ADDRESS || "";
         // const tokenA = process.env.REACT_APP_WRAPPED_BITCOIN_ADDRESS || ""
         const tokenA = process.env.REACT_APP_WETH_ADDRESS || ""
-        // const tokenA = process.env.REACT_APP_ERC20_CHAINLINK_TARGET_ADDRESS || "";
         const tokenB = process.env.REACT_APP_HOTGATE_TOKEN_ADDRESS || "";
 
-        const liquidityPoolExist = await liquidityPoolFactory.getLiquidityPool(tokenA, tokenB);
+        const liquidityPoolExist = await liquidityPoolFactory.getLiquidityPoolAddress(tokenA, tokenB);
 
         liquidityPoolExist === "0x0000000000000000000000000000000000000000" && liquidityPoolFactory.createLiquidityPool(tokenA, tokenB);
     };

@@ -15,6 +15,9 @@ const CrossChainExchange: FC = () => {
         outputToken: { key: "bsc", value: "BSC" },
         receiverAddress: "",
         transferType: "normal",
+        deadline: 0,
+        slippage: 0,
+        confirmations: 20
     });
     const detailsList = [
         { title: "Swap Rate", value: "1.2038475" },
@@ -65,7 +68,11 @@ const CrossChainExchange: FC = () => {
                 title="Cross-Chain Exchange"
                 description="Exchange tokens from [[Chain A]] to tokens in [[Chain B]]"
                 submitTitle="Cross-Chain Exchange"
-                haveSetting
+                defaultSetting={{
+                    deadline: form.deadline,
+                    slippage: form.slippage,
+                    confirmations: form.confirmations,
+                }}
                 typeSetting={form.transferType}
             >
                 <div className="transfer-type">

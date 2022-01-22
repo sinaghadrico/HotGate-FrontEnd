@@ -56,11 +56,57 @@ export const useLiquidityPoolFactory = () => {
     };
 
     // Get  liquidity pool 
-    const getLiquidityPool = async (tokenA: string, tokenB: string): Promise<any> => {
+    const getLiquidityPoolAddress = async (tokenA: string, tokenB: string): Promise<any> => {
 
         const liquidityPool = await contractMethod.getLiquidityPool(tokenA, tokenB)
-        debugger;
 
+
+        return liquidityPool
+    };
+
+    // Get  liquidity pool 
+    const getLiquidityPool = async (tokenA: string, tokenB: string): Promise<any> => {
+
+        const dataPooLAddress = await contractMethod.getLiquidityPool(tokenA, tokenB)
+
+
+        const signer = library?.getSigner();
+
+        let liquidityPool = null;
+
+        if (signer && account) {
+
+            const deployedLiquidityPool = LiquidityPool__factory.connect(dataPooLAddress, signer);
+            const tokenAddress0 = await deployedLiquidityPool.token0();
+            const tokenAddress1 = await deployedLiquidityPool.token1();
+
+            const deployedToken0 = WrappedERC20Token__factory.connect(tokenA, signer);
+            const deployedToken1 = WrappedERC20Token__factory.connect(tokenB, signer);
+
+            const tokenName0 = await deployedToken0.name();
+            const tokenName1 = await deployedToken1.name();
+
+            const tokenSymbol0 = await deployedToken0.symbol();
+            const tokenSymbol1 = await deployedToken1.symbol();
+
+            const tokenBalance0 = await deployedToken0.balanceOf(account);
+            const tokenBalance1 = await deployedToken1.balanceOf(account);
+
+            const returnedArray = await deployedLiquidityPool.getReserves();
+
+            const tokenAmount0 = parseTokenValue(returnedArray[0]);
+            const tokenAmount1 = parseTokenValue(returnedArray[1]);
+
+
+
+            const tokenPrice0 = 1;
+            const tokenPrice1 = 1;
+
+            const tvl = (tokenAmount0) * tokenPrice0 + (tokenAmount1) * tokenPrice1
+
+            liquidityPool = { title: `${tokenSymbol0}-${tokenSymbol1}`, tvl: tvl, volume: 0, inputToken: { name: tokenName0, address: tokenAddress0, symbol: tokenSymbol0, amount: tokenAmount0, price: tokenPrice0, balance: parseTokenValue(tokenBalance0) }, outputToken: { name: tokenName1, address: tokenAddress1, symbol: tokenSymbol1, amount: tokenAmount1, price: tokenPrice1, balance: parseTokenValue(tokenBalance1) } };
+
+        }
         return liquidityPool
     };
 
@@ -168,6 +214,7 @@ export const useLiquidityPoolFactory = () => {
         getAllLiquidityPoolsLength,
         getAllLiquidityPools,
         getLiquidityPool,
+        getLiquidityPoolAddress,
         getAllTokens,
 
 

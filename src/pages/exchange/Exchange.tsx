@@ -20,6 +20,9 @@ const Exchange: FC = () => {
         outputToken: { symbol: "BSC" },
         receiverAddress: account,
         transferType: "normal",
+        deadline: 1200,
+        slippage: 0,
+        confirmations: 20
     });
 
     const handleChange = (event: any) => {
@@ -56,7 +59,7 @@ const Exchange: FC = () => {
 
 
     const mutationSwap = useMutation((_form: any): any => {
-        return exchangeRouter?.swapExactTokensForTokens(_form?.inputToken.address, _form?.outputToken.address, _form?.amount, amountOut);
+        return exchangeRouter?.swapExactTokensForTokens(_form?.inputToken.address, _form?.outputToken.address, _form?.amount, amountOut, _form.deadline);
     });
 
     const handleSwap = () => {
@@ -69,9 +72,19 @@ const Exchange: FC = () => {
             );
         }
     };
+    const handleChangeSetting = (settings: any) => {
+        setForm({ ...form, ...settings });
+    };
 
 
-    const swapRate = amountOut / form?.amount;
+
+
+    const expectedReceivedAmount = amountOut
+    // const swapRate = expectedReceivedAmount / form?.amount;
+    const currentswapRate = form?.inputToken.amount / form?.outputToken.amount;
+    const minimumReceivedAmount = expectedReceivedAmount * (1 - form?.slippage / 100);
+    const newSwapRate = (form?.amount + form?.inputToken.amount) / (form?.outputToken.amount - amountOut);
+    const priceImpact = (newSwapRate - currentswapRate) / (currentswapRate) * 100;
 
     return (
         <div className="exchange">
@@ -83,9 +96,14 @@ const Exchange: FC = () => {
                 title="Exchange"
                 description="Change your tokens to different tokens on the same chain."
                 submitTitle="Exchange"
-                haveSetting
+                defaultSetting={{
+                    deadline: form.deadline,
+                    slippage: form.slippage,
+                    confirmations: form.confirmations,
+                }}
                 typeSetting={form.transferType}
                 onSubmit={handleSwap}
+                onChangeSetting={handleChangeSetting}
             >
                 <Input
                     prefix={
@@ -118,7 +136,7 @@ const Exchange: FC = () => {
                     }
                     className="my-10"
                     label="Expected Received Amount"
-                    value={formatNumberWithCommas(amountOut)}
+                    value={formatNumberWithCommas(expectedReceivedAmount)}
                     name="receivedAmount"
                     onChange={handleChange}
                     autoComplete="off"
@@ -136,9 +154,9 @@ const Exchange: FC = () => {
                 />
 
                 <DetailsList list={[
-                    { title: "Swap Rate", value: swapRate },
-                    { title: "Minimum Received Amount", value: amountOut },
-                    { title: "Price Impact", value: "1.234556" },
+                    { title: "Swap Rate", value: currentswapRate },
+                    { title: "Minimum Received Amount", value: minimumReceivedAmount },
+                    { title: "Price Impact", value: priceImpact },
                     { title: "Fee", value: "%0.3" }
                 ]} />
             </Box>

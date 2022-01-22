@@ -74,33 +74,39 @@ export const useExchangeRouter = () => {
 
     const swapExactTokensForTokens = async (tokenA: string,
         tokenB: string, amountA: string,
-        amountOut: string) => {
-        return new Promise((resolve: (response: any) => void, reject) => {
-
-            let amountIn = toTokenValue(amountA);
-            let amountOutMin = toTokenValue(amountOut); // Minimum Received Amount
-            let path = [tokenA, tokenB];
-            let to = account;
-            let deadline = 1000000000;
+        amountOut: string, deadline: any) => {
 
 
-            debugger
-            contractMethod
-                ?.swapExactTokensForTokens(amountIn, amountOutMin, path, to, deadline)
-                .then((transaction: ContractTransaction) => {
-                    debugger;
-                    transaction.wait(1).then((transactionE) => {
-                        debugger;
-                        notification.success("Exchange was succesfull!");
-                        resolve(transaction);
-                    });
-                })
-                .catch((error: any) => {
-                    debugger
-                    notification.error(getErrorMessage(error));
-                    reject(error);
-                });
-        });
+        let amountIn = toTokenValue(amountA);
+        let amountOutMin = toTokenValue(amountOut); // Minimum Received Amount
+        let path = [tokenA, tokenB];
+        let to = account;
+
+
+
+        await approve(tokenA, contractMethod.address, amountIn)
+
+
+        let lastBlock: any = await library?.getBlock('latest');
+        let lastTimestamp = lastBlock.timestamp;
+        let calcDeadline = lastTimestamp + deadline;
+
+
+        contractMethod
+            ?.swapExactTokensForTokens(amountIn, amountOutMin, path, to, calcDeadline)
+        // .then((transaction: ContractTransaction) => {
+        //     debugger;
+        //     transaction.wait(1).then((transactionE) => {
+        //         debugger;
+        //         notification.success("Exchange was succesfull!");
+        //         resolve(transaction);
+        //     });
+        // })
+        // .catch((error: any) => {
+        //     debugger
+        //     notification.error(getErrorMessage(error));
+        //     reject(error);
+        // });
     };
 
     //read contract
