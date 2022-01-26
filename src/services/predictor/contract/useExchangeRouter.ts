@@ -1,3 +1,5 @@
+import { LiquidityPool } from './../../../contracts/types/LiquidityPool.d';
+import { Withdraw } from 'components/withdraw';
 import { BigNumber } from '@ethersproject/bignumber';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
@@ -7,10 +9,12 @@ import { parseTokenValue, toTokenValue } from "utils/convert";
 import useNotification from "hooks/useNotification";
 import { WrappedERC20Token__factory } from "contracts/types";
 import { useExchangeRouterContract } from "services/contracts";
+import { useQueryClient } from 'react-query';
 
 export const useExchangeRouter = () => {
     const { library, account } = useWebWallet();
     const notification = useNotification();
+    const queryClient = useQueryClient();
     const contractMethod: any = useExchangeRouterContract();
     const secondsToWait = 1200
 
@@ -31,43 +35,99 @@ export const useExchangeRouter = () => {
         let amountIn = toTokenValue(amountA);
         let amountOut = toTokenValue(amountB); // Minimum Received Amount
 
-        debugger
-        await approve(tokenA, contractMethod.address, amountIn)
-        await approve(tokenB, contractMethod.address, amountOut)
+
+        try {
+            await approve(tokenA, contractMethod.address, amountIn)
+            await approve(tokenB, contractMethod.address, amountOut)
+
+            let amountAmin = toTokenValue((Number(amountA) * 0.95).toString());
+            let amountBmin = toTokenValue((Number(amountB) * 0.95).toString());
+
+            let lastBlock: any = await library?.getBlock('latest');
+            let lastTimestamp = lastBlock.timestamp;
+            let deadline = lastTimestamp + secondsToWait;
 
 
 
-        let amountAmin = 0; // TODO: find correct amount
-        let amountBmin = 0; // TODO: find correct amount
+            contractMethod
+                ?.addLiquidity(tokenA, tokenB,
+                    amountIn,
+                    amountOut,
+                    amountAmin,
+                    amountBmin,
+                    account,
+                    deadline)
+                .then((transaction: ContractTransaction) => {
 
-        let lastBlock: any = await library?.getBlock('latest');
-        let lastTimestamp = lastBlock.timestamp;
-        let deadline = lastTimestamp + secondsToWait;
+                    transaction.wait(1).then((transactionE) => {
+                        notification.success("Deposit was succesfull!");
+                        queryClient.invalidateQueries(`get-predictor-pools`);
+                    });
+                })
+                .catch((error: any) => {
+                    notification.error(getErrorMessage(error));
+                });
+        } catch (error) {
+            notification.error(getErrorMessage(error));
+        }
 
 
-        debugger
-        contractMethod
-            ?.addLiquidity(tokenA, tokenB,
-                amountIn,
-                amountOut,
-                amountAmin,
-                amountBmin,
-                account,
-                deadline)
-        // .then((transaction: ContractTransaction) => {
-        //     debugger;
-        //     transaction.wait(1).then((transactionE) => {
-        //         debugger;
-        //         notification.success("Deposit was succesfull!");
-        //         resolve(transaction);
-        //     });
-        // })
-        // .catch((error: any) => {
-        //     debugger
-        //     notification.error(getErrorMessage(error));
-        //     reject(error);
-        // });
+
+
     };
+    const withdraw = async (tokenA: string,
+        tokenB: string, _amountAmin: string,
+        _amountBmin: string, liquidityAmount: string) => {
+
+
+
+
+        try {
+
+
+            debugger
+            const liquidity = toTokenValue(liquidityAmount)
+            // await approve(contractMethod.address, contractMethod.address, liquidityAmount)
+            await approve(tokenA, contractMethod.address, liquidity)
+            await approve(tokenB, contractMethod.address, liquidity)
+
+            let amountAmin = toTokenValue(_amountAmin);
+            let amountBmin = toTokenValue(_amountBmin);
+
+
+            let lastBlock: any = await library?.getBlock('latest');
+            let lastTimestamp = lastBlock.timestamp;
+            let deadline = lastTimestamp + secondsToWait;
+
+
+
+            contractMethod
+                ?.removeLiquidity(tokenA, tokenB,
+                    liquidity,
+                    amountAmin,
+                    amountBmin,
+                    account,
+                    deadline)
+                .then((transaction: ContractTransaction) => {
+
+                    transaction.wait(1).then((transactionE) => {
+                        notification.success("Withdraw was succesfull!");
+                        queryClient.invalidateQueries(`get-predictor-pools`);
+                    });
+                })
+                .catch((error: any) => {
+                    notification.error(getErrorMessage(error));
+                });
+        } catch (error) {
+            notification.error(getErrorMessage(error));
+        }
+
+
+
+
+    };
+
+
 
 
     //Perform swap
@@ -82,31 +142,30 @@ export const useExchangeRouter = () => {
         let path = [tokenA, tokenB];
         let to = account;
 
+        try {
+
+            await approve(tokenA, contractMethod.address, amountIn)
 
 
-        await approve(tokenA, contractMethod.address, amountIn)
+            let lastBlock: any = await library?.getBlock('latest');
+            let lastTimestamp = lastBlock.timestamp;
+            let calcDeadline = lastTimestamp + deadline;
 
 
-        let lastBlock: any = await library?.getBlock('latest');
-        let lastTimestamp = lastBlock.timestamp;
-        let calcDeadline = lastTimestamp + deadline;
+            contractMethod
+                ?.swapExactTokensForTokens(amountIn, amountOutMin, path, to, calcDeadline)
+                .then((transaction: ContractTransaction) => {
+                    transaction.wait(1).then((transactionE) => {
+                        notification.success("Exchange was succesfull!");
+                    });
+                })
+                .catch((error: any) => {
+                    notification.error(getErrorMessage(error));
+                });
+        } catch (error) {
+            notification.error(getErrorMessage(error));
+        }
 
-
-        contractMethod
-            ?.swapExactTokensForTokens(amountIn, amountOutMin, path, to, calcDeadline)
-        // .then((transaction: ContractTransaction) => {
-        //     debugger;
-        //     transaction.wait(1).then((transactionE) => {
-        //         debugger;
-        //         notification.success("Exchange was succesfull!");
-        //         resolve(transaction);
-        //     });
-        // })
-        // .catch((error: any) => {
-        //     debugger
-        //     notification.error(getErrorMessage(error));
-        //     reject(error);
-        // });
     };
 
     //read contract
@@ -116,12 +175,10 @@ export const useExchangeRouter = () => {
         return contractMethod
             .getAmountOut(toTokenValue(amountIn), toTokenValue(reserveIn), toTokenValue(reserveOut))
             .then((data: any) => {
-                debugger;
                 return parseTokenValue(data)
 
             })
             .catch((error: any) => {
-                debugger;
                 notification.error(getErrorMessage(error));
             });
     };
@@ -138,11 +195,22 @@ export const useExchangeRouter = () => {
 
             if (parseTokenValue(amount) > parseTokenValue(currentAllowance)) {
                 let neededAllowance = amount;
-                await deployedERC20.approve(cntractAddress, neededAllowance)
+                await deployedERC20.approve(cntractAddress, neededAllowance).catch((error: any) => {
+                    notification.error(getErrorMessage(error));
+                });
             }
         }
 
 
+    }
+
+    const getWrappedBitcoinAddress = async () => {
+        const fastPoolAddress = await contractMethod.wrappedBitcoin();
+
+        if (fastPoolAddress === "0x0000000000000000000000000000000000000000") {
+            return process.env.REACT_APP_WRAPPED_BITCOIN_ADDRESS || ""
+        }
+        return fastPoolAddress;
     }
 
 
@@ -152,9 +220,10 @@ export const useExchangeRouter = () => {
     return {
         getAmountOut,
 
-
+        getWrappedBitcoinAddress,
         swapExactTokensForTokens,
         deposit,
+        withdraw,
 
         contract: contractMethod || undefined,
     };

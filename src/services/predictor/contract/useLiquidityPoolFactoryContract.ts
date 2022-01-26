@@ -128,8 +128,15 @@ export const useLiquidityPoolFactory = () => {
                 const dataPooLAddress = await contractMethod.allLiquidityPools(i)
                 const deployedLiquidityPool = LiquidityPool__factory.connect(dataPooLAddress, signer);
 
+                const liquidityPoolBalance = await deployedLiquidityPool.balanceOf(account);
+                const liquidityPoolTotalSupply = await deployedLiquidityPool.totalSupply();
+                const balance = parseTokenValue(liquidityPoolBalance)
+                const totalSupply = parseTokenValue(liquidityPoolTotalSupply)
+
+
                 const tokenAddress0 = await deployedLiquidityPool.token0();
                 const tokenAddress1 = await deployedLiquidityPool.token1();
+
 
                 const deployedToken0 = WrappedERC20Token__factory.connect(tokenAddress0, signer);
                 const deployedToken1 = WrappedERC20Token__factory.connect(tokenAddress1, signer);
@@ -155,7 +162,7 @@ export const useLiquidityPoolFactory = () => {
 
                 const tvl = (tokenAmount0) * tokenPrice0 + (tokenAmount1) * tokenPrice1
 
-                liquidityPools.push({ title: `${tokenSymbol0}-${tokenSymbol1}`, tvl: tvl, volume: 0, inputToken: { name: tokenName0, address: tokenAddress0, symbol: tokenSymbol0, amount: tokenAmount0, price: tokenPrice0, balance: parseTokenValue(tokenBalance0) }, outputToken: { name: tokenName1, address: tokenAddress1, symbol: tokenSymbol1, amount: tokenAmount1, price: tokenPrice1, balance: parseTokenValue(tokenBalance1) } })
+                liquidityPools.push({ title: `${tokenSymbol0}-${tokenSymbol1}`, tvl: tvl, balance, totalSupply, volume: 0, inputToken: { name: tokenName0, address: tokenAddress0, symbol: tokenSymbol0, amount: tokenAmount0, price: tokenPrice0, balance: parseTokenValue(tokenBalance0) }, outputToken: { name: tokenName1, address: tokenAddress1, symbol: tokenSymbol1, amount: tokenAmount1, price: tokenPrice1, balance: parseTokenValue(tokenBalance1) } })
 
             }
 

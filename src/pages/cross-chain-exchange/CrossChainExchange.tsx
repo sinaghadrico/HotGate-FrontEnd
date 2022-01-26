@@ -5,14 +5,24 @@ import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils
 import TokenSelector from "components/token-selector/TokenSelector";
 import { DetailsList } from "components/details-list";
 import { Helmet } from "react-helmet-async";
+import useWebWallet from "hooks/use-web-wallet/useWebWallet";
+import { useExchangeRouter } from "services/predictor/contract/useExchangeRouter";
+import { useQuery, useMutation } from "react-query";
 import "./CrossChainExchange.scss";
 
 const CrossChainExchange: FC = () => {
+    const { account } = useWebWallet();
+    const exchangeRouter = useExchangeRouter();
+
+    const { data: wrappedBitcoinAddress } = useQuery(["wrappedBitcoinAddress"], () => exchangeRouter.getWrappedBitcoinAddress(), {
+        enabled: !!exchangeRouter.contract,
+    });
+
     const [form, setForm] = useState<any>({
         amount: 0,
-        inputToken: { key: "bsc", value: "BSC" },
+        inputToken: { symbol: "BTC" },
         receivedAmount: 0,
-        outputToken: { key: "bsc", value: "BSC" },
+        outputToken: { symbol: "BSC" },
         receiverAddress: "",
         transferType: "normal",
         deadline: 0,
@@ -58,6 +68,8 @@ const CrossChainExchange: FC = () => {
         { value: "Fast", key: "fast" },
         { value: "Instant", key: "instant" },
     ];
+
+    const outputTokenHidden = { symbol: "HWBTC" };
     return (
         <div className="cross-chain-exchange">
             <Helmet>
@@ -97,9 +109,6 @@ const CrossChainExchange: FC = () => {
                     prefix={
                         <TokenSelector
                             title="Input Token"
-                            onChangeValue={(token: any) => {
-                                handleChange({ target: { name: "inputToken", value: token } });
-                            }}
                             token={form?.inputToken}
                         />
                     }
@@ -117,7 +126,7 @@ const CrossChainExchange: FC = () => {
                             onChangeValue={(token: any) => {
                                 handleChange({ target: { name: "outputToken", value: token } });
                             }}
-                            hiddenToken={form?.inputToken}
+                            hiddenToken={outputTokenHidden}
                             token={form?.outputToken}
                         />
                     }

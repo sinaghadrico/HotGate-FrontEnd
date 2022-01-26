@@ -13,7 +13,7 @@ const usePredictorStakes = (pageNumber: number, perPage = 10) => {
         async () => {
 
             const tokens: any[] = await liquidityPoolFactory.getAllTokens();
-            debugger
+
             const result: StakeData = {
                 stakes: tokens,
                 // stakes: [

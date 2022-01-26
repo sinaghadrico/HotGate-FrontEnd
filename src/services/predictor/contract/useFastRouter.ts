@@ -7,12 +7,14 @@ import { parseTokenValue, toTokenValue } from "utils/convert";
 import useNotification from "hooks/useNotification";
 import { WrappedERC20Token__factory, FastPool__factory } from "contracts/types";
 import { useFastRouterContract } from "services/contracts";
+import { useQueryClient } from 'react-query';
 
 export const useFastRouter = () => {
     const { library, account } = useWebWallet();
     const notification = useNotification();
     const contractMethod: any = useFastRouterContract();
     const secondsToWait = 1200
+    const queryClient = useQueryClient();
 
 
     //write-contract
@@ -28,27 +30,48 @@ export const useFastRouter = () => {
 
         const wrappedBitcoinAmount = toTokenValue(amount);
         const wrappedBitcoinAddress = process.env.REACT_APP_WRAPPED_BITCOIN_ADDRESS || ""
-        debugger
-        await approve(wrappedBitcoinAddress, contractMethod.address, wrappedBitcoinAmount)
 
 
+        try {
+            await approve(wrappedBitcoinAddress, contractMethod.address, wrappedBitcoinAmount)
 
-        debugger
-        contractMethod
-            ?.addLiquidity(account, wrappedBitcoinAmount)
-        // .then((transaction: ContractTransaction) => {
-        //     debugger;
-        //     transaction.wait(1).then((transactionE) => {
-        //         debugger;
-        //         notification.success("Deposit was succesfull!");
-        //         resolve(transaction);
-        //     });
-        // })
-        // .catch((error: any) => {
-        //     debugger
-        //     notification.error(getErrorMessage(error));
-        //     reject(error);
-        // });
+            contractMethod
+                ?.addLiquidity(account, wrappedBitcoinAmount)
+                .then((transaction: ContractTransaction) => {
+
+                    transaction.wait(1).then((transactionE) => {
+                        notification.success("Withdraw was succesfull!");
+                        queryClient.invalidateQueries(`get-predictor-pools`);
+                    });
+                })
+                .catch((error: any) => {
+                    notification.error(getErrorMessage(error));
+                });
+        } catch (error) {
+            notification.error(getErrorMessage(error));
+        }
+    };
+
+    const withdraw = async (user: string, _amount: string) => {
+        try {
+            const amount = toTokenValue(_amount)
+            contractMethod
+                ?.removeLiquidity(
+                    user,
+                    amount)
+                .then((transaction: ContractTransaction) => {
+
+                    transaction.wait(1).then((transactionE) => {
+                        notification.success("Withdraw was succesfull!");
+                        queryClient.invalidateQueries(`get-predictor-pools`);
+                    });
+                })
+                .catch((error: any) => {
+                    notification.error(getErrorMessage(error));
+                });
+        } catch (error) {
+            notification.error(getErrorMessage(error));
+        }
     };
 
 
@@ -66,13 +89,13 @@ export const useFastRouter = () => {
             let deadline = 1000000000;
 
 
-            debugger
+
             contractMethod
                 ?.swapExactTokensForTokens(amountIn, amountOutMin, path, to, deadline)
                 .then((transaction: ContractTransaction) => {
-                    debugger;
+
                     transaction.wait(1).then((transactionE) => {
-                        debugger;
+
                         notification.success("Exchange was succesfull!");
                         resolve(transaction);
                     });
@@ -168,6 +191,7 @@ export const useFastRouter = () => {
 
         swapExactTokensForTokens,
         deposit,
+        withdraw,
 
         contract: contractMethod || undefined,
     };

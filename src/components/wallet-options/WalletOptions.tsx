@@ -71,14 +71,54 @@ const WalletOptions: FC = () => {
     const handleBTCWallet = async () => {
         debugger;
         const _window: any = window;
-        await _window?.bitcoin?.enable();
+        _window?.bitcoin?.enable().then((data: any) => {
+            debugger
+
+            _window?.bitcoin.request({
+                method: 'wallet_getConnectedNetwork',
+                params: []
+            }).then((data: any) => {
+                debugger
+            });
+
+            // _window?.bitcoin.request({ method: 'wallet_getAddresses', params: [0, 10] }).then((data: any) => {
+            //     debugger
+            // });
+            // _window?.bitcoin.request({
+            //     method: 'wallet_signMessage', params: [
+            //         'Better with code than with words',
+            //         'tb1qgkptjdvfhqpyp438h2908gg63krxetkr93l984'
+            //     ]
+            // }).then((data: any) => {
+            //     debugger
+            // });
+
+
+            // _window?.bitcoin.request({
+            //     method: 'wallet_sendTransaction',
+            //     params: ['tb1qgkptjdvfhqpyp438h2908gg63krxetkr93l984', 200000]
+            // }).then((data: any) => {
+            //     debugger
+            // });
+            _window?.bitcoin.request({
+                method: 'wallet_getbalance', params: []
+            }).then((data: any) => {
+                debugger
+            });
+
+
+        });
+
+
+
+
         // const bitcoin = new Client();
 
         // const btcConfig: any = {
         //     rpc: {
-        //         username: "bitcoin",
-        //         password: "local321",
-        //         url: "https://liquality.io/bitcointestnetrpc/",
+        //         username: "user",
+        //         password: "pass",
+        //         url: "http://127.0.0.1:1234",
         //         addressType: "bech32",
         //         wallet: true,
         //     },
@@ -96,16 +136,17 @@ const WalletOptions: FC = () => {
         //         network: btcConfig.network,
         //     }),
         // );
-        debugger;
+
+
         // // bitcoin.addProvider(new BitcoinLedgerProvider({ network: BitcoinNetworks.bitcoin_testnet }));
 
         // // Fetch addresses from Ledger wallet using a single-unified API
-        // const [bitcoinAddress] = await bitcoin.wallet.getAddresses(0, 1);
-        // debugger;
+        // const r = await bitcoin.wallet.exportPrivateKey();
+
         // Sign a message
         // const signedMessageBitcoin = await bitcoin.wallet.signMessage(
         //     "The Times 3 January 2009 Chancellor on brink of second bailout for banks",
-        //     bitcoinAddress,
+        //     bitcoinAddress || "0x",
         // );
 
         // Send a transaction
@@ -126,8 +167,8 @@ const WalletOptions: FC = () => {
                                 border: activating
                                     ? "2px solid orange"
                                     : connected && account
-                                    ? " 2px solid green"
-                                    : "unset",
+                                        ? " 2px solid green"
+                                        : "unset",
                                 cursor: disabled ? "unset" : "pointer",
                             }}
                             key={option.value}

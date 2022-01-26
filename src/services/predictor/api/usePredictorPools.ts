@@ -67,7 +67,7 @@ const usePredictorPools = (perPage = 10, filter: any = undefined, orderBy = "lau
 
 
 
-            debugger
+
 
 
             const result: PredictionPoolData = {
