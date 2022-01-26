@@ -7,8 +7,10 @@ import { BigNumberish, ContractTransaction } from "ethers";
 import useWebWallet, { getErrorMessage } from "hooks/use-web-wallet/useWebWallet";
 import { parseTokenValue, toTokenValue } from "utils/convert";
 import useNotification from "hooks/useNotification";
-import { WrappedERC20Token__factory } from "contracts/types";
+import { WrappedERC20Token__factory, LiquidityPool__factory } from "contracts/types";
 import { useExchangeRouterContract } from "services/contracts";
+
+
 import { useQueryClient } from 'react-query';
 
 export const useExchangeRouter = () => {
@@ -77,7 +79,7 @@ export const useExchangeRouter = () => {
     };
     const withdraw = async (tokenA: string,
         tokenB: string, _amountAmin: string,
-        _amountBmin: string, liquidityAmount: string) => {
+        _amountBmin: string, liquidityAmount: string, liquidityPoolAdresses: string) => {
 
 
 
@@ -85,11 +87,11 @@ export const useExchangeRouter = () => {
         try {
 
 
-            debugger
+
             const liquidity = toTokenValue(liquidityAmount)
-            // await approve(contractMethod.address, contractMethod.address, liquidityAmount)
-            await approve(tokenA, contractMethod.address, liquidity)
-            await approve(tokenB, contractMethod.address, liquidity)
+
+            await approveForLiquidityPool(liquidityPoolAdresses, contractMethod.address, liquidityAmount)
+
 
             let amountAmin = toTokenValue(_amountAmin);
             let amountBmin = toTokenValue(_amountBmin);
@@ -99,7 +101,7 @@ export const useExchangeRouter = () => {
             let lastTimestamp = lastBlock.timestamp;
             let deadline = lastTimestamp + secondsToWait;
 
-
+            debugger
 
             contractMethod
                 ?.removeLiquidity(tokenA, tokenB,
@@ -195,13 +197,41 @@ export const useExchangeRouter = () => {
 
             if (parseTokenValue(amount) > parseTokenValue(currentAllowance)) {
                 let neededAllowance = amount;
-                await deployedERC20.approve(cntractAddress, neededAllowance).catch((error: any) => {
+
+                try {
+                    const approvTx: ContractTransaction = await deployedERC20.approve(cntractAddress, neededAllowance);
+                    await approvTx.wait(1);
+                } catch (error) {
                     notification.error(getErrorMessage(error));
-                });
+                }
+
             }
         }
 
 
+    }
+
+    const approveForLiquidityPool = async (liquidityPoolAdresses: string, cntractAddress: string, amount: BigNumberish) => {
+        const signer: any = library?.getSigner();
+        if (signer && account) {
+
+            let deployedLiquidityPool = LiquidityPool__factory.connect(liquidityPoolAdresses, signer);
+
+            let currentAllowance: any = await deployedLiquidityPool.allowance(account, cntractAddress);
+
+
+            if (parseTokenValue(amount) > parseTokenValue(currentAllowance)) {
+                let neededAllowance = amount;
+
+                try {
+                    const approvTx: ContractTransaction = await deployedLiquidityPool.approve(cntractAddress, neededAllowance);
+                    await approvTx.wait(1);
+                } catch (error) {
+                    notification.error(getErrorMessage(error));
+                }
+
+            }
+        }
     }
 
     const getWrappedBitcoinAddress = async () => {

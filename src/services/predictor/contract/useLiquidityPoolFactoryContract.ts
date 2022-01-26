@@ -162,7 +162,7 @@ export const useLiquidityPoolFactory = () => {
 
                 const tvl = (tokenAmount0) * tokenPrice0 + (tokenAmount1) * tokenPrice1
 
-                liquidityPools.push({ title: `${tokenSymbol0}-${tokenSymbol1}`, tvl: tvl, balance, totalSupply, volume: 0, inputToken: { name: tokenName0, address: tokenAddress0, symbol: tokenSymbol0, amount: tokenAmount0, price: tokenPrice0, balance: parseTokenValue(tokenBalance0) }, outputToken: { name: tokenName1, address: tokenAddress1, symbol: tokenSymbol1, amount: tokenAmount1, price: tokenPrice1, balance: parseTokenValue(tokenBalance1) } })
+                liquidityPools.push({ title: `${tokenSymbol0}-${tokenSymbol1}`, address: dataPooLAddress, tvl: tvl, balance, totalSupply, volume: 0, inputToken: { name: tokenName0, address: tokenAddress0, symbol: tokenSymbol0, amount: tokenAmount0, price: tokenPrice0, balance: parseTokenValue(tokenBalance0) }, outputToken: { name: tokenName1, address: tokenAddress1, symbol: tokenSymbol1, amount: tokenAmount1, price: tokenPrice1, balance: parseTokenValue(tokenBalance1) } })
 
             }
 

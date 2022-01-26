@@ -15,7 +15,7 @@ import { useGlobalState } from "states/globalContext";
 import { useMutation } from "react-query";
 
 const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
-    const { inputToken, outputToken, balance, totalSupply } = data;
+    const { inputToken, outputToken, balance, totalSupply, address } = data;
     const { account } = useWebWallet();
     const { poolsFilters } = useGlobalState();
 
@@ -54,7 +54,7 @@ const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
     const mutationNormlWithdraw = useMutation((_form: any): any => {
         const amountAmin = (_form?.amount * inputToken?.amount / totalSupply * 0.95).toString()
         const amountBmin = (_form?.amount * outputToken?.amount / totalSupply * 0.95).toString()
-        return exchangeRouter?.withdraw(_form?.inputToken?.address, _form?.outputToken?.address, amountAmin, amountBmin, _form?.amount);
+        return exchangeRouter?.withdraw(_form?.inputToken?.address, _form?.outputToken?.address, amountAmin, amountBmin, _form?.amount, address);
     });
 
     const mutationFastWithdraw = useMutation((_form: any): any => {

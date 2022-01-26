@@ -125,7 +125,6 @@ export const useFastRouter = () => {
             });
     };
 
-
     const approve = async (tokenContractAddress: string, cntractAddress: string, amount: BigNumberish) => {
 
         const signer: any = library?.getSigner();
@@ -137,7 +136,14 @@ export const useFastRouter = () => {
 
             if (parseTokenValue(amount) > parseTokenValue(currentAllowance)) {
                 let neededAllowance = amount;
-                await deployedERC20.approve(cntractAddress, neededAllowance)
+
+                try {
+                    const approvTx: ContractTransaction = await deployedERC20.approve(cntractAddress, neededAllowance);
+                    await approvTx.wait(1);
+                } catch (error) {
+                    notification.error(getErrorMessage(error));
+                }
+
             }
         }
 
