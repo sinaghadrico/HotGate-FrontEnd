@@ -27,6 +27,7 @@ interface WETHInterface extends ethers.utils.Interface {
         "balanceOf(address)": FunctionFragment;
         "decimals()": FunctionFragment;
         "deposit()": FunctionFragment;
+        "mintTestToken()": FunctionFragment;
         "name()": FunctionFragment;
         "symbol()": FunctionFragment;
         "totalSupply()": FunctionFragment;
@@ -35,28 +36,60 @@ interface WETHInterface extends ethers.utils.Interface {
         "withdraw(uint256)": FunctionFragment;
     };
 
-    encodeFunctionData(functionFragment: "allowance", values: [string, string]): string;
-    encodeFunctionData(functionFragment: "approve", values: [string, BigNumberish]): string;
+    encodeFunctionData(
+        functionFragment: "allowance",
+        values: [string, string]
+    ): string;
+    encodeFunctionData(
+        functionFragment: "approve",
+        values: [string, BigNumberish]
+    ): string;
     encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
     encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
     encodeFunctionData(functionFragment: "deposit", values?: undefined): string;
+    encodeFunctionData(
+        functionFragment: "mintTestToken",
+        values?: undefined
+    ): string;
     encodeFunctionData(functionFragment: "name", values?: undefined): string;
     encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-    encodeFunctionData(functionFragment: "totalSupply", values?: undefined): string;
-    encodeFunctionData(functionFragment: "transfer", values: [string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "transferFrom", values: [string, string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "withdraw", values: [BigNumberish]): string;
+    encodeFunctionData(
+        functionFragment: "totalSupply",
+        values?: undefined
+    ): string;
+    encodeFunctionData(
+        functionFragment: "transfer",
+        values: [string, BigNumberish]
+    ): string;
+    encodeFunctionData(
+        functionFragment: "transferFrom",
+        values: [string, string, BigNumberish]
+    ): string;
+    encodeFunctionData(
+        functionFragment: "withdraw",
+        values: [BigNumberish]
+    ): string;
 
     decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+    decodeFunctionResult(
+        functionFragment: "mintTestToken",
+        data: BytesLike
+    ): Result;
     decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "totalSupply", data: BytesLike): Result;
+    decodeFunctionResult(
+        functionFragment: "totalSupply",
+        data: BytesLike
+    ): Result;
     decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
+    decodeFunctionResult(
+        functionFragment: "transferFrom",
+        data: BytesLike
+    ): Result;
     decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
     events: {};
@@ -68,26 +101,26 @@ export class WETH extends BaseContract {
     deployed(): Promise<this>;
 
     listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
+        eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
     ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
     off<EventArgsArray extends Array<any>, EventArgsObject>(
         eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
+        listener: TypedListener<EventArgsArray, EventArgsObject>
     ): this;
     on<EventArgsArray extends Array<any>, EventArgsObject>(
         eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
+        listener: TypedListener<EventArgsArray, EventArgsObject>
     ): this;
     once<EventArgsArray extends Array<any>, EventArgsObject>(
         eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
+        listener: TypedListener<EventArgsArray, EventArgsObject>
     ): this;
     removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
         eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
+        listener: TypedListener<EventArgsArray, EventArgsObject>
     ): this;
     removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
     ): this;
 
     listeners(eventName?: string): Array<Listener>;
@@ -100,25 +133,35 @@ export class WETH extends BaseContract {
     queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
         event: TypedEventFilter<EventArgsArray, EventArgsObject>,
         fromBlockOrBlockhash?: string | number | undefined,
-        toBlock?: string | number | undefined,
+        toBlock?: string | number | undefined
     ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
     interface: WETHInterface;
 
     functions: {
-        allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        allowance(
+            arg0: string,
+            arg1: string,
+            overrides?: CallOverrides
+        ): Promise<[BigNumber]>;
 
         approve(
             spender: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<ContractTransaction>;
 
         balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
         decimals(overrides?: CallOverrides): Promise<[number]>;
 
-        deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+        deposit(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<ContractTransaction>;
+
+        mintTestToken(
+            overrides?: Overrides & { from?: string | Promise<string> }
+        ): Promise<ContractTransaction>;
 
         name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -129,35 +172,45 @@ export class WETH extends BaseContract {
         transfer(
             to: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<ContractTransaction>;
 
         transferFrom(
             from: string,
             to: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<ContractTransaction>;
 
         withdraw(
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<ContractTransaction>;
     };
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+        arg0: string,
+        arg1: string,
+        overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     approve(
         spender: string,
         value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
+        overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    deposit(
+        overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    mintTestToken(
+        overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -168,25 +221,33 @@ export class WETH extends BaseContract {
     transfer(
         to: string,
         value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
+        overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     transferFrom(
         from: string,
         to: string,
         value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
+        overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     withdraw(
         value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
+        overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     callStatic: {
-        allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        allowance(
+            arg0: string,
+            arg1: string,
+            overrides?: CallOverrides
+        ): Promise<BigNumber>;
 
-        approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+        approve(
+            spender: string,
+            value: BigNumberish,
+            overrides?: CallOverrides
+        ): Promise<boolean>;
 
         balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -194,15 +255,26 @@ export class WETH extends BaseContract {
 
         deposit(overrides?: CallOverrides): Promise<void>;
 
+        mintTestToken(overrides?: CallOverrides): Promise<void>;
+
         name(overrides?: CallOverrides): Promise<string>;
 
         symbol(overrides?: CallOverrides): Promise<string>;
 
         totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-        transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+        transfer(
+            to: string,
+            value: BigNumberish,
+            overrides?: CallOverrides
+        ): Promise<boolean>;
 
-        transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+        transferFrom(
+            from: string,
+            to: string,
+            value: BigNumberish,
+            overrides?: CallOverrides
+        ): Promise<boolean>;
 
         withdraw(value: BigNumberish, overrides?: CallOverrides): Promise<void>;
     };
@@ -210,19 +282,29 @@ export class WETH extends BaseContract {
     filters: {};
 
     estimateGas: {
-        allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        allowance(
+            arg0: string,
+            arg1: string,
+            overrides?: CallOverrides
+        ): Promise<BigNumber>;
 
         approve(
             spender: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<BigNumber>;
 
         balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
         decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-        deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+        deposit(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<BigNumber>;
+
+        mintTestToken(
+            overrides?: Overrides & { from?: string | Promise<string> }
+        ): Promise<BigNumber>;
 
         name(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -233,33 +315,49 @@ export class WETH extends BaseContract {
         transfer(
             to: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<BigNumber>;
 
         transferFrom(
             from: string,
             to: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<BigNumber>;
 
-        withdraw(value: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+        withdraw(
+            value: BigNumberish,
+            overrides?: Overrides & { from?: string | Promise<string> }
+        ): Promise<BigNumber>;
     };
 
     populateTransaction: {
-        allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        allowance(
+            arg0: string,
+            arg1: string,
+            overrides?: CallOverrides
+        ): Promise<PopulatedTransaction>;
 
         approve(
             spender: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<PopulatedTransaction>;
 
-        balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        balanceOf(
+            arg0: string,
+            overrides?: CallOverrides
+        ): Promise<PopulatedTransaction>;
 
         decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+        deposit(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<PopulatedTransaction>;
+
+        mintTestToken(
+            overrides?: Overrides & { from?: string | Promise<string> }
+        ): Promise<PopulatedTransaction>;
 
         name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -270,19 +368,19 @@ export class WETH extends BaseContract {
         transfer(
             to: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<PopulatedTransaction>;
 
         transferFrom(
             from: string,
             to: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<PopulatedTransaction>;
 
         withdraw(
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<PopulatedTransaction>;
     };
 }

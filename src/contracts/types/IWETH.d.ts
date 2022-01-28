@@ -23,15 +23,30 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 interface IWETHInterface extends ethers.utils.Interface {
     functions: {
         "deposit()": FunctionFragment;
+        "mintTestToken()": FunctionFragment;
         "transfer(address,uint256)": FunctionFragment;
         "withdraw(uint256)": FunctionFragment;
     };
 
     encodeFunctionData(functionFragment: "deposit", values?: undefined): string;
-    encodeFunctionData(functionFragment: "transfer", values: [string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "withdraw", values: [BigNumberish]): string;
+    encodeFunctionData(
+        functionFragment: "mintTestToken",
+        values?: undefined
+    ): string;
+    encodeFunctionData(
+        functionFragment: "transfer",
+        values: [string, BigNumberish]
+    ): string;
+    encodeFunctionData(
+        functionFragment: "withdraw",
+        values: [BigNumberish]
+    ): string;
 
     decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+    decodeFunctionResult(
+        functionFragment: "mintTestToken",
+        data: BytesLike
+    ): Result;
     decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
@@ -44,26 +59,26 @@ export class IWETH extends BaseContract {
     deployed(): Promise<this>;
 
     listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
+        eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
     ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
     off<EventArgsArray extends Array<any>, EventArgsObject>(
         eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
+        listener: TypedListener<EventArgsArray, EventArgsObject>
     ): this;
     on<EventArgsArray extends Array<any>, EventArgsObject>(
         eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
+        listener: TypedListener<EventArgsArray, EventArgsObject>
     ): this;
     once<EventArgsArray extends Array<any>, EventArgsObject>(
         eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
+        listener: TypedListener<EventArgsArray, EventArgsObject>
     ): this;
     removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
         eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
+        listener: TypedListener<EventArgsArray, EventArgsObject>
     ): this;
     removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
     ): this;
 
     listeners(eventName?: string): Array<Listener>;
@@ -76,43 +91,61 @@ export class IWETH extends BaseContract {
     queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
         event: TypedEventFilter<EventArgsArray, EventArgsObject>,
         fromBlockOrBlockhash?: string | number | undefined,
-        toBlock?: string | number | undefined,
+        toBlock?: string | number | undefined
     ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
     interface: IWETHInterface;
 
     functions: {
-        deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+        deposit(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<ContractTransaction>;
+
+        mintTestToken(
+            overrides?: Overrides & { from?: string | Promise<string> }
+        ): Promise<ContractTransaction>;
 
         transfer(
             to: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<ContractTransaction>;
 
         withdraw(
             arg0: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<ContractTransaction>;
     };
 
-    deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    deposit(
+        overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    mintTestToken(
+        overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     transfer(
         to: string,
         value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
+        overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     withdraw(
         arg0: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
+        overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     callStatic: {
         deposit(overrides?: CallOverrides): Promise<void>;
 
-        transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+        mintTestToken(overrides?: CallOverrides): Promise<void>;
+
+        transfer(
+            to: string,
+            value: BigNumberish,
+            overrides?: CallOverrides
+        ): Promise<boolean>;
 
         withdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<void>;
     };
@@ -120,29 +153,44 @@ export class IWETH extends BaseContract {
     filters: {};
 
     estimateGas: {
-        deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+        deposit(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<BigNumber>;
+
+        mintTestToken(
+            overrides?: Overrides & { from?: string | Promise<string> }
+        ): Promise<BigNumber>;
 
         transfer(
             to: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<BigNumber>;
 
-        withdraw(arg0: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+        withdraw(
+            arg0: BigNumberish,
+            overrides?: Overrides & { from?: string | Promise<string> }
+        ): Promise<BigNumber>;
     };
 
     populateTransaction: {
-        deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+        deposit(
+            overrides?: PayableOverrides & { from?: string | Promise<string> }
+        ): Promise<PopulatedTransaction>;
+
+        mintTestToken(
+            overrides?: Overrides & { from?: string | Promise<string> }
+        ): Promise<PopulatedTransaction>;
 
         transfer(
             to: string,
             value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<PopulatedTransaction>;
 
         withdraw(
             arg0: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
+            overrides?: Overrides & { from?: string | Promise<string> }
         ): Promise<PopulatedTransaction>;
     };
 }

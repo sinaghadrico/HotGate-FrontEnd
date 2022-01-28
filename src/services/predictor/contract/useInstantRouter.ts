@@ -5,7 +5,7 @@ import { BigNumberish, ContractTransaction } from "ethers";
 import useWebWallet, { getErrorMessage } from "hooks/use-web-wallet/useWebWallet";
 import { parseTokenValue, toTokenValue } from "utils/convert";
 import useNotification from "hooks/useNotification";
-import { WrappedERC20Token__factory, InstantPool__factory } from "contracts/types";
+import { WrappedERC20Token__factory, InstantPool__factory, LiquidityPool__factory } from "contracts/types";
 import { useInstantRouterContract } from "services/contracts";
 import { useQueryClient } from 'react-query';
 
@@ -51,6 +51,10 @@ export const useInstantRouter = () => {
     const withdraw = async (user: string, _amount: string) => {
         try {
             const amount = toTokenValue(_amount)
+
+            const wrappedBitcoinAddress = process.env.REACT_APP_WRAPPED_BITCOIN_ADDRESS || ""
+            await approve(wrappedBitcoinAddress, contractMethod.address, amount)
+
             contractMethod
                 ?.removeLiquidity(
                     user,
@@ -151,23 +155,29 @@ export const useInstantRouter = () => {
         const instantPoolAddress = await contractMethod.bitcoinInstantPool()
 
         const signer = library?.getSigner();
-        let fastPool = null;
+        let instantPool = null;
         if (signer && account) {
-            const deployedFastPool = InstantPool__factory.connect(instantPoolAddress, signer);
+            const deployedInstantPool = InstantPool__factory.connect(instantPoolAddress, signer);
+
+            const poolBalance = await deployedInstantPool.balanceOf(account);
+            const poolTotalSupply = await deployedInstantPool.totalSupply();
+            const balance = parseTokenValue(poolBalance)
+            const totalSupply = parseTokenValue(poolTotalSupply)
 
 
-            const tokenAmount = await deployedFastPool.totalWrappedBitcoin()
+
+            const tokenAmount = await deployedInstantPool.totalWrappedBitcoin()
 
             const tokenAddress = instantPoolAddress;
 
 
-            const tokenName = await deployedFastPool.name();
+            const tokenName = await deployedInstantPool.name();
 
 
-            const tokenSymbol = await deployedFastPool.symbol();
+            const tokenSymbol = await deployedInstantPool.symbol();
 
 
-            const tokenBalance = await deployedFastPool.balanceOf(account);
+            const tokenBalance = await deployedInstantPool.balanceOf(account);
 
 
             const tokenPrice = 1;
@@ -175,13 +185,38 @@ export const useInstantRouter = () => {
 
             const tvl = parseTokenValue(tokenAmount) * tokenPrice;
 
-            fastPool = { title: `${tokenSymbol}`, tvl: tvl, volume: 0, inputToken: { name: tokenName, address: tokenAddress, symbol: tokenSymbol, amount: parseTokenValue(tokenAmount), price: tokenPrice, balance: parseTokenValue(tokenBalance) } }
+            instantPool = { title: `${tokenSymbol}`, address: instantPoolAddress, balance, totalSupply, tvl: tvl, volume: 0, inputToken: { name: tokenName, address: tokenAddress, symbol: tokenSymbol, amount: parseTokenValue(tokenAmount), price: tokenPrice, balance: parseTokenValue(tokenBalance) } }
 
 
-            return fastPool;
+            return instantPool;
         }
 
     }
+
+    const approveForLiquidityPool = async (liquidityPoolAdresses: string, cntractAddress: string, amount: BigNumberish) => {
+        const signer: any = library?.getSigner();
+        if (signer && account) {
+
+            let deployedLiquidityPool = LiquidityPool__factory.connect(liquidityPoolAdresses, signer);
+
+            let currentAllowance: any = await deployedLiquidityPool.allowance(account, cntractAddress);
+
+            debugger
+            if (parseTokenValue(amount) > parseTokenValue(currentAllowance)) {
+                let neededAllowance = amount;
+
+                try {
+                    const approvTx: ContractTransaction = await deployedLiquidityPool.approve(cntractAddress, neededAllowance);
+                    await approvTx.wait(1);
+                } catch (error) {
+                    notification.error(getErrorMessage(error));
+                }
+
+            }
+        }
+    }
+
+
 
 
     //how to use

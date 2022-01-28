@@ -12,12 +12,14 @@ import { useExchangeRouterContract } from "services/contracts";
 
 
 import { useQueryClient } from 'react-query';
+import { useLiquidityPoolFactory } from './useLiquidityPoolFactoryContract';
 
 export const useExchangeRouter = () => {
     const { library, account } = useWebWallet();
     const notification = useNotification();
     const queryClient = useQueryClient();
     const contractMethod: any = useExchangeRouterContract();
+    const liquidityPoolFactory = useLiquidityPoolFactory();
     const secondsToWait = 1200
 
 
@@ -90,7 +92,7 @@ export const useExchangeRouter = () => {
 
             const liquidity = toTokenValue(liquidityAmount)
 
-            await approveForLiquidityPool(liquidityPoolAdresses, contractMethod.address, liquidityAmount)
+            await approveForLiquidityPool(liquidityPoolAdresses, contractMethod.address, liquidity)
 
 
             let amountAmin = toTokenValue(_amountAmin);
@@ -101,7 +103,7 @@ export const useExchangeRouter = () => {
             let lastTimestamp = lastBlock.timestamp;
             let deadline = lastTimestamp + secondsToWait;
 
-            debugger
+
 
             contractMethod
                 ?.removeLiquidity(tokenA, tokenB,

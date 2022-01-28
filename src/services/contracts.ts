@@ -63,11 +63,6 @@ export const useCCTransferRouterContract = (): CCTransferRouter | undefined => {
     return useContractFromAddress(CCTransferRouter__factory.connect, address);
 };
 
-export const useHOTGATEontract = (): ERC20 | undefined => {
-    const address: any = process.env.REACT_APP_HOTGATE_TOKEN_ADDRESS;
-    return useContractFromAddress(ERC20__factory.connect, address);
-};
-
 export const useHOTGATEContract = (): ERC20 | undefined => {
     const address: any = process.env.REACT_APP_HOTGATE_TOKEN_ADDRESS;
     return useContractFromAddress(ERC20__factory.connect, address);

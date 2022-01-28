@@ -5,7 +5,7 @@ import { BigNumberish, ContractTransaction } from "ethers";
 import useWebWallet, { getErrorMessage } from "hooks/use-web-wallet/useWebWallet";
 import { parseTokenValue, toTokenValue } from "utils/convert";
 import useNotification from "hooks/useNotification";
-import { WrappedERC20Token__factory, FastPool__factory } from "contracts/types";
+import { WrappedERC20Token__factory, FastPool__factory, LiquidityPool__factory } from "contracts/types";
 import { useFastRouterContract } from "services/contracts";
 import { useQueryClient } from 'react-query';
 
@@ -55,6 +55,8 @@ export const useFastRouter = () => {
     const withdraw = async (user: string, _amount: string) => {
         try {
             const amount = toTokenValue(_amount)
+            const wrappedBitcoinAddress = process.env.REACT_APP_WRAPPED_BITCOIN_ADDRESS || ""
+            await approve(wrappedBitcoinAddress, contractMethod.address, amount)
             contractMethod
                 ?.removeLiquidity(
                     user,
@@ -159,6 +161,11 @@ export const useFastRouter = () => {
         if (signer && account) {
             const deployedFastPool = FastPool__factory.connect(fastPoolAddress, signer);
 
+            const poolBalance = await deployedFastPool.balanceOf(account);
+            const poolTotalSupply = await deployedFastPool.totalSupply();
+            const balance = parseTokenValue(poolBalance)
+            const totalSupply = parseTokenValue(poolTotalSupply)
+
 
             const tokenAmount = await deployedFastPool.totalWrappedBitcoin()
 
@@ -179,12 +186,34 @@ export const useFastRouter = () => {
 
             const tvl = parseTokenValue(tokenAmount) * tokenPrice;
 
-            fastPool = { title: `${tokenSymbol}`, tvl: tvl, volume: 0, inputToken: { name: tokenName, address: tokenAddress, symbol: tokenSymbol, amount: parseTokenValue(tokenAmount), price: tokenPrice, balance: parseTokenValue(tokenBalance) } }
+            fastPool = { title: `${tokenSymbol}`, address: fastPoolAddress, tvl: tvl, balance, totalSupply, volume: 0, inputToken: { name: tokenName, address: tokenAddress, symbol: tokenSymbol, amount: parseTokenValue(tokenAmount), price: tokenPrice, balance: parseTokenValue(tokenBalance) } }
 
 
             return fastPool;
         }
 
+    }
+    const approveForLiquidityPool = async (liquidityPoolAdresses: string, cntractAddress: string, amount: BigNumberish) => {
+        const signer: any = library?.getSigner();
+        if (signer && account) {
+
+            let deployedLiquidityPool = LiquidityPool__factory.connect(liquidityPoolAdresses, signer);
+
+            let currentAllowance: any = await deployedLiquidityPool.allowance(account, cntractAddress);
+
+            debugger
+            if (parseTokenValue(amount) > parseTokenValue(currentAllowance)) {
+                let neededAllowance = amount;
+
+                try {
+                    const approvTx: ContractTransaction = await deployedLiquidityPool.approve(cntractAddress, neededAllowance);
+                    await approvTx.wait(1);
+                } catch (error) {
+                    notification.error(getErrorMessage(error));
+                }
+
+            }
+        }
     }
 
 

@@ -44,10 +44,11 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
         const isValid = isValidNumber("" + _value);
 
         if (isValid) {
-
+            debugger
             // Second token amount = (second token reserve)*(first token amount)/(first token reserve)
             if (name === "amount") {
-                setForm({ ...form, [name]: _value, receivedAmount: (form.outputToken.amount * _value * _value / form.inputToken.amount) || _value });
+                debugger
+                setForm({ ...form, [name]: _value, receivedAmount: (form?.outputToken?.amount * _value / form.inputToken.amount) || _value });
                 return null;
             }
             if (name === "receivedAmount") {
