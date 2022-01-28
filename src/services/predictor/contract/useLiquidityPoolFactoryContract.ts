@@ -8,10 +8,12 @@ import useNotification from "hooks/useNotification";
 import { LiquidityPool__factory, WrappedERC20Token__factory } from "contracts/types";
 
 import { useLiquidityPoolFactoryContract } from "services/contracts";
+import { useQueryClient } from 'react-query';
 
 export const useLiquidityPoolFactory = () => {
     const { library, account } = useWebWallet();
     const notification = useNotification();
+    const queryClient = useQueryClient();
     const contractMethod: any = useLiquidityPoolFactoryContract();
 
     //write-contract
@@ -19,14 +21,15 @@ export const useLiquidityPoolFactory = () => {
     const createLiquidityPool = async (tokenA: string,
         tokenB: string) => {
         return new Promise((resolve: (response: any) => void, reject) => {
-            debugger
+
             contractMethod
                 ?.createLiquidityPool(tokenA, tokenB)
                 .then((transaction: ContractTransaction) => {
-                    debugger;
+
                     transaction.wait(1).then((transactionE) => {
-                        debugger;
+
                         notification.success("Liquidity Pool Creted.");
+                        queryClient.invalidateQueries(`get-predictor-pools`);
                         resolve(transaction);
                     });
                 })
@@ -174,6 +177,14 @@ export const useLiquidityPoolFactory = () => {
     // Get all tokens  
     const getAllTokens = async (): Promise<any[]> => {
 
+        const staticsTokenAddressList = [
+            process.env.REACT_APP_ERC20_POLKADOT_TARGET_ADDRESS,
+            process.env.REACT_APP_ERC20_CHAINLINK_TARGET_ADDRESS,
+            process.env.REACT_APP_WRAPPED_BITCOIN_ADDRESS,
+            process.env.REACT_APP_WETH_ADDRESS,
+            process.env.REACT_APP_HOTGATE_TOKEN_ADDRESS,
+        ]
+
 
 
         let tokens: any = [];
@@ -209,6 +220,38 @@ export const useLiquidityPoolFactory = () => {
 
 
         })
+
+        const findedTokens = staticsTokenAddressList.filter((staticTokenAddress: any) => !tokens.find((i: any) => staticTokenAddress === i.address))
+        debugger
+        const signer = library?.getSigner();
+        if (findedTokens.length > 0 && signer && account) {
+            debugger
+            for (let i = 0; i < findedTokens.length; i++) {
+
+                const address = findedTokens[i];
+                if (address) {
+                    const deployedToken = WrappedERC20Token__factory.connect(address, signer);
+
+
+                    const name = await deployedToken.name();
+                    const symbol = await deployedToken.symbol();
+                    const balance = await deployedToken.balanceOf(account);
+                    const amount = 0
+                    const tokenPrice = 1;
+
+
+
+                    tokens.push({ address, name, symbol, amount, tokenPrice, namebalance: parseTokenValue(balance), tvl: 0, connectionTokens: [] })
+
+
+
+                }
+
+            }
+        }
+
+
+
 
 
         return tokens;

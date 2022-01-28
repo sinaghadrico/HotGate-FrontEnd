@@ -1,0 +1,40 @@
+.new-pool {
+    .token-selector {
+        border: 0 !important;
+    }
+
+    &-select {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    &-list {
+
+        &-items {
+            display: flex;
+            flex-direction: column;
+            max-height: 300px;
+            overflow-y: auto;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        &-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    }
+
+    .select-input {
+        .ui-input-prefix {
+            border: 2px solid var(--totem-ui-component-color-orange);
+            border-radius: 10px;
+        }
+
+    }
+}
