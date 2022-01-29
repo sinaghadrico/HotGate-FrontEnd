@@ -61,7 +61,7 @@ const CrossChainTransfer: FC = () => {
             <Box
                 title="Cross-Chain Transfer"
                 description="Send tokens from [[Chain A]] to [[Chain B]]."
-                submitTitle="Transfer"
+                submitTitle="Cross-Chain Transfer"
                 defaultSetting={{
                     deadline: form.deadline,
                     slippage: form.slippage,
@@ -104,7 +104,7 @@ const CrossChainTransfer: FC = () => {
                     onChange={handleChange}
                     autoComplete="off"
                 />
-
+                {form?.inputToken?.name && <span className="balance">Balance: {form?.inputToken.balance} {" "} {form?.inputToken.symbol} </span>}
                 <Input
                     className="my-10"
                     label="Receiver Address"

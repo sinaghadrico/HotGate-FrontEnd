@@ -122,6 +122,7 @@ const Exchange: FC = () => {
                     onChange={handleChange}
                     autoComplete="off"
                 />
+                {form?.inputToken?.name && <span className="balance">Balance: {form?.inputToken.balance} {" "} {form?.inputToken.symbol} </span>}
                 <Input
                     prefix={
                         <TokenSelector

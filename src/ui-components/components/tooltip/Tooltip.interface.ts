@@ -4,7 +4,7 @@ import { TooltipPosition } from "./Tooltip.enum";
 
 export interface TooltipProps extends Pick<HTMLAttributes<any>, "children"> {
     readonly title?: string;
-    readonly description: string;
+    readonly description: any;
     readonly position?: TooltipPosition;
     readonly pointTo?: number;
     readonly offset?: number;

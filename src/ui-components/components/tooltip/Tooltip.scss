@@ -1,6 +1,6 @@
 .ui-tooltip {
-    $dangle-color: white;
-    $box-color: white;
+    $dangle-color: #433851;
+    $box-color: #433851;
 
     vertical-align: middle !important;
     display: inline-block;
@@ -9,12 +9,12 @@
         display: block;
         visibility: hidden;
         position: absolute;
-        padding: 5px 15px;
+        padding: 5px 5px;
         background-color: $box-color;
         border-radius: 7px;
         text-align: center;
         width: max-content;
-        max-width: 150px;
+        max-width: 250px;
         min-width: 100px;
         // max-height: 140px;
         left: -5px;
