@@ -222,10 +222,10 @@ export const useLiquidityPoolFactory = () => {
         })
 
         const findedTokens = staticsTokenAddressList.filter((staticTokenAddress: any) => !tokens.find((i: any) => staticTokenAddress === i.address))
-        debugger
+
         const signer = library?.getSigner();
         if (findedTokens.length > 0 && signer && account) {
-            debugger
+
             for (let i = 0; i < findedTokens.length; i++) {
 
                 const address = findedTokens[i];
@@ -257,6 +257,30 @@ export const useLiquidityPoolFactory = () => {
         return tokens;
     };
 
+    const getToken = async (address: string): Promise<any> => {
+        const signer = library?.getSigner();
+
+
+
+        if (address && account && signer) {
+            const deployedToken = WrappedERC20Token__factory.connect(address, signer);
+
+
+            const name = await deployedToken.name();
+            const symbol = await deployedToken.symbol();
+            const balance = await deployedToken.balanceOf(account);
+            const amount = 0
+            const tokenPrice = 1;
+
+
+
+            return { address, name, symbol, amount, tokenPrice, namebalance: parseTokenValue(balance), tvl: 0, connectionTokens: [] }
+
+        }
+
+
+    }
+
     //how to use
     // const { data: startDate, loading } = useQuery("StartDate", () => getStartDate());
 
@@ -266,6 +290,7 @@ export const useLiquidityPoolFactory = () => {
         getLiquidityPool,
         getLiquidityPoolAddress,
         getAllTokens,
+        getToken,
 
 
 

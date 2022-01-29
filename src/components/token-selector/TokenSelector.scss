@@ -7,8 +7,7 @@
     flex-direction: column;
     align-items: flex-start;
 
-    &-title {
-    }
+    &-title {}
 
     &-value {
         display: flex;
@@ -52,9 +51,16 @@
     &-placholder {
         min-height: 250px;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        &-symbol {}
+
+        &-name {}
     }
 
     &-fotter {
         width: 100%;
+        display: flex;
     }
 }
