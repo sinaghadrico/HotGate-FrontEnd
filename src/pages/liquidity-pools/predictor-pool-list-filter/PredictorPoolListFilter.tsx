@@ -21,7 +21,7 @@ const PredictionPoolListFilter = () => {
         const { value } = event.target;
 
         GlobalDispatch({
-            type: "setPoolFilters",
+            type: "setPoolInputSearch",
             value: value,
         });
     };
