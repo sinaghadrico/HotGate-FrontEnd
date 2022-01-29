@@ -11,21 +11,21 @@ import { useExchangeRouter } from "services/predictor/contract/useExchangeRouter
 import { useFastRouter } from "services/predictor/contract/useFastRouter";
 import { useInstantRouter } from "services/predictor/contract/useInstantRouter";
 
-
+import useNotification from "hooks/useNotification";
 import { useMutation } from "react-query";
 
 const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
     const { inputToken, outputToken } = data;
     const { poolsFilters } = useGlobalState();
     const { account } = useWebWallet();
-
+    const notification = useNotification();
     const exchangeRouter = useExchangeRouter();
     const fastRouter = useFastRouter();
     const istantRouter = useInstantRouter();
     const [form, setForm] = useState({
         amount: inputToken?.balance,
         inputToken: inputToken,
-        receivedAmount: 0,
+        receivedAmount: (outputToken?.amount * inputToken?.balance / inputToken.amount) || inputToken?.balance,
         outputToken: outputToken,
         receiverAddress: account,
 
@@ -44,16 +44,16 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
         const isValid = isValidNumber("" + _value);
 
         if (isValid) {
-            debugger
+
             // Second token amount = (second token reserve)*(first token amount)/(first token reserve)
             if (name === "amount") {
-                debugger
-                setForm({ ...form, [name]: _value, receivedAmount: (form?.outputToken?.amount * _value / form.inputToken.amount) || _value });
+
+                setForm({ ...form, [name]: value, receivedAmount: (form?.outputToken?.amount * Number(value) / form.inputToken.amount) || value });
                 return null;
             }
             if (name === "receivedAmount") {
                 // First token amount = (first token reserve)*(second token amount)/(second token reserve)
-                setForm({ ...form, [name]: _value, amount: (form.inputToken.amount * _value / form.outputToken.amount) || _value });
+                setForm({ ...form, [name]: value, amount: (form.inputToken.amount * Number(value) / form.outputToken.amount) || value });
                 return null;
             }
             setForm({ ...form, [name]: value });
@@ -73,6 +73,11 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
 
     const handleDeposit = () => {
         if (poolsFilters?.value === "liquidity") {
+
+            if (form.amount === 0 || form.receivedAmount === 0) {
+                notification.error(`Enter Input Token Amount And  Output Token Amount Greater Than 0  `);
+                return null
+            }
             if (!mutationNormlDeposit?.isSuccess) {
                 mutationNormlDeposit.mutate(
                     form,
@@ -86,6 +91,10 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
             }
         }
         else if (poolsFilters?.value === "fast") {
+            if (form.amount === 0) {
+                notification.error(`Enter Input Token Amount Greater Than 0  `);
+                return null
+            }
             if (!mutationFastDeposit?.isSuccess) {
                 mutationFastDeposit.mutate(
                     form,
@@ -99,6 +108,10 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
             }
         }
         else if (poolsFilters?.value === "instant") {
+            if (form.amount === 0) {
+                notification.error(`Enter Input Token Amount Greater Than 0  `);
+                return null
+            }
             if (!mutationInstantDeposit?.isSuccess) {
                 mutationInstantDeposit.mutate(
                     form,

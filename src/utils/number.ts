@@ -34,10 +34,10 @@ const isValidNumber = (value: any): boolean => {
 
     const dotIndex = value?.toString()?.indexOf(".");
     const realDecimal = dotIndex > 0 ? value?.toString()?.substring(dotIndex + 1).length : 0;
-
+    debugger
     if (_value === "") {
         return true;
-    } else if (realDecimal > 2) {
+    } else if (Number(value) > 1 && realDecimal > 2 || Number(value) < 1 && realDecimal > 8) {
         return false;
     } else {
         return validNumberRegex.test(_value);

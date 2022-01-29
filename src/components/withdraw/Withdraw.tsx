@@ -13,10 +13,12 @@ import { useInstantRouter } from "services/predictor/contract/useInstantRouter";
 
 import { useGlobalState } from "states/globalContext";
 import { useMutation } from "react-query";
+import useNotification from "hooks/useNotification";
 
 const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
     const { inputToken, outputToken, balance, totalSupply, address } = data;
     const { account } = useWebWallet();
+    const notification = useNotification();
     const { poolsFilters } = useGlobalState();
 
     const exchangeRouter = useExchangeRouter();
@@ -65,6 +67,10 @@ const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
     });
 
     const handleWithdraw = () => {
+        if (form.amount === 0) {
+            notification.error(`Enter Input Token Amount Greater Than 0  `);
+            return null
+        }
         if (poolsFilters?.value === "liquidity") {
             if (!mutationNormlWithdraw?.isSuccess) {
                 mutationNormlWithdraw.mutate(

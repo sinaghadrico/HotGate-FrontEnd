@@ -12,11 +12,13 @@ import { useLiquidityPoolFactory } from "services/predictor/contract/useLiquidit
 import usePredictorStakes from "services/predictor/api/usePredictorStakes";
 
 import { useMutation } from "react-query";
+import useNotification from "hooks/useNotification";
+import { useWrappedBITCOINContract, useWETHContract } from "services/contracts";
 
 const NewPool = ({ open, onClose, onConfirm }: NewPoolProps) => {
-
-    // const deployWETHContract = useWETHContract()
-    // const deployWrappedBITCOINContract = useWrappedBITCOINContract()
+    const notification = useNotification();
+    const deployWETHContract = useWETHContract()
+    const deployWrappedBITCOINContract = useWrappedBITCOINContract()
 
     const { poolsFilters } = useGlobalState();
     const liquidityPoolFactory = useLiquidityPoolFactory()
@@ -33,18 +35,15 @@ const NewPool = ({ open, onClose, onConfirm }: NewPoolProps) => {
 
 
     const handleNewPool = async () => {
-        //const tokenA = process.env.REACT_APP_ERC20_POLKADOT_TARGET_ADDRESS || "";
-        //const tokenA = process.env.REACT_APP_ERC20_CHAINLINK_TARGET_ADDRESS || "";
-        // const tokenA = process.env.REACT_APP_WRAPPED_BITCOIN_ADDRESS || ""
-        // const tokenA = process.env.REACT_APP_WETH_ADDRESS || ""
-        // const tokenB = process.env.REACT_APP_HOTGATE_TOKEN_ADDRESS || "";
+        if (!form.inputToken || !form.outputToken) {
+            notification.error(`Please Choose First And Second Token`);
+            return null
+        }
 
         const liquidityPoolExist = await liquidityPoolFactory.getLiquidityPoolAddress(form.inputToken.address, form.outputToken.address);
 
         if (liquidityPoolExist === "0x0000000000000000000000000000000000000000") {
-            console.log("reject")
 
-        } else {
             if (!mutationNewPool?.isSuccess) {
                 mutationNewPool.mutate(
                     form,
@@ -55,6 +54,10 @@ const NewPool = ({ open, onClose, onConfirm }: NewPoolProps) => {
                     },
                 );
             }
+
+        } else {
+
+            notification.error(`Liquidity Pool Exist`);
         }
 
         // deployWrappedBITCOINContract && await deployWrappedBITCOINContract.mintTestToken();
@@ -71,7 +74,7 @@ const NewPool = ({ open, onClose, onConfirm }: NewPoolProps) => {
         const { name, value } = event.target;
         if (name === "tokenType") {
             if (value === "inputToken" && form.inputToken) {
-                setForm({ ...form, [name]: value, inputToken: null });
+                setForm({ ...form, [name]: value, inputToken: null, outputToken: null });
             }
             else if (value === "outputToken" && form.outputToken) {
                 setForm({ ...form, [name]: value, outputToken: null });

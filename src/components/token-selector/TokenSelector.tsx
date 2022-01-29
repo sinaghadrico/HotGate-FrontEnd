@@ -18,8 +18,8 @@ const TokenSelector = ({ onChangeValue, title = "Input Token", token, hiddenToke
     const { data, isLoading, isFetching } = usePredictorStakes(0, 10);
 
     const handleChange = (event: any) => {
-        const { name, value: _value } = event.target;
-        setForm({ ...form, [name]: _value });
+        const { name, value } = event.target;
+        setForm({ ...form, [name]: value });
     };
 
     const handleChangeTab = (value: any) => {

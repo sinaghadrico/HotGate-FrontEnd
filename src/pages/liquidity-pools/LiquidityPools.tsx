@@ -9,7 +9,7 @@ import "./LiquidityPools.scss";
 import { PoolBox } from "components/pool-box";
 
 const LiquidityPools: FC = () => {
-    const { poolsOrderBy, poolsFilters } = useGlobalState();
+    const { poolsOrderBy, poolsFilters, poolInputSearch } = useGlobalState();
     const GlobalDispatch = useGlobalDispatch();
 
     useEffect(() => {
@@ -37,7 +37,7 @@ const LiquidityPools: FC = () => {
             </div>
             <div className="row">
                 {data?.pages?.map((page) => {
-                    return page?.pools?.map((pool: any, index) => {
+                    return page?.pools?.filter((pool: any) => pool?.title?.toLowerCase()?.includes(poolInputSearch?.toLowerCase())).map((pool: any, index) => {
                         return (
                             <div className="col-md-4 col-lg-4 col-xl-4 my-10" key={index}>
                                 <PoolBox

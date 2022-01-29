@@ -19,7 +19,7 @@ const globalReducer = (state: any, action: any) => {
         case "setPoolFilters":
             return { ...state, poolsFilters: action.value };
         case "setPoolInputSearch":
-            return { ...state, poolsFilters: action.value };
+            return { ...state, poolInputSearch: action.value };
         case "setPoolsOrderBy":
             return { ...state, poolsOrderBy: action.value };
 
