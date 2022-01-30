@@ -8,6 +8,7 @@ const CrossChainExchange = lazy(() => import("../pages/cross-chain-exchange/Cros
 const CrossChainTransfer = lazy(() => import("../pages/cross-chain-transfer/CrossChainTransfer"));
 const LiquidityPools = lazy(() => import("../pages/liquidity-pools/LiquidityPools"));
 const Tokens = lazy(() => import("../pages/account-management/AccountManagement"));
+const Staking = lazy(() => import("../pages/staking/Staking"));
 
 const AccountManagement = lazy(() => import("../pages/account-management/AccountManagement"));
 const NotFoundPage = lazy(() => import("../pages/not-found-page/NotFoundPage"));
@@ -35,6 +36,7 @@ const RoutesBase: React.FC<RouteComponentProps> = () => {
 
         [Paths.AccountManagement]: AccountManagement,
         [Paths.Home]: Exchange,
+        [Paths.Staking]: Staking,
         [Paths.NotFound]: NotFoundPage,
     };
 

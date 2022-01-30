@@ -4,6 +4,7 @@ export const Paths = {
     CrossChainTransfer: "/cross-chain-transfer",
     LiquidityPools: "/pools",
     Tokens: "/tokens",
+    Staking: "/staking",
     AccountManagement: "/AccountManagement",
     Home: "/",
     NotFound: "*",

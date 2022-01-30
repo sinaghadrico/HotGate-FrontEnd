@@ -3,7 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 /* eslint-disable prefer-const */
 import { BigNumberish, ContractTransaction } from "ethers";
 import useWebWallet, { getErrorMessage } from "hooks/use-web-wallet/useWebWallet";
-import { parseTokenValue, toTokenValue } from "utils/convert";
+import { parseTokenValue, toTokenValue, parseValue } from "utils/convert";
 import useNotification from "hooks/useNotification";
 import { WrappedERC20Token__factory, InstantPool__factory, LiquidityPool__factory } from "contracts/types";
 import { useInstantRouterContract } from "services/contracts";
@@ -74,6 +74,53 @@ export const useInstantRouter = () => {
         }
     };
 
+    const lockHGT = async (_amount: string) => {
+
+        const amount = toTokenValue(_amount);
+
+        try {
+            const HGTAddress = process.env.REACT_APP_HOTGATE_TOKEN_ADDRESS;
+
+            await approve(HGTAddress || "0x00", contractMethod.address, amount)
+            debugger
+            contractMethod
+                ?.lockHGT(amount)
+                .then((transaction: ContractTransaction) => {
+
+                    transaction.wait(1).then((transactionE) => {
+                        notification.success("lockHGT was succesfull!");
+                        // queryClient.invalidateQueries(`get-predictor-pools`);
+                    });
+                })
+                .catch((error: any) => {
+                    notification.error(getErrorMessage(error));
+                });
+        } catch (error) {
+            notification.error(getErrorMessage(error));
+        }
+    };
+    const unlockHGT = async (_amount: string) => {
+
+        const amount = toTokenValue(_amount);
+
+        try {
+            // await approve(wrappedBitcoinAddress, contractMethod.address, wrappedBitcoinAmount)
+            contractMethod
+                ?.unlockHGT(amount)
+                .then((transaction: ContractTransaction) => {
+
+                    transaction.wait(1).then((transactionE) => {
+                        notification.success("unlockHGT was succesfull!");
+                        // queryClient.invalidateQueries(`get-predictor-pools`);
+                    });
+                })
+                .catch((error: any) => {
+                    notification.error(getErrorMessage(error));
+                });
+        } catch (error) {
+            notification.error(getErrorMessage(error));
+        }
+    };
 
     //Perform swap
 
@@ -109,6 +156,60 @@ export const useInstantRouter = () => {
     };
 
     //read contract
+
+
+    const getHotGateToken = () => {
+        return contractMethod
+            .HotGateToken()
+            .then((data: any) => {
+                debugger;
+                return data
+
+            })
+            .catch((error: any) => {
+
+                notification.error(getErrorMessage(error));
+            });
+    };
+    const getTotalLockedHGT = () => {
+        return contractMethod
+            .totalLockedHGT()
+            .then((data: any) => {
+                debugger;
+                return parseTokenValue(data)
+
+            })
+            .catch((error: any) => {
+
+                notification.error(getErrorMessage(error));
+            });
+    };
+    const getLockedHGT = (account: string) => {
+        return contractMethod
+            .lockedHGT(account)
+            .then((data: any) => {
+                debugger;
+                return parseTokenValue(data)
+
+            })
+            .catch((error: any) => {
+
+                notification.error(getErrorMessage(error));
+            });
+    };
+    const getCollateralRatio = () => {
+        return contractMethod
+            .collateralRatio()
+            .then((data: any) => {
+                debugger;
+                return parseTokenValue(data)
+
+            })
+            .catch((error: any) => {
+
+                notification.error(getErrorMessage(error));
+            });
+    };
 
     // Get the expected received amount
     const getAmountOut = (amountIn: string, reserveIn: string, reserveOut: string) => {
@@ -225,10 +326,16 @@ export const useInstantRouter = () => {
     return {
         getAmountOut,
         getBitcoinInstantPool,
+        getHotGateToken,
+        getTotalLockedHGT,
+        getLockedHGT,
+        getCollateralRatio,
 
         swapExactTokensForTokens,
         deposit,
         withdraw,
+        lockHGT,
+        unlockHGT,
 
         contract: contractMethod || undefined,
     };

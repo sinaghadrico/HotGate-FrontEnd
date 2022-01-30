@@ -29,6 +29,9 @@ const Sidebar: FC = () => {
             <NavLink to="/tokens" replace={false} activeClassName="active" rel="noopener noreferrer">
                 <Icon src={account_logo} /> Tokens
             </NavLink>
+            <NavLink to="/staking" replace={false} activeClassName="active" rel="noopener noreferrer">
+                <Icon src={account_logo} /> Staking
+            </NavLink>
         </div>
     );
 };
