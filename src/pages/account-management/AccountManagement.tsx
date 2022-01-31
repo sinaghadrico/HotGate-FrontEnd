@@ -6,7 +6,7 @@ import "./AccountManagement.scss";
 
 import { AccountPredictor } from "./account-predictor";
 
-const Tokens: FC = () => {
+const AccountManagement: FC = () => {
     return (
         <>
             <Helmet>
@@ -24,5 +24,5 @@ const Tokens: FC = () => {
         </>
     );
 };
-Tokens.defaultProps = {};
-export default Tokens;
+AccountManagement.defaultProps = {};
+export default AccountManagement;
