@@ -50,6 +50,10 @@ const NewPool = ({ open, onClose, onConfirm }: NewPoolProps) => {
                     {
                         onSuccess: () => {
                             onConfirm(form)
+                            mutationNewPool.reset()
+                        },
+                        onError: () => {
+                            mutationNewPool.reset()
                         },
                     },
                 );

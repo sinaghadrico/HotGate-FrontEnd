@@ -78,8 +78,11 @@ const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
                     {
                         onSuccess: () => {
                             onConfirm(form)
+                            mutationNormlWithdraw.reset()
                         },
-
+                        onError: () => {
+                            mutationNormlWithdraw.reset()
+                        },
                     },
                 );
             }
@@ -91,8 +94,11 @@ const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
                     {
                         onSuccess: () => {
                             onConfirm(form)
+                            mutationFastWithdraw.reset()
                         },
-
+                        onError: () => {
+                            mutationFastWithdraw.reset()
+                        },
                     },
                 );
             }
@@ -104,8 +110,11 @@ const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
                     {
                         onSuccess: () => {
                             onConfirm(form)
+                            mutationInstantWithdraw.reset()
                         },
-
+                        onError: () => {
+                            mutationInstantWithdraw.reset()
+                        },
                     },
                 );
             }

@@ -90,8 +90,10 @@ const Staking: FC = () => {
                     form,
                     {
                         onSuccess: () => {
-                            console.log("onSuccess")
-
+                            mutationStake.reset()
+                        },
+                        onError: () => {
+                            mutationStake.reset()
                         },
 
                     },
@@ -108,7 +110,10 @@ const Staking: FC = () => {
                     form,
                     {
                         onSuccess: () => {
-                            console.log("onSuccess")
+                            mutationUnStake.reset()
+                        },
+                        onError: () => {
+                            mutationUnStake.reset()
                         },
 
                     },
@@ -125,7 +130,10 @@ const Staking: FC = () => {
                     form,
                     {
                         onSuccess: () => {
-                            console.log("onSuccess")
+                            mutationClaim.reset()
+                        },
+                        onError: () => {
+                            mutationClaim.reset()
                         },
 
                     },

@@ -77,7 +77,12 @@ const Exchange: FC = () => {
             mutationSwap.mutate(
                 form,
                 {
-                    // onSuccess: () => { },
+                    onSuccess: () => {
+                        mutationSwap.reset()
+                    },
+                    onError: () => {
+                        mutationSwap.reset()
+                    },
                 },
             );
         }

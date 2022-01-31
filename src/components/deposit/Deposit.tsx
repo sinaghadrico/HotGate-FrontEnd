@@ -84,6 +84,10 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
                     {
                         onSuccess: () => {
                             onConfirm(form)
+                            mutationNormlDeposit.reset()
+                        },
+                        onError: () => {
+                            mutationNormlDeposit.reset()
                         },
 
                     },
@@ -101,6 +105,10 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
                     {
                         onSuccess: () => {
                             onConfirm(form)
+                            mutationFastDeposit.reset()
+                        },
+                        onError: () => {
+                            mutationFastDeposit.reset()
                         },
 
                     },
@@ -118,6 +126,10 @@ const Deposit = ({ open, onClose, onConfirm, data }: DepositProps) => {
                     {
                         onSuccess: () => {
                             onConfirm(form)
+                            mutationInstantDeposit.reset()
+                        },
+                        onError: () => {
+                            mutationInstantDeposit.reset()
                         },
 
                     },
