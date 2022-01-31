@@ -1,25 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Stake, StatusClass } from "models";
-import { FC, useEffect } from "react";
-import { Label, Currency, CurrencyUnit, Button, TableRow, TableCell, ButtonWidth } from "ui-components";
+import { FC } from "react";
+import { TableRow, TableCell } from "ui-components";
 import "./AccountPredictorRewardsRow.scss";
 import ContentLoader from "react-content-loader";
-import { TransactionAddress } from "components/transaction-address";
 
-import { Icon } from "components/icon";
-import expand_logo from "assets/icons/svgs/expand.svg";
 
-import { transactionEndpoint } from "utils/configs";
 
-import { TotemClaimDetails } from "./totem-claim-details";
 import { PairCoin } from "components/pair-coin";
 
-import { motion, AnimatePresence } from "framer-motion";
+
 import { Column } from "models/column";
-import { useLPStaker } from "services/predictor/contract/useLPStaker";
-import { useQuery } from "react-query";
-import useWebWallet from "hooks/use-web-wallet/useWebWallet";
+
 
 export interface AccountPredictorRewardsRowProps {
     className?: string;
@@ -33,10 +25,9 @@ export interface AccountPredictorRewardsRowProps {
 
 const AccountPredictorRewardsRow: FC<AccountPredictorRewardsRowProps> = ({
     data,
-    expandItem,
-    setExpandItem,
+
     columns,
-    refetchPoolData,
+
 }: AccountPredictorRewardsRowProps) => {
     const { address, price, symbol, change = "0", tvl, amount } = data;
     const isLoading = false;
