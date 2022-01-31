@@ -21,13 +21,13 @@ export const useStaking = () => {
 
         const address = process.env.REACT_APP_TELEPORTDAO_TOKEN_ADDRESS || "0x00";
         try {
-            await approve(address, contractMethod.address, _amount)
+            await approve(address, contractMethod.address, amount)
             contractMethod
                 ?.stake(user, amount)
                 .then((transaction: ContractTransaction) => {
 
                     transaction.wait(1).then(() => {
-                        notification.success("stake confirmed");
+                        notification.success("Stake confirmed");
                         queryClient.invalidateQueries(`getInitialDataStakling`);
                     });
                 })
@@ -44,10 +44,9 @@ export const useStaking = () => {
         return new Promise((resolve: (response: any) => void, reject) => {
             contractMethod
                 ?.unstake(user, amount)
-                .call()
                 .then((transaction: ContractTransaction) => {
                     transaction.wait(1).then(() => {
-                        notification.success("unstake confirmed");
+                        notification.success("Unstake confirmed");
                         queryClient.invalidateQueries(`getInitialDataStakling`);
                         resolve(transaction);
                     });
@@ -67,7 +66,7 @@ export const useStaking = () => {
                 .then((transaction: ContractTransaction) => {
 
                     transaction.wait(1).then(() => {
-                        notification.success("claim confirmed");
+                        notification.success("Claim confirmed");
                         queryClient.invalidateQueries(`getInitialDataStakling`);
                     });
                 })
@@ -157,11 +156,12 @@ export const useStaking = () => {
 
     const getInitialData = async (user: string): Promise<any> => {
 
-        const rewards: any = await getEarnedTDT(user);
+
         const stakedBalance: any = await getStakedAmount(user);
         const maxValueUnstake: any = await getStakingShare(user);
         const apy = 5;
         const collateralRatio = 200;
+        const rewards: any = await getEarnedTDT(user);
 
         return { rewards, stakedBalance, maxValueUnstake, apy, collateralRatio };
     };
@@ -171,12 +171,12 @@ export const useStaking = () => {
         const signer: any = library?.getSigner();
         if (signer && account) {
 
-            let deployedERC20 = WrappedERC20Token__factory.connect(tokenContractAddress, signer);
+            const deployedERC20 = WrappedERC20Token__factory.connect(tokenContractAddress, signer);
 
-            let currentAllowance: any = await deployedERC20.allowance(account, cntractAddress)
+            const currentAllowance: any = await deployedERC20.allowance(account, cntractAddress)
 
             if (parseTokenValue(amount) > parseTokenValue(currentAllowance)) {
-                let neededAllowance = amount;
+                const neededAllowance = amount;
 
                 try {
                     const approvTx: ContractTransaction = await deployedERC20.approve(cntractAddress, neededAllowance);

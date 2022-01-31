@@ -40,6 +40,7 @@ const Staking: FC = () => {
     useEffect(() => {
         setForm({
             ...form,
+            recipient: !form.recipient ? account : form.recipient,
             amountStake: 0,
             amountUnStake: maxValueUnstake || 0,
         })
@@ -62,29 +63,27 @@ const Staking: FC = () => {
 
 
 
-
-
-
-
-
-
-
     const mutationStake = useMutation((_form: any): any => {
-        return staking?.stake(_form.recipient, _form?.amount);
+        return staking?.stake(_form.recipient, _form?.amountStake);
     });
     const mutationUnStake = useMutation((_form: any): any => {
-        return staking?.unstake(_form.recipient, _form?.amount);
+        return staking?.unstake(_form.recipient, _form?.amountUnStake);
     });
     const mutationClaim = useMutation((_form: any): any => {
         return staking?.claim(_form.recipient);
     });
 
     const handleClick = () => {
-        if (form.amount === 0) {
-            notification.error(`Enter Input Token Amount Greater Than 0  `);
+        if (form.recipient === 0) {
+            notification.error(`Enter Recipient Address  `);
             return null
         }
+
         if (selectedTab === "stake") {
+            if (form.amountStake === 0) {
+                notification.error(`Amount Greater Than 0  `);
+                return null
+            }
             if (!mutationStake?.isSuccess) {
                 mutationStake.mutate(
                     form,
@@ -99,6 +98,10 @@ const Staking: FC = () => {
             }
         }
         else if (selectedTab === "unstake") {
+            if (form.amountUnStake === 0) {
+                notification.error(`Amount Greater Than 0  `);
+                return null
+            }
             if (!mutationUnStake?.isSuccess) {
                 mutationUnStake.mutate(
                     form,
@@ -112,6 +115,10 @@ const Staking: FC = () => {
             }
         }
         else if (selectedTab === "claim") {
+            if (rewards === 0) {
+                notification.error(`Yout Rewards is still 0  `);
+                return null
+            }
             if (!mutationClaim?.isSuccess) {
                 mutationClaim.mutate(
                     form,
@@ -140,57 +147,61 @@ const Staking: FC = () => {
             </Helmet>
             <Box
                 title="Staking"
-                description="Stake  HotGate tokens."
+                description="Stake HotGate token"
                 submitTitle={selectedTab}
                 onSubmit={handleClick}
 
             >
 
-                <div className="row">
-                    <Tabs hasBorder={true} value={selectedTab} onChange={handleChangeTab}>
-                        <Tab value="stake">Stake</Tab>
-                        <Tab value="unstake">Unstake</Tab>
-                        <Tab value="claim">Rewards</Tab>
-                    </Tabs>
-                    <TabPanel value={selectedTab} name="stake">
+
+                <Tabs hasBorder={true} value={selectedTab} onChange={handleChangeTab}>
+                    <Tab value="stake">Stake</Tab>
+                    <Tab value="unstake">Unstake</Tab>
+                    <Tab value="claim">Rewards</Tab>
+                </Tabs>
+                <TabPanel value={selectedTab} name="stake">
+                    <div className="w-100">
+
                         <Input
                             className="my-10"
                             label="Amount"
-                            value={formatNumberWithCommas(form?.amount)}
-                            name="amount"
+                            value={formatNumberWithCommas(form?.amountStake)}
+                            name="amountStake"
                             onChange={handleChange}
                             autoComplete="off"
                         />
                         <Input
                             className="my-10"
-                            label="Receiver Address"
+                            label="Recipient"
                             value={form?.recipient}
                             name="recipient"
                             onChange={handleChange}
                             autoComplete="off"
                         />
-
-                    </TabPanel>
-                    <TabPanel value={selectedTab} name="unstake">
+                    </div>
+                </TabPanel>
+                <TabPanel value={selectedTab} name="unstake">
+                    <div className="w-100">
                         <Input
                             className="my-10"
                             label="Amount"
-                            value={formatNumberWithCommas(form?.amount)}
-                            name="amount"
+                            value={formatNumberWithCommas(form?.amountUnStake)}
+                            name="amountUnStake"
                             onChange={handleChange}
                             autoComplete="off"
                         />
                         <Input
                             className="my-10"
-                            label="Receiver Address"
+                            label="Recipient"
                             value={form?.recipient}
                             name="recipient"
                             onChange={handleChange}
                             autoComplete="off"
                         />
-
-                    </TabPanel>
-                    <TabPanel value={selectedTab} name="claim">
+                    </div>
+                </TabPanel>
+                <TabPanel value={selectedTab} name="claim">
+                    <div className="w-100">
                         <span>
                             Total Rewards :  {rewards}
                         </span>
@@ -202,14 +213,15 @@ const Staking: FC = () => {
                             onChange={handleChange}
                             autoComplete="off"
                         />
-                    </TabPanel>
-                </div>
+                    </div>
+                </TabPanel>
+
 
 
 
 
                 <DetailsList list={[
-                    { title: "APY", value: apy },
+                    { title: "APY", value: apy + "%" },
                     { title: "Collateral Ratio", value: collateralRatio },
                     { title: "Staked Balance", value: stakedBalance },
                 ]} />
