@@ -181,7 +181,7 @@ export const useLiquidityPoolFactory = () => {
             process.env.REACT_APP_ERC20_POLKADOT_TARGET_ADDRESS,
             process.env.REACT_APP_ERC20_CHAINLINK_TARGET_ADDRESS,
             process.env.REACT_APP_WRAPPED_BITCOIN_ADDRESS,
-            process.env.REACT_APP_WETH_ADDRESS,
+            process.env.REACT_APP_WAVAX_ADDRESS,
             process.env.REACT_APP_HOTGATE_TOKEN_ADDRESS,
         ]
 

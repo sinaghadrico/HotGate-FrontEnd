@@ -76,7 +76,7 @@ export const useCHAINLINKContract = (): ERC20 | undefined => {
     return useContractFromAddress(ERC20__factory.connect, address);
 };
 export const useWETHContract = (): WETH | undefined => {
-    const address: any = process.env.REACT_APP_WETH_ADDRESS;
+    const address: any = process.env.REACT_APP_WAVAX_ADDRESS;
     return useContractFromAddress(WETH__factory.connect, address);
 };
 export const useWrappedBITCOINContract = (): WrappedToken | undefined => {
