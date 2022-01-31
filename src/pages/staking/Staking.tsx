@@ -23,7 +23,7 @@ const Staking: FC = () => {
     const { account } = useWebWallet();
     const staking = useStaking();
 
-    const { data: initialData = {} } = useQuery(["getInitialDataStakling", account], () => staking.getInitialData(account || "0x00"), {
+    const { data: initialData = {} } = useQuery(["getInitialDataStaking", account], () => staking.getInitialData(account || "0x00"), {
         enabled: !!staking.contract && !!account,
         refetchOnWindowFocus: false
     });
@@ -56,6 +56,7 @@ const Staking: FC = () => {
         const value = parseValueToNumber("" + _value);
         const isValid = isValidNumber("" + _value);
 
+
         if (isValid) {
             setForm({ ...form, [name]: value });
         }
@@ -74,7 +75,7 @@ const Staking: FC = () => {
     });
 
     const handleClick = () => {
-        if (form.recipient === 0) {
+        if (!form.recipient) {
             notification.error(`Enter Recipient Address  `);
             return null
         }
@@ -221,7 +222,7 @@ const Staking: FC = () => {
 
 
                 <DetailsList list={[
-                    { title: "APY", value: apy + "%" },
+                    { title: "APY", value: apy || 0 + "%" },
                     { title: "Collateral Ratio", value: collateralRatio },
                     { title: "Staked Balance", value: stakedBalance },
                 ]} />

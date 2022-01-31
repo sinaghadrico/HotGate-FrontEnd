@@ -18,6 +18,7 @@ const CrossChainExchange: FC = () => {
 
     const { data: wrappedBitcoinAddress } = useQuery(["wrappedBitcoinAddress"], () => exchangeRouter.getWrappedBitcoinAddress(), {
         enabled: !!exchangeRouter.contract,
+        refetchOnWindowFocus: false
     });
 
     const [form, setForm] = useState<any>({

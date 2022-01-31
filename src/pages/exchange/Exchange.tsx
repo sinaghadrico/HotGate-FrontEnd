@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Box } from "components/box";
 import { Input } from "ui-components";
 import useWebWallet from "hooks/use-web-wallet/useWebWallet";
@@ -7,6 +7,7 @@ import TokenSelector from "components/token-selector/TokenSelector";
 import { DetailsList } from "components/details-list";
 import { useQuery, useMutation } from "react-query";
 import { Helmet } from "react-helmet-async";
+import useDebounce from "hooks/useDebounce";
 import "./Exchange.scss";
 import { useExchangeRouter } from "services/predictor/contract/useExchangeRouter";
 
@@ -15,9 +16,9 @@ const Exchange: FC = () => {
     const exchangeRouter = useExchangeRouter();
     const [form, setForm] = useState<any>({
         amount: 0,
-        inputToken: { symbol: "BSC" },
+        inputToken: {},
         receivedAmount: 0,
-        outputToken: { symbol: "BSC" },
+        outputToken: {},
         receiverAddress: account,
         transferType: "normal",
         deadline: 1200,
@@ -35,7 +36,7 @@ const Exchange: FC = () => {
         }
 
         if (name === "inputToken") {
-            setForm({ ...form, [name]: _value, amount: _value.balance, outputToken: { key: "bsc", value: "BSC" }, receivedAmount: 0 });
+            setForm({ ...form, [name]: _value, amount: _value.balance, outputToken: {}, receivedAmount: 0 });
             return null
         }
         if (name === "outputToken") {
@@ -52,14 +53,23 @@ const Exchange: FC = () => {
         }
     };
 
-    const { data: amountOut } = useQuery(["amountOut", account, form], () => exchangeRouter.getAmountOut(form?.amount, form?.inputToken?.amount, form?.outputToken?.amount), {
-        enabled: !!exchangeRouter.contract,
+    useEffect(() => {
+        setForm({
+            ...form,
+            receiverAddress: !form.account ? account : account,
+        })
+    }, [account]);
+
+    const debouncedSearch = useDebounce(form?.amount, 500);
+    const { error, data: amountOut } = useQuery(["amountOut", account, debouncedSearch, form?.outputToken], () => exchangeRouter.getAmountOut(form?.amount, form?.inputToken?.amount, form?.outputToken?.amount), {
+        enabled: !!exchangeRouter.contract && !!form?.inputToken.symbol && !!form?.outputToken.symbol,
+        refetchOnWindowFocus: false
     });
 
 
 
     const mutationSwap = useMutation((_form: any): any => {
-        return exchangeRouter?.swapExactTokensForTokens(_form?.inputToken.address, _form?.outputToken.address, _form?.amount, amountOut, _form.deadline);
+        return exchangeRouter?.swapExactTokensForTokens(_form?.inputToken.address, _form?.outputToken.address, _form?.amount, amountOut, _form?.receiverAddress, _form.deadline);
     });
 
     const handleSwap = () => {
@@ -104,6 +114,7 @@ const Exchange: FC = () => {
                 typeSetting={form.transferType}
                 onSubmit={handleSwap}
                 onChangeSetting={handleChangeSetting}
+                isLoading={mutationSwap?.isLoading}
             >
                 <Input
                     prefix={
@@ -122,6 +133,7 @@ const Exchange: FC = () => {
                     onChange={handleChange}
                     autoComplete="off"
                 />
+                <span className="alert-error"><>{error}</></span>
                 {form?.inputToken?.name && <span className="balance">Balance: {form?.inputToken.balance} {" "} {form?.inputToken.symbol} </span>}
                 <Input
                     prefix={
@@ -155,9 +167,9 @@ const Exchange: FC = () => {
                 />
 
                 <DetailsList list={[
-                    { title: "Swap Rate", value: currentswapRate },
-                    { title: "Minimum Received Amount", value: minimumReceivedAmount },
-                    { title: "Price Impact", value: priceImpact },
+                    { title: "Swap Rate", value: currentswapRate || 0 },
+                    { title: "Minimum Received Amount", value: minimumReceivedAmount || 0 },
+                    { title: "Price Impact", value: priceImpact || 0 },
                     { title: "Fee", value: "%0.3" }
                 ]} />
             </Box>

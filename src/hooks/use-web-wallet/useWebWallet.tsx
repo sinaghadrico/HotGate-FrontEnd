@@ -75,10 +75,12 @@ function getErrorMessage(error: any) {
     ) {
         return "Please authorize this website to access your Ethereum account.";
     } else {
+
+
         return (
-            error?.data?.message ||
-            error?.data?.reason ||
-            error?.message ||
+            error?.data?.message?.replace("VM Exception while processing transaction:", "") ||
+            error?.data?.reason?.replace("VM Exception while processing transaction:", "") ||
+            error?.message?.replace("VM Exception while processing transaction:", "") ||
             "An unknown error occurred. Check the console for more details."
         );
     }

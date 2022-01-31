@@ -58,6 +58,7 @@ const TotemClaimDetails = ({ data, initialData = {}, refetchPoolData, isLoading 
     const token = useUsdcToken();
     const { data: balance } = useQuery(["token-balance", account], () => token.getBalance(account), {
         enabled: !!token.contract,
+        refetchOnWindowFocus: false
     });
 
     const handleChange = (event: any) => {
@@ -108,7 +109,7 @@ const TotemClaimDetails = ({ data, initialData = {}, refetchPoolData, isLoading 
             mutationStake.mutate(
                 { stakeAmount },
                 {
-                    onSuccess: () => {},
+                    onSuccess: () => { },
                 },
             );
         }
@@ -133,7 +134,7 @@ const TotemClaimDetails = ({ data, initialData = {}, refetchPoolData, isLoading 
             mutationClaim.mutate(
                 {},
                 {
-                    onSuccess: () => {},
+                    onSuccess: () => { },
                 },
             );
         }
@@ -158,7 +159,7 @@ const TotemClaimDetails = ({ data, initialData = {}, refetchPoolData, isLoading 
             mutationWithdraw.mutate(
                 { withdrawAmount },
                 {
-                    onSuccess: () => {},
+                    onSuccess: () => { },
                 },
             );
         }
@@ -183,7 +184,7 @@ const TotemClaimDetails = ({ data, initialData = {}, refetchPoolData, isLoading 
             mutationEmergencyWithdraw.mutate(
                 {},
                 {
-                    onSuccess: () => {},
+                    onSuccess: () => { },
                 },
             );
         }
@@ -193,9 +194,9 @@ const TotemClaimDetails = ({ data, initialData = {}, refetchPoolData, isLoading 
             <AnimatePresence>
                 <motion.div
                     className="totem-claim-details"
-                    // initial={{ height: 0 }}
-                    // animate={{ height: "auto" }}
-                    // exit={{ height: 0 }}
+                // initial={{ height: 0 }}
+                // animate={{ height: "auto" }}
+                // exit={{ height: 0 }}
                 >
                     <div className="row totem-claim-details-main">
                         <div className="col-md-4 col-xs-12 flex-column-align-center">

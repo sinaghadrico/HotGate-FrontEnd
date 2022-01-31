@@ -25,11 +25,11 @@ const toValue = (amount: string): BigNumberish => {
         .mul(amountTemp);
 };
 
-const parseTokenValue = (amount: BigNumberish): number => {
+const parseTokenValue = (amount: BigNumberish): any => {
     if (amount === "0x00" || amount === 0) {
         return 0;
     } else {
-        // return BigNumber.from(amount).div(expToken).toNumber();
+        // return BigNumber.from(amount).toString();
 
         try {
             return parseFloat(formatUnits(amount, 16)) / 100;
@@ -53,7 +53,7 @@ const toTokenValue = (amount: string): BigNumberish => {
     const dotIndex = amount?.toString()?.indexOf(".");
     const realDecimal = dotIndex > 0 ? amount?.toString()?.substring(dotIndex + 1).length : 0;
 
-    const amountTemp = ~~(Number(amount) * Math.pow(10, realDecimal));
+    const amountTemp = +(Number(amount) * Math.pow(10, realDecimal));
     return BigNumber.from(10)
         .pow(18 - realDecimal)
         .mul(amountTemp);

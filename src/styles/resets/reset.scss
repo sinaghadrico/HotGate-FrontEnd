@@ -95,6 +95,7 @@ p {
 .ui-confirm-modal-footer button {
     padding: unset !important;
 }
+
 .unsecured-page {
     display: flex;
     flex-direction: column;
@@ -104,11 +105,18 @@ p {
     height: 100%;
     margin: auto;
 }
+
 .ui-tooltip {
     img {
         margin-bottom: -3px;
     }
 }
+
 input:read-only {
     cursor: not-allowed !important;
+}
+
+.alert-error {
+    font-size: 12px;
+    color: #f140409e;
 }

@@ -1,6 +1,4 @@
-import { LiquidityPool } from './../../../contracts/types/LiquidityPool.d';
-import { Withdraw } from 'components/withdraw';
-import { BigNumber } from '@ethersproject/bignumber';
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 import { BigNumberish, ContractTransaction } from "ethers";
@@ -9,8 +7,6 @@ import { parseTokenValue, toTokenValue } from "utils/convert";
 import useNotification from "hooks/useNotification";
 import { WrappedERC20Token__factory, LiquidityPool__factory } from "contracts/types";
 import { useExchangeRouterContract } from "services/contracts";
-
-
 import { useQueryClient } from 'react-query';
 import { useLiquidityPoolFactory } from './useLiquidityPoolFactoryContract';
 
@@ -24,13 +20,6 @@ export const useExchangeRouter = () => {
 
 
     //write-contract
-
-
-
-
-
-
-
 
     const deposit = async (tokenA: string,
         tokenB: string, amountA: string,
@@ -91,8 +80,9 @@ export const useExchangeRouter = () => {
 
 
             const liquidity = toTokenValue(liquidityAmount)
+            debugger
 
-            await approveForLiquidityPool(liquidityPoolAdresses, contractMethod.address, liquidity)
+            await approve(liquidityPoolAdresses, contractMethod.address, liquidity)
 
 
             let amountAmin = toTokenValue(_amountAmin);
@@ -131,21 +121,19 @@ export const useExchangeRouter = () => {
 
     };
 
-
-
-
     //Perform swap
 
     const swapExactTokensForTokens = async (tokenA: string,
         tokenB: string, amountA: string,
-        amountOut: string, deadline: any) => {
+        amountOut: string, user: string, deadline: any) => {
 
 
         let amountIn = toTokenValue(amountA);
         let amountOutMin = toTokenValue(amountOut); // Minimum Received Amount
         let path = [tokenA, tokenB];
-        let to = account;
+        let to = user;
 
+        debugger
         try {
 
             await approve(tokenA, contractMethod.address, amountIn)
@@ -161,6 +149,7 @@ export const useExchangeRouter = () => {
                 .then((transaction: ContractTransaction) => {
                     transaction.wait(1).then((transactionE) => {
                         notification.success("Exchange was succesfull!");
+                        queryClient.invalidateQueries(`get-predictor-stakes`);
                     });
                 })
                 .catch((error: any) => {
@@ -170,21 +159,6 @@ export const useExchangeRouter = () => {
             notification.error(getErrorMessage(error));
         }
 
-    };
-
-    //read contract
-
-    // Get the expected received amount
-    const getAmountOut = (amountIn: string, reserveIn: string, reserveOut: string) => {
-        return contractMethod
-            .getAmountOut(toTokenValue(amountIn), toTokenValue(reserveIn), toTokenValue(reserveOut))
-            .then((data: any) => {
-                return parseTokenValue(data)
-
-            })
-            .catch((error: any) => {
-                notification.error(getErrorMessage(error));
-            });
     };
 
 
@@ -208,33 +182,32 @@ export const useExchangeRouter = () => {
                 }
 
             }
+            debugger
         }
 
 
     }
 
-    const approveForLiquidityPool = async (liquidityPoolAdresses: string, cntractAddress: string, amount: BigNumberish) => {
-        const signer: any = library?.getSigner();
-        if (signer && account) {
-
-            let deployedLiquidityPool = LiquidityPool__factory.connect(liquidityPoolAdresses, signer);
-
-            let currentAllowance: any = await deployedLiquidityPool.allowance(account, cntractAddress);
 
 
-            if (parseTokenValue(amount) > parseTokenValue(currentAllowance)) {
-                let neededAllowance = amount;
+    //read contract
 
-                try {
-                    const approvTx: ContractTransaction = await deployedLiquidityPool.approve(cntractAddress, neededAllowance);
-                    await approvTx.wait(1);
-                } catch (error) {
-                    notification.error(getErrorMessage(error));
-                }
+    // Get the expected received amount
+    const getAmountOut = (amountIn: string, reserveIn: string, reserveOut: string) => {
+        return new Promise((resolve: (response: any) => void, reject) => {
+            return contractMethod
+                .getAmountOut(toTokenValue(amountIn), toTokenValue(reserveIn), toTokenValue(reserveOut))
+                .then((data: any) => {
+                    resolve(parseTokenValue(data))
 
-            }
-        }
-    }
+                })
+                .catch((error: any) => {
+                    reject((getErrorMessage(error)));
+                });
+        });
+    };
+
+
 
     const getWrappedBitcoinAddress = async () => {
         const fastPoolAddress = await contractMethod.wrappedBitcoin();
@@ -251,8 +224,8 @@ export const useExchangeRouter = () => {
 
     return {
         getAmountOut,
-
         getWrappedBitcoinAddress,
+
         swapExactTokensForTokens,
         deposit,
         withdraw,

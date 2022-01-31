@@ -28,7 +28,7 @@ export const useStaking = () => {
 
                     transaction.wait(1).then(() => {
                         notification.success("Stake confirmed");
-                        queryClient.invalidateQueries(`getInitialDataStakling`);
+                        queryClient.invalidateQueries(`getInitialDataStaking`);
                     });
                 })
                 .catch((error: any) => {
@@ -47,7 +47,7 @@ export const useStaking = () => {
                 .then((transaction: ContractTransaction) => {
                     transaction.wait(1).then(() => {
                         notification.success("Unstake confirmed");
-                        queryClient.invalidateQueries(`getInitialDataStakling`);
+                        queryClient.invalidateQueries(`getInitialDataStaking`);
                         resolve(transaction);
                     });
                 })
@@ -67,7 +67,7 @@ export const useStaking = () => {
 
                     transaction.wait(1).then(() => {
                         notification.success("Claim confirmed");
-                        queryClient.invalidateQueries(`getInitialDataStakling`);
+                        queryClient.invalidateQueries(`getInitialDataStaking`);
                     });
                 })
                 .catch((error: any) => {

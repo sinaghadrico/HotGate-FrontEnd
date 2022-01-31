@@ -15,6 +15,7 @@ const AccountDetails: FC = () => {
     // const token = useUsdcToken();
     // const { data: balance } = useQuery(["token-balance", account], () => token.getBalance(account), {
     //     enabled: !!token.contract,
+    //  refetchOnWindowFocus: false
     // });
 
     const globalDispatch = useGlobalDispatch();

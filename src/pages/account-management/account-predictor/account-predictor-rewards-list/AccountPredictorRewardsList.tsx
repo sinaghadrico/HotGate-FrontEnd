@@ -50,7 +50,7 @@ const AccountPredictorRewardsList: FC = () => {
                 </TableHead>
 
                 <TableBody>
-                    {isLoading || isFetching || !data ? (
+                    {isLoading || isFetching ? (
                         <>
                             {[0, 1, 2, 3, 4, 5]?.map((item) => (
                                 <AccountPredictorRewardsRowLoader key={item} />
