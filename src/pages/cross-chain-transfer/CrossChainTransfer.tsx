@@ -1,18 +1,20 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Box } from "components/box";
 import { Input, RadioButton, RadioGroup } from "ui-components";
 import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils/number";
 import TokenSelector from "components/token-selector/TokenSelector";
 import { DetailsList } from "components/details-list";
+import useWebWallet from "hooks/use-web-wallet/useWebWallet";
 import { Helmet } from "react-helmet-async";
 import "./CrossChainTransfer.scss";
 
 const CrossChainTransfer: FC = () => {
+    const { account } = useWebWallet();
     const [form, setForm] = useState<any>({
         amount: 0,
         inputToken: { key: "bsc", value: "BSC" },
         receivedAmount: 0,
-        outputToken: { key: "bsc", value: "BSC" },
+        outputToken: {},
         receiverAddress: "",
         transferType: "normal",
         deadline: 0,
@@ -20,6 +22,14 @@ const CrossChainTransfer: FC = () => {
         confirmations: 20
     });
     const detailsList = [{ title: "Keeper Fee", value: "1.234556" }];
+
+    useEffect(() => {
+        setForm({
+            ...form,
+            receiverAddress: !form.account ? account : account,
+        })
+    }, [account]);
+
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
 
@@ -30,7 +40,7 @@ const CrossChainTransfer: FC = () => {
         }
 
         if (name === "inputToken") {
-            setForm({ ...form, [name]: _value, amount: _value.balance, outputToken: { key: "bsc", value: "BSC" }, receivedAmount: 0 });
+            setForm({ ...form, [name]: _value, amount: _value.balance, outputToken: {}, receivedAmount: 0 });
             return null
         }
         if (name === "outputToken") {

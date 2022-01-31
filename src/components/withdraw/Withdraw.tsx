@@ -123,6 +123,7 @@ const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
             onConfirm={handleWithdraw}
             confirmTitle="Withdraw"
             cancelTitle="Cancel"
+            isLoading={mutationNormlWithdraw?.isLoading || mutationFastWithdraw?.isLoading || mutationInstantWithdraw?.isLoading}
         >
             <Input
                 prefix={<TokenSelector title="Input Token" token={form?.inputToken} />}
@@ -152,7 +153,7 @@ const Withdraw = ({ open, onClose, onConfirm, data }: WithdrawProps) => {
                 onChange={handleChange}
                 autoComplete="off"
             />
-        </ConfirmModal>
+        </ConfirmModal >
     );
 };
 export default Withdraw;

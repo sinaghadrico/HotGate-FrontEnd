@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Box } from "components/box";
 import { Input, RadioButton, RadioGroup, Tooltip, TooltipPosition } from "ui-components";
 import { formatNumberWithCommas, isValidNumber, parseValueToNumber } from "utils/number";
@@ -25,13 +25,21 @@ const CrossChainExchange: FC = () => {
         amount: 0,
         inputToken: { symbol: "BTC" },
         receivedAmount: 0,
-        outputToken: { symbol: "BSC" },
+        outputToken: {},
         receiverAddress: "",
         transferType: "normal",
         deadline: 0,
         slippage: 0,
         confirmations: 20
     });
+
+    useEffect(() => {
+        setForm({
+            ...form,
+            receiverAddress: !form.account ? account : account,
+        })
+    }, [account]);
+
     const detailsList = [
         { title: "Swap Rate", value: "1.2038475" },
         { title: "Minimum Received Amount", value: "1.234556" },
@@ -50,7 +58,7 @@ const CrossChainExchange: FC = () => {
                 Fees <Icon src={info_logo} />
             </Tooltip>, value: "1.234556"
         },
-        { title: "Tx Status", value: "mined" }
+        // { title: "Tx Status", value: "mined" }
     ];
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
@@ -62,7 +70,7 @@ const CrossChainExchange: FC = () => {
         }
 
         if (name === "inputToken") {
-            setForm({ ...form, [name]: _value, amount: _value.balance, outputToken: { key: "bsc", value: "BSC" }, receivedAmount: 0 });
+            setForm({ ...form, [name]: _value, amount: _value.balance, outputToken: {}, receivedAmount: 0 });
             return null
         }
         if (name === "outputToken") {
