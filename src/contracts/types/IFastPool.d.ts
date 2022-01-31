@@ -3,16 +3,16 @@
 /* eslint-disable */
 
 import {
-    ethers,
-    EventFilter,
-    Signer,
-    BigNumber,
-    BigNumberish,
-    PopulatedTransaction,
-    BaseContract,
-    ContractTransaction,
-    Overrides,
-    CallOverrides,
+  ethers,
+  EventFilter,
+  Signer,
+  BigNumber,
+  BigNumberish,
+  PopulatedTransaction,
+  BaseContract,
+  ContractTransaction,
+  Overrides,
+  CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
@@ -20,273 +20,478 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface IFastPoolInterface extends ethers.utils.Interface {
-    functions: {
-        "addLiquidity(address,uint256)": FunctionFragment;
-        "allowance(address,address)": FunctionFragment;
-        "approve(address,uint256)": FunctionFragment;
-        "balanceOf(address)": FunctionFragment;
-        "changeOwner(address)": FunctionFragment;
-        "decimals()": FunctionFragment;
-        "fastFee()": FunctionFragment;
-        "fastLimit()": FunctionFragment;
-        "fastRouter()": FunctionFragment;
-        "fastTransfer(address,uint256,uint256)": FunctionFragment;
-        "name()": FunctionFragment;
-        "neededConfirmations()": FunctionFragment;
-        "owner()": FunctionFragment;
-        "removeLiquidity(address,uint256)": FunctionFragment;
-        "setFastFee(uint256)": FunctionFragment;
-        "setFastLimit(uint256)": FunctionFragment;
-        "setFastRouter(address)": FunctionFragment;
-        "setNeededConfirmations(uint256)": FunctionFragment;
-        "symbol()": FunctionFragment;
-        "totalRequestedAmount(uint256)": FunctionFragment;
-        "totalSupply()": FunctionFragment;
-        "totalWrappedBitcoin()": FunctionFragment;
-        "transfer(address,uint256)": FunctionFragment;
-        "transferFrom(address,address,uint256)": FunctionFragment;
-        "wrappedBitcoin()": FunctionFragment;
-    };
+  functions: {
+    "addLiquidity(address,uint256)": FunctionFragment;
+    "allowance(address,address)": FunctionFragment;
+    "approve(address,uint256)": FunctionFragment;
+    "balanceOf(address)": FunctionFragment;
+    "changeOwner(address)": FunctionFragment;
+    "decimals()": FunctionFragment;
+    "fastFee()": FunctionFragment;
+    "fastLimit()": FunctionFragment;
+    "fastRouter()": FunctionFragment;
+    "fastTransfer(address,uint256,uint256)": FunctionFragment;
+    "name()": FunctionFragment;
+    "neededConfirmations()": FunctionFragment;
+    "owner()": FunctionFragment;
+    "removeLiquidity(address,uint256)": FunctionFragment;
+    "setFastFee(uint256)": FunctionFragment;
+    "setFastLimit(uint256)": FunctionFragment;
+    "setFastRouter(address)": FunctionFragment;
+    "setNeededConfirmations(uint256)": FunctionFragment;
+    "symbol()": FunctionFragment;
+    "totalRequestedAmount(uint256)": FunctionFragment;
+    "totalSupply()": FunctionFragment;
+    "totalWrappedBitcoin()": FunctionFragment;
+    "transfer(address,uint256)": FunctionFragment;
+    "transferFrom(address,address,uint256)": FunctionFragment;
+    "wrappedBitcoin()": FunctionFragment;
+  };
 
-    encodeFunctionData(functionFragment: "addLiquidity", values: [string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "allowance", values: [string, string]): string;
-    encodeFunctionData(functionFragment: "approve", values: [string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-    encodeFunctionData(functionFragment: "changeOwner", values: [string]): string;
-    encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-    encodeFunctionData(functionFragment: "fastFee", values?: undefined): string;
-    encodeFunctionData(functionFragment: "fastLimit", values?: undefined): string;
-    encodeFunctionData(functionFragment: "fastRouter", values?: undefined): string;
-    encodeFunctionData(functionFragment: "fastTransfer", values: [string, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "name", values?: undefined): string;
-    encodeFunctionData(functionFragment: "neededConfirmations", values?: undefined): string;
-    encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-    encodeFunctionData(functionFragment: "removeLiquidity", values: [string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setFastFee", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setFastLimit", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setFastRouter", values: [string]): string;
-    encodeFunctionData(functionFragment: "setNeededConfirmations", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-    encodeFunctionData(functionFragment: "totalRequestedAmount", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "totalSupply", values?: undefined): string;
-    encodeFunctionData(functionFragment: "totalWrappedBitcoin", values?: undefined): string;
-    encodeFunctionData(functionFragment: "transfer", values: [string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "transferFrom", values: [string, string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "wrappedBitcoin", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "addLiquidity",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allowance",
+    values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "approve",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(functionFragment: "changeOwner", values: [string]): string;
+  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(functionFragment: "fastFee", values?: undefined): string;
+  encodeFunctionData(functionFragment: "fastLimit", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "fastRouter",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "fastTransfer",
+    values: [string, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "neededConfirmations",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "removeLiquidity",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setFastFee",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setFastLimit",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setFastRouter",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setNeededConfirmations",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "totalRequestedAmount",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalWrappedBitcoin",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transfer",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferFrom",
+    values: [string, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "wrappedBitcoin",
+    values?: undefined
+  ): string;
 
-    decodeFunctionResult(functionFragment: "addLiquidity", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "changeOwner", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "fastFee", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "fastLimit", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "fastRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "fastTransfer", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "neededConfirmations", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "removeLiquidity", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setFastFee", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setFastLimit", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setFastRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setNeededConfirmations", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "totalRequestedAmount", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "totalSupply", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "totalWrappedBitcoin", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "wrappedBitcoin", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "addLiquidity",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "changeOwner",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "fastFee", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "fastLimit", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "fastRouter", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "fastTransfer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "neededConfirmations",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "removeLiquidity",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setFastFee", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setFastLimit",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setFastRouter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setNeededConfirmations",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "totalRequestedAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalWrappedBitcoin",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "wrappedBitcoin",
+    data: BytesLike
+  ): Result;
 
-    events: {
-        "AddLiquidity(address,uint256)": EventFragment;
-        "Approval(address,address,uint256)": EventFragment;
-        "FastTransfer(address,uint256)": EventFragment;
-        "RemoveLiquidity(address,uint256)": EventFragment;
-        "Transfer(address,address,uint256)": EventFragment;
-    };
+  events: {
+    "AddLiquidity(address,uint256)": EventFragment;
+    "Approval(address,address,uint256)": EventFragment;
+    "FastTransfer(address,uint256)": EventFragment;
+    "RemoveLiquidity(address,uint256)": EventFragment;
+    "Transfer(address,address,uint256)": EventFragment;
+  };
 
-    getEvent(nameOrSignatureOrTopic: "AddLiquidity"): EventFragment;
-    getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-    getEvent(nameOrSignatureOrTopic: "FastTransfer"): EventFragment;
-    getEvent(nameOrSignatureOrTopic: "RemoveLiquidity"): EventFragment;
-    getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AddLiquidity"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "FastTransfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RemoveLiquidity"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
-export type AddLiquidityEvent = TypedEvent<[string, BigNumber] & { user: string; wrappedBitcoinAmount: BigNumber }>;
-
-export type ApprovalEvent = TypedEvent<
-    [string, string, BigNumber] & {
-        owner: string;
-        spender: string;
-        value: BigNumber;
-    }
+export type AddLiquidityEvent = TypedEvent<
+  [string, BigNumber] & { user: string; wrappedBitcoinAmount: BigNumber }
 >;
 
-export type FastTransferEvent = TypedEvent<[string, BigNumber] & { user: string; wrappedBitcoinAmount: BigNumber }>;
+export type ApprovalEvent = TypedEvent<
+  [string, string, BigNumber] & {
+    owner: string;
+    spender: string;
+    value: BigNumber;
+  }
+>;
 
-export type RemoveLiquidityEvent = TypedEvent<[string, BigNumber] & { user: string; wrappedBitcoinAmount: BigNumber }>;
+export type FastTransferEvent = TypedEvent<
+  [string, BigNumber] & { user: string; wrappedBitcoinAmount: BigNumber }
+>;
 
-export type TransferEvent = TypedEvent<[string, string, BigNumber] & { from: string; to: string; value: BigNumber }>;
+export type RemoveLiquidityEvent = TypedEvent<
+  [string, BigNumber] & { user: string; wrappedBitcoinAmount: BigNumber }
+>;
+
+export type TransferEvent = TypedEvent<
+  [string, string, BigNumber] & { from: string; to: string; value: BigNumber }
+>;
 
 export class IFastPool extends BaseContract {
-    connect(signerOrProvider: Signer | Provider | string): this;
-    attach(addressOrName: string): this;
-    deployed(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-    listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
-    off<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    on<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    once<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): this;
+  listeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
+  off<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  on<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  once<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): this;
 
-    listeners(eventName?: string): Array<Listener>;
-    off(eventName: string, listener: Listener): this;
-    on(eventName: string, listener: Listener): this;
-    once(eventName: string, listener: Listener): this;
-    removeListener(eventName: string, listener: Listener): this;
-    removeAllListeners(eventName?: string): this;
+  listeners(eventName?: string): Array<Listener>;
+  off(eventName: string, listener: Listener): this;
+  on(eventName: string, listener: Listener): this;
+  once(eventName: string, listener: Listener): this;
+  removeListener(eventName: string, listener: Listener): this;
+  removeAllListeners(eventName?: string): this;
 
-    queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
-        event: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        fromBlockOrBlockhash?: string | number | undefined,
-        toBlock?: string | number | undefined,
-    ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
+  queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
+    event: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-    interface: IFastPoolInterface;
+  interface: IFastPoolInterface;
 
-    functions: {
-        addLiquidity(
-            user: string,
-            wrappedBitcoinAmount: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        approve(
-            spender: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        changeOwner(
-            _owner: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        decimals(overrides?: CallOverrides): Promise<[number]>;
-
-        fastFee(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        fastLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        fastRouter(overrides?: CallOverrides): Promise<[string]>;
-
-        fastTransfer(
-            user: string,
-            amount: BigNumberish,
-            blockNumber: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        name(overrides?: CallOverrides): Promise<[string]>;
-
-        neededConfirmations(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        owner(overrides?: CallOverrides): Promise<[string]>;
-
-        removeLiquidity(
-            user: string,
-            fastPoolTokenAmount: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        setFastFee(
-            _fastFee: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        setFastLimit(
-            _fastLimit: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        setFastRouter(
-            _fastRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        setNeededConfirmations(
-            _neededConfirmations: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        symbol(overrides?: CallOverrides): Promise<[string]>;
-
-        totalRequestedAmount(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        totalWrappedBitcoin(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        transfer(
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        transferFrom(
-            from: string,
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        wrappedBitcoin(overrides?: CallOverrides): Promise<[string]>;
-    };
-
+  functions: {
     addLiquidity(
-        user: string,
-        wrappedBitcoinAmount: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
+      user: string,
+      wrappedBitcoinAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     approve(
-        spender: string,
-        value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
+      spender: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    changeOwner(
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    decimals(overrides?: CallOverrides): Promise<[number]>;
+
+    fastFee(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    fastLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    fastRouter(overrides?: CallOverrides): Promise<[string]>;
+
+    fastTransfer(
+      user: string,
+      amount: BigNumberish,
+      blockNumber: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    name(overrides?: CallOverrides): Promise<[string]>;
+
+    neededConfirmations(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    removeLiquidity(
+      user: string,
+      fastPoolTokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setFastFee(
+      _fastFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setFastLimit(
+      _fastLimit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setFastRouter(
+      _fastRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setNeededConfirmations(
+      _neededConfirmations: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    symbol(overrides?: CallOverrides): Promise<[string]>;
+
+    totalRequestedAmount(
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalWrappedBitcoin(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    transfer(
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    transferFrom(
+      from: string,
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    wrappedBitcoin(overrides?: CallOverrides): Promise<[string]>;
+  };
+
+  addLiquidity(
+    user: string,
+    wrappedBitcoinAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  allowance(
+    owner: string,
+    spender: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  approve(
+    spender: string,
+    value: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  changeOwner(
+    _owner: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  decimals(overrides?: CallOverrides): Promise<number>;
+
+  fastFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+  fastLimit(overrides?: CallOverrides): Promise<BigNumber>;
+
+  fastRouter(overrides?: CallOverrides): Promise<string>;
+
+  fastTransfer(
+    user: string,
+    amount: BigNumberish,
+    blockNumber: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  name(overrides?: CallOverrides): Promise<string>;
+
+  neededConfirmations(overrides?: CallOverrides): Promise<BigNumber>;
+
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  removeLiquidity(
+    user: string,
+    fastPoolTokenAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setFastFee(
+    _fastFee: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setFastLimit(
+    _fastLimit: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setFastRouter(
+    _fastRouter: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setNeededConfirmations(
+    _neededConfirmations: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  symbol(overrides?: CallOverrides): Promise<string>;
+
+  totalRequestedAmount(
+    blockNumber: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalWrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
+
+  transfer(
+    to: string,
+    value: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  transferFrom(
+    from: string,
+    to: string,
+    value: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  wrappedBitcoin(overrides?: CallOverrides): Promise<string>;
+
+  callStatic: {
+    addLiquidity(
+      user: string,
+      wrappedBitcoinAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    approve(
+      spender: string,
+      value: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    changeOwner(
-        _owner: string,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    changeOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -297,11 +502,11 @@ export class IFastPool extends BaseContract {
     fastRouter(overrides?: CallOverrides): Promise<string>;
 
     fastTransfer(
-        user: string,
-        amount: BigNumberish,
-        blockNumber: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      user: string,
+      amount: BigNumberish,
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -310,347 +515,348 @@ export class IFastPool extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     removeLiquidity(
-        user: string,
-        fastPoolTokenAmount: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      user: string,
+      fastPoolTokenAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     setFastFee(
-        _fastFee: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _fastFee: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setFastLimit(
-        _fastLimit: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _fastLimit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setFastRouter(
-        _fastRouter: string,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _fastRouter: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setNeededConfirmations(
-        _neededConfirmations: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _neededConfirmations: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    totalRequestedAmount(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalRequestedAmount(
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalWrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-        to: string,
-        value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      to: string,
+      value: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     transferFrom(
-        from: string,
-        to: string,
-        value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      from: string,
+      to: string,
+      value: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     wrappedBitcoin(overrides?: CallOverrides): Promise<string>;
+  };
+
+  filters: {
+    "AddLiquidity(address,uint256)"(
+      user?: null,
+      wrappedBitcoinAmount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; wrappedBitcoinAmount: BigNumber }
+    >;
+
+    AddLiquidity(
+      user?: null,
+      wrappedBitcoinAmount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; wrappedBitcoinAmount: BigNumber }
+    >;
+
+    "Approval(address,address,uint256)"(
+      owner?: string | null,
+      spender?: string | null,
+      value?: null
+    ): TypedEventFilter<
+      [string, string, BigNumber],
+      { owner: string; spender: string; value: BigNumber }
+    >;
+
+    Approval(
+      owner?: string | null,
+      spender?: string | null,
+      value?: null
+    ): TypedEventFilter<
+      [string, string, BigNumber],
+      { owner: string; spender: string; value: BigNumber }
+    >;
+
+    "FastTransfer(address,uint256)"(
+      user?: null,
+      wrappedBitcoinAmount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; wrappedBitcoinAmount: BigNumber }
+    >;
+
+    FastTransfer(
+      user?: null,
+      wrappedBitcoinAmount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; wrappedBitcoinAmount: BigNumber }
+    >;
+
+    "RemoveLiquidity(address,uint256)"(
+      user?: null,
+      wrappedBitcoinAmount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; wrappedBitcoinAmount: BigNumber }
+    >;
+
+    RemoveLiquidity(
+      user?: null,
+      wrappedBitcoinAmount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; wrappedBitcoinAmount: BigNumber }
+    >;
+
+    "Transfer(address,address,uint256)"(
+      from?: string | null,
+      to?: string | null,
+      value?: null
+    ): TypedEventFilter<
+      [string, string, BigNumber],
+      { from: string; to: string; value: BigNumber }
+    >;
+
+    Transfer(
+      from?: string | null,
+      to?: string | null,
+      value?: null
+    ): TypedEventFilter<
+      [string, string, BigNumber],
+      { from: string; to: string; value: BigNumber }
+    >;
+  };
+
+  estimateGas: {
+    addLiquidity(
+      user: string,
+      wrappedBitcoinAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    approve(
+      spender: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    callStatic: {
-        addLiquidity(user: string, wrappedBitcoinAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    changeOwner(
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    decimals(overrides?: CallOverrides): Promise<BigNumber>;
+
+    fastFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+    fastLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
-        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    fastRouter(overrides?: CallOverrides): Promise<BigNumber>;
 
-        approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    fastTransfer(
+      user: string,
+      amount: BigNumberish,
+      blockNumber: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    name(overrides?: CallOverrides): Promise<BigNumber>;
 
-        changeOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    neededConfirmations(overrides?: CallOverrides): Promise<BigNumber>;
 
-        decimals(overrides?: CallOverrides): Promise<number>;
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-        fastFee(overrides?: CallOverrides): Promise<BigNumber>;
+    removeLiquidity(
+      user: string,
+      fastPoolTokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        fastLimit(overrides?: CallOverrides): Promise<BigNumber>;
+    setFastFee(
+      _fastFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        fastRouter(overrides?: CallOverrides): Promise<string>;
+    setFastLimit(
+      _fastLimit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        fastTransfer(
-            user: string,
-            amount: BigNumberish,
-            blockNumber: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<boolean>;
+    setFastRouter(
+      _fastRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        name(overrides?: CallOverrides): Promise<string>;
+    setNeededConfirmations(
+      _neededConfirmations: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        neededConfirmations(overrides?: CallOverrides): Promise<BigNumber>;
+    symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-        owner(overrides?: CallOverrides): Promise<string>;
+    totalRequestedAmount(
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-        removeLiquidity(user: string, fastPoolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-        setFastFee(_fastFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    totalWrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
 
-        setFastLimit(_fastLimit: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transfer(
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        setFastRouter(_fastRouter: string, overrides?: CallOverrides): Promise<void>;
+    transferFrom(
+      from: string,
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        setNeededConfirmations(_neededConfirmations: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    wrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
+  };
 
-        symbol(overrides?: CallOverrides): Promise<string>;
-
-        totalRequestedAmount(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-        totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-        totalWrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
-
-        transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-        transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-        wrappedBitcoin(overrides?: CallOverrides): Promise<string>;
-    };
-
-    filters: {
-        "AddLiquidity(address,uint256)"(
-            user?: null,
-            wrappedBitcoinAmount?: null,
-        ): TypedEventFilter<[string, BigNumber], { user: string; wrappedBitcoinAmount: BigNumber }>;
-
-        AddLiquidity(
-            user?: null,
-            wrappedBitcoinAmount?: null,
-        ): TypedEventFilter<[string, BigNumber], { user: string; wrappedBitcoinAmount: BigNumber }>;
-
-        "Approval(address,address,uint256)"(
-            owner?: string | null,
-            spender?: string | null,
-            value?: null,
-        ): TypedEventFilter<[string, string, BigNumber], { owner: string; spender: string; value: BigNumber }>;
-
-        Approval(
-            owner?: string | null,
-            spender?: string | null,
-            value?: null,
-        ): TypedEventFilter<[string, string, BigNumber], { owner: string; spender: string; value: BigNumber }>;
-
-        "FastTransfer(address,uint256)"(
-            user?: null,
-            wrappedBitcoinAmount?: null,
-        ): TypedEventFilter<[string, BigNumber], { user: string; wrappedBitcoinAmount: BigNumber }>;
-
-        FastTransfer(
-            user?: null,
-            wrappedBitcoinAmount?: null,
-        ): TypedEventFilter<[string, BigNumber], { user: string; wrappedBitcoinAmount: BigNumber }>;
-
-        "RemoveLiquidity(address,uint256)"(
-            user?: null,
-            wrappedBitcoinAmount?: null,
-        ): TypedEventFilter<[string, BigNumber], { user: string; wrappedBitcoinAmount: BigNumber }>;
-
-        RemoveLiquidity(
-            user?: null,
-            wrappedBitcoinAmount?: null,
-        ): TypedEventFilter<[string, BigNumber], { user: string; wrappedBitcoinAmount: BigNumber }>;
-
-        "Transfer(address,address,uint256)"(
-            from?: string | null,
-            to?: string | null,
-            value?: null,
-        ): TypedEventFilter<[string, string, BigNumber], { from: string; to: string; value: BigNumber }>;
-
-        Transfer(
-            from?: string | null,
-            to?: string | null,
-            value?: null,
-        ): TypedEventFilter<[string, string, BigNumber], { from: string; to: string; value: BigNumber }>;
-    };
-
-    estimateGas: {
-        addLiquidity(
-            user: string,
-            wrappedBitcoinAmount: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-        approve(
-            spender: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-        changeOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-        decimals(overrides?: CallOverrides): Promise<BigNumber>;
-
-        fastFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-        fastLimit(overrides?: CallOverrides): Promise<BigNumber>;
-
-        fastRouter(overrides?: CallOverrides): Promise<BigNumber>;
-
-        fastTransfer(
-            user: string,
-            amount: BigNumberish,
-            blockNumber: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        name(overrides?: CallOverrides): Promise<BigNumber>;
-
-        neededConfirmations(overrides?: CallOverrides): Promise<BigNumber>;
-
-        owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-        removeLiquidity(
-            user: string,
-            fastPoolTokenAmount: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setFastFee(
-            _fastFee: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setFastLimit(
-            _fastLimit: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setFastRouter(
-            _fastRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setNeededConfirmations(
-            _neededConfirmations: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
-        totalRequestedAmount(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-        totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-        totalWrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
-
-        transfer(
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        transferFrom(
-            from: string,
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        wrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
-    };
-
-    populateTransaction: {
-        addLiquidity(
-            user: string,
-            wrappedBitcoinAmount: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        approve(
-            spender: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        changeOwner(
-            _owner: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        fastFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        fastLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        fastRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        fastTransfer(
-            user: string,
-            amount: BigNumberish,
-            blockNumber: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        neededConfirmations(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        removeLiquidity(
-            user: string,
-            fastPoolTokenAmount: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setFastFee(
-            _fastFee: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setFastLimit(
-            _fastLimit: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setFastRouter(
-            _fastRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setNeededConfirmations(
-            _neededConfirmations: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        totalRequestedAmount(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        totalWrappedBitcoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        transfer(
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        transferFrom(
-            from: string,
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        wrappedBitcoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-    };
+  populateTransaction: {
+    addLiquidity(
+      user: string,
+      wrappedBitcoinAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    approve(
+      spender: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(
+      owner: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    changeOwner(
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    fastFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    fastLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    fastRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    fastTransfer(
+      user: string,
+      amount: BigNumberish,
+      blockNumber: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    neededConfirmations(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    removeLiquidity(
+      user: string,
+      fastPoolTokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setFastFee(
+      _fastFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setFastLimit(
+      _fastLimit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setFastRouter(
+      _fastRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setNeededConfirmations(
+      _neededConfirmations: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalRequestedAmount(
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalWrappedBitcoin(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    transfer(
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transferFrom(
+      from: string,
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    wrappedBitcoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+  };
 }

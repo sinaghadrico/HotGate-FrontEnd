@@ -4,309 +4,315 @@
 
 import { Contract, Signer, utils } from "ethers";
 import { Provider } from "@ethersproject/providers";
-import type { ICCTransferRouter, ICCTransferRouterInterface } from "../ICCTransferRouter";
+import type {
+  ICCTransferRouter,
+  ICCTransferRouterInterface,
+} from "../ICCTransferRouter";
 
 const _abi = [
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "address",
-                name: "inputToken",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "inputAmount",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "speed",
-                type: "uint256",
-            },
-        ],
-        name: "CCTransfer",
-        type: "event",
-    },
-    {
-        inputs: [],
-        name: "bitcoinFastPool",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "bytes4",
-                name: "version",
-                type: "bytes4",
-            },
-            {
-                internalType: "bytes",
-                name: "vin",
-                type: "bytes",
-            },
-            {
-                internalType: "bytes",
-                name: "vout",
-                type: "bytes",
-            },
-            {
-                internalType: "bytes4",
-                name: "locktime",
-                type: "bytes4",
-            },
-            {
-                internalType: "uint256",
-                name: "blockNumber",
-                type: "uint256",
-            },
-            {
-                internalType: "bytes",
-                name: "intermediateNodes",
-                type: "bytes",
-            },
-            {
-                internalType: "uint256",
-                name: "index",
-                type: "uint256",
-            },
-            {
-                internalType: "bool",
-                name: "payWithHGT",
-                type: "bool",
-            },
-        ],
-        name: "ccTransfer",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "_owner",
-                type: "address",
-            },
-        ],
-        name: "changeOwner",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "signer",
-                type: "address",
-            },
-            {
-                internalType: "bytes",
-                name: "signature",
-                type: "bytes",
-            },
-            {
-                internalType: "address",
-                name: "receiver",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "instantTokenAmount",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "deadline",
-                type: "uint256",
-            },
-        ],
-        name: "instantCCTransferWithPermit",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "bytes32",
-                name: "txId",
-                type: "bytes32",
-            },
-        ],
-        name: "isRequestUsed",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "bytes32",
-                name: "txId",
-                type: "bytes32",
-            },
-        ],
-        name: "mintAfterFinalization",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "owner",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "_bitcoinRelay",
-                type: "address",
-            },
-        ],
-        name: "setBitcoinRelay",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "_ccExchangeRouter",
-                type: "address",
-            },
-        ],
-        name: "setCCExchangeRouter",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "_confirmationParameter",
-                type: "uint256",
-            },
-        ],
-        name: "setConfirmationParameter",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "_fastRouter",
-                type: "address",
-            },
-        ],
-        name: "setFastRouter",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "_instantRouter",
-                type: "address",
-            },
-        ],
-        name: "setInstantRouter",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "_wrappedBitcoin",
-                type: "address",
-            },
-        ],
-        name: "setWrappedBitcoin",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "wrappedBitcoin",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "inputToken",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "inputAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "speed",
+        type: "uint256",
+      },
+    ],
+    name: "CCTransfer",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "bitcoinFastPool",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes4",
+        name: "version",
+        type: "bytes4",
+      },
+      {
+        internalType: "bytes",
+        name: "vin",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "vout",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes4",
+        name: "locktime",
+        type: "bytes4",
+      },
+      {
+        internalType: "uint256",
+        name: "blockNumber",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "intermediateNodes",
+        type: "bytes",
+      },
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "payWithHGT",
+        type: "bool",
+      },
+    ],
+    name: "ccTransfer",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_owner",
+        type: "address",
+      },
+    ],
+    name: "changeOwner",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "signer",
+        type: "address",
+      },
+      {
+        internalType: "bytes",
+        name: "signature",
+        type: "bytes",
+      },
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "instantTokenAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "deadline",
+        type: "uint256",
+      },
+    ],
+    name: "instantCCTransferWithPermit",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "txId",
+        type: "bytes32",
+      },
+    ],
+    name: "isRequestUsed",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "txId",
+        type: "bytes32",
+      },
+    ],
+    name: "mintAfterFinalization",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_bitcoinRelay",
+        type: "address",
+      },
+    ],
+    name: "setBitcoinRelay",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_ccExchangeRouter",
+        type: "address",
+      },
+    ],
+    name: "setCCExchangeRouter",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_confirmationParameter",
+        type: "uint256",
+      },
+    ],
+    name: "setConfirmationParameter",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_fastRouter",
+        type: "address",
+      },
+    ],
+    name: "setFastRouter",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_instantRouter",
+        type: "address",
+      },
+    ],
+    name: "setInstantRouter",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_wrappedBitcoin",
+        type: "address",
+      },
+    ],
+    name: "setWrappedBitcoin",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "wrappedBitcoin",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ];
 
 export class ICCTransferRouter__factory {
-    static readonly abi = _abi;
-    static createInterface(): ICCTransferRouterInterface {
-        return new utils.Interface(_abi) as ICCTransferRouterInterface;
-    }
-    static connect(address: string, signerOrProvider: Signer | Provider): ICCTransferRouter {
-        return new Contract(address, _abi, signerOrProvider) as ICCTransferRouter;
-    }
+  static readonly abi = _abi;
+  static createInterface(): ICCTransferRouterInterface {
+    return new utils.Interface(_abi) as ICCTransferRouterInterface;
+  }
+  static connect(
+    address: string,
+    signerOrProvider: Signer | Provider
+  ): ICCTransferRouter {
+    return new Contract(address, _abi, signerOrProvider) as ICCTransferRouter;
+  }
 }

@@ -23,6 +23,8 @@ import {
     LiquidityPool__factory,
     FastRouter,
     FastRouter__factory,
+    Staking,
+    Staking__factory
 } from "contracts/types";
 import { useContract, useContractFromAddress } from "./contract";
 
@@ -64,7 +66,7 @@ export const useCCTransferRouterContract = (): CCTransferRouter | undefined => {
 };
 
 export const useHOTGATEContract = (): ERC20 | undefined => {
-    const address: any = process.env.REACT_APP_HOTGATE_TOKEN_ADDRESS;
+    const address: any = process.env.REACT_APP_TELEPORTDAO_TOKEN_ADDRESS;
     return useContractFromAddress(ERC20__factory.connect, address);
 };
 export const usePOLKADOTContract = (): ERC20 | undefined => {
@@ -87,3 +89,9 @@ export const useBitcoinRelayContract = (): BitcoinRelay | undefined => {
     const address: any = process.env.REACT_APP_BTC_RELAY_ADDRESS;
     return useContractFromAddress(BitcoinRelay__factory.connect, address);
 };
+
+export const useStakingContract = (): Staking | undefined => {
+    const address: any = process.env.REACT_APP_STAKING_ADDRESS;
+    return useContractFromAddress(Staking__factory.connect, address);
+};
+

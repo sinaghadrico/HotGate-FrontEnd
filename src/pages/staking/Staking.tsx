@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Box } from "components/box";
 import { Input, Tabs, Tab, TabPanel, } from "ui-components";
 import useWebWallet from "hooks/use-web-wallet/useWebWallet";
@@ -7,7 +7,7 @@ import { DetailsList } from "components/details-list";
 import { useQuery, useMutation } from "react-query";
 import { Helmet } from "react-helmet-async";
 import "./Staking.scss";
-import { useInstantRouter } from "services/predictor/contract/useInstantRouter";
+import { useStaking } from "services/predictor/contract/useStaking";
 import useNotification from "hooks/useNotification";
 
 const Staking: FC = () => {
@@ -21,14 +21,37 @@ const Staking: FC = () => {
         setSelectedTab(value);
     };
     const { account } = useWebWallet();
-    const istantRouter = useInstantRouter();
-    const [form, setForm] = useState<any>({
-        amount: 0,
+    const staking = useStaking();
+
+    const { data: initialData = {} } = useQuery(["getInitialDataStakling", account], () => staking.getInitialData(account || "0x00"), {
+        enabled: !!staking.contract && !!account,
+        refetchOnWindowFocus: false
     });
+    const { rewards, stakedBalance, maxValueUnstake, apy, collateralRatio } = initialData
+
+
+
+    const [form, setForm] = useState<any>({
+        amountStake: 0,
+        amountUnStake: maxValueUnstake || 0,
+        recipient: account
+    });
+
+    useEffect(() => {
+        setForm({
+            ...form,
+            amountStake: 0,
+            amountUnStake: maxValueUnstake || 0,
+        })
+    }, [initialData]);
 
     const handleChange = (event: any) => {
         const { name, value: _value } = event.target;
 
+        if (name === "recipient") {
+            setForm({ ...form, [name]: _value });
+            return null
+        }
         const value = parseValueToNumber("" + _value);
         const isValid = isValidNumber("" + _value);
 
@@ -40,35 +63,20 @@ const Staking: FC = () => {
 
 
 
-    const { data: HotGateToken } = useQuery(["HotGateToken", account], () => istantRouter.getHotGateToken(), {
-        enabled: !!istantRouter.contract,
-        refetchOnWindowFocus: false
-    });
 
-    const { data: totalLockedHGT } = useQuery(["totalLockedHGT", account], () => istantRouter.getTotalLockedHGT(), {
-        enabled: !!istantRouter.contract,
-        refetchOnWindowFocus: false
-    });
-    const { data: lockedHGT } = useQuery(["lockedHGT", account], () => istantRouter.getLockedHGT(account || "0x00"), {
-        enabled: !!istantRouter.contract,
-        refetchOnWindowFocus: false
-    });
-    const { data: collateralRatio } = useQuery(["collateralRatio", account], () => istantRouter.getCollateralRatio(), {
-        enabled: !!istantRouter.contract,
-        refetchOnWindowFocus: false
-    });
+
 
 
 
 
     const mutationStake = useMutation((_form: any): any => {
-        return istantRouter?.lockHGT(_form?.amount);
+        return staking?.stake(_form.recipient, _form?.amount);
     });
     const mutationUnStake = useMutation((_form: any): any => {
-        return istantRouter?.unlockHGT(_form?.amount);
+        return staking?.unstake(_form.recipient, _form?.amount);
     });
     const mutationClaim = useMutation((_form: any): any => {
-        return istantRouter?.withdraw(_form.receiverAddress, _form?.amount);
+        return staking?.claim(_form.recipient);
     });
 
     const handleClick = () => {
@@ -121,9 +129,7 @@ const Staking: FC = () => {
 
 
 
-    const APY = 0;
-    // const collateralRatio = 0;
-    const stakedBalance = 0;
+
 
 
     return (
@@ -155,6 +161,14 @@ const Staking: FC = () => {
                             onChange={handleChange}
                             autoComplete="off"
                         />
+                        <Input
+                            className="my-10"
+                            label="Receiver Address"
+                            value={form?.recipient}
+                            name="recipient"
+                            onChange={handleChange}
+                            autoComplete="off"
+                        />
 
                     </TabPanel>
                     <TabPanel value={selectedTab} name="unstake">
@@ -166,11 +180,28 @@ const Staking: FC = () => {
                             onChange={handleChange}
                             autoComplete="off"
                         />
+                        <Input
+                            className="my-10"
+                            label="Receiver Address"
+                            value={form?.recipient}
+                            name="recipient"
+                            onChange={handleChange}
+                            autoComplete="off"
+                        />
 
                     </TabPanel>
                     <TabPanel value={selectedTab} name="claim">
-
-
+                        <span>
+                            Total Rewards :  {rewards}
+                        </span>
+                        <Input
+                            className="my-10"
+                            label="Receiver Address"
+                            value={form?.recipient}
+                            name="recipient"
+                            onChange={handleChange}
+                            autoComplete="off"
+                        />
                     </TabPanel>
                 </div>
 
@@ -178,7 +209,7 @@ const Staking: FC = () => {
 
 
                 <DetailsList list={[
-                    { title: "APY", value: APY },
+                    { title: "APY", value: apy },
                     { title: "Collateral Ratio", value: collateralRatio },
                     { title: "Staked Balance", value: stakedBalance },
                 ]} />

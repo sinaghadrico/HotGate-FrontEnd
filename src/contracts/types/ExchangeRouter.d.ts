@@ -3,17 +3,17 @@
 /* eslint-disable */
 
 import {
-    ethers,
-    EventFilter,
-    Signer,
-    BigNumber,
-    BigNumberish,
-    PopulatedTransaction,
-    BaseContract,
-    ContractTransaction,
-    Overrides,
-    PayableOverrides,
-    CallOverrides,
+  ethers,
+  EventFilter,
+  Signer,
+  BigNumber,
+  BigNumberish,
+  PopulatedTransaction,
+  BaseContract,
+  ContractTransaction,
+  Overrides,
+  PayableOverrides,
+  CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
@@ -21,835 +21,1114 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface ExchangeRouterInterface extends ethers.utils.Interface {
-    functions: {
-        "WAVAX()": FunctionFragment;
-        "addLiquidity(address,address,uint256,uint256,uint256,uint256,address,uint256)": FunctionFragment;
-        "addLiquidityETH(address,uint256,uint256,uint256,address,uint256)": FunctionFragment;
-        "bitcoinInstantPool()": FunctionFragment;
-        "getAmountIn(uint256,uint256,uint256)": FunctionFragment;
-        "getAmountOut(uint256,uint256,uint256)": FunctionFragment;
-        "getAmountsIn(uint256,address[])": FunctionFragment;
-        "getAmountsOut(uint256,address[])": FunctionFragment;
-        "liquidityPoolFactory()": FunctionFragment;
-        "quote(uint256,uint256,uint256)": FunctionFragment;
-        "removeLiquidity(address,address,uint256,uint256,uint256,address,uint256)": FunctionFragment;
-        "removeLiquidityETH(address,uint256,uint256,uint256,address,uint256)": FunctionFragment;
-        "swapETHForExactTokens(uint256,address[],address,uint256)": FunctionFragment;
-        "swapExactETHForTokens(uint256,address[],address,uint256)": FunctionFragment;
-        "swapExactTokensForETH(uint256,uint256,address[],address,uint256)": FunctionFragment;
-        "swapExactTokensForTokens(uint256,uint256,address[],address,uint256)": FunctionFragment;
-        "swapTokensForExactETH(uint256,uint256,address[],address,uint256)": FunctionFragment;
-        "swapTokensForExactTokens(uint256,uint256,address[],address,uint256)": FunctionFragment;
-        "wrappedBitcoin()": FunctionFragment;
-    };
+  functions: {
+    "WAVAX()": FunctionFragment;
+    "addLiquidity(address,address,uint256,uint256,uint256,uint256,address,uint256)": FunctionFragment;
+    "addLiquidityAVAX(address,uint256,uint256,uint256,address,uint256)": FunctionFragment;
+    "bitcoinInstantPool()": FunctionFragment;
+    "getAmountIn(uint256,uint256,uint256)": FunctionFragment;
+    "getAmountOut(uint256,uint256,uint256)": FunctionFragment;
+    "getAmountsIn(uint256,address[])": FunctionFragment;
+    "getAmountsOut(uint256,address[])": FunctionFragment;
+    "liquidityPoolFactory()": FunctionFragment;
+    "quote(uint256,uint256,uint256)": FunctionFragment;
+    "removeLiquidity(address,address,uint256,uint256,uint256,address,uint256)": FunctionFragment;
+    "removeLiquidityAVAX(address,uint256,uint256,uint256,address,uint256)": FunctionFragment;
+    "swapAVAXForExactTokens(uint256,address[],address,uint256)": FunctionFragment;
+    "swapExactAVAXForTokens(uint256,address[],address,uint256)": FunctionFragment;
+    "swapExactAVAXForTokensSupportingFeeOnTransferTokens(uint256,address[],address,uint256)": FunctionFragment;
+    "swapExactTokensForAVAX(uint256,uint256,address[],address,uint256)": FunctionFragment;
+    "swapExactTokensForAVAXSupportingFeeOnTransferTokens(uint256,uint256,address[],address,uint256)": FunctionFragment;
+    "swapExactTokensForTokens(uint256,uint256,address[],address,uint256)": FunctionFragment;
+    "swapExactTokensForTokensSupportingFeeOnTransferTokens(uint256,uint256,address[],address,uint256)": FunctionFragment;
+    "swapTokensForExactAVAX(uint256,uint256,address[],address,uint256)": FunctionFragment;
+    "swapTokensForExactTokens(uint256,uint256,address[],address,uint256)": FunctionFragment;
+    "wrappedBitcoin()": FunctionFragment;
+  };
 
-    encodeFunctionData(functionFragment: "WAVAX", values?: undefined): string;
-    encodeFunctionData(
-        functionFragment: "addLiquidity",
-        values: [string, string, BigNumberish, BigNumberish, BigNumberish, BigNumberish, string, BigNumberish],
-    ): string;
-    encodeFunctionData(
-        functionFragment: "addLiquidityETH",
-        values: [string, BigNumberish, BigNumberish, BigNumberish, string, BigNumberish],
-    ): string;
-    encodeFunctionData(functionFragment: "bitcoinInstantPool", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getAmountIn", values: [BigNumberish, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "getAmountOut", values: [BigNumberish, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "getAmountsIn", values: [BigNumberish, string[]]): string;
-    encodeFunctionData(functionFragment: "getAmountsOut", values: [BigNumberish, string[]]): string;
-    encodeFunctionData(functionFragment: "liquidityPoolFactory", values?: undefined): string;
-    encodeFunctionData(functionFragment: "quote", values: [BigNumberish, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(
-        functionFragment: "removeLiquidity",
-        values: [string, string, BigNumberish, BigNumberish, BigNumberish, string, BigNumberish],
-    ): string;
-    encodeFunctionData(
-        functionFragment: "removeLiquidityETH",
-        values: [string, BigNumberish, BigNumberish, BigNumberish, string, BigNumberish],
-    ): string;
-    encodeFunctionData(
-        functionFragment: "swapETHForExactTokens",
-        values: [BigNumberish, string[], string, BigNumberish],
-    ): string;
-    encodeFunctionData(
-        functionFragment: "swapExactETHForTokens",
-        values: [BigNumberish, string[], string, BigNumberish],
-    ): string;
-    encodeFunctionData(
-        functionFragment: "swapExactTokensForETH",
-        values: [BigNumberish, BigNumberish, string[], string, BigNumberish],
-    ): string;
-    encodeFunctionData(
-        functionFragment: "swapExactTokensForTokens",
-        values: [BigNumberish, BigNumberish, string[], string, BigNumberish],
-    ): string;
-    encodeFunctionData(
-        functionFragment: "swapTokensForExactETH",
-        values: [BigNumberish, BigNumberish, string[], string, BigNumberish],
-    ): string;
-    encodeFunctionData(
-        functionFragment: "swapTokensForExactTokens",
-        values: [BigNumberish, BigNumberish, string[], string, BigNumberish],
-    ): string;
-    encodeFunctionData(functionFragment: "wrappedBitcoin", values?: undefined): string;
+  encodeFunctionData(functionFragment: "WAVAX", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "addLiquidity",
+    values: [
+      string,
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addLiquidityAVAX",
+    values: [
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "bitcoinInstantPool",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getAmountIn",
+    values: [BigNumberish, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getAmountOut",
+    values: [BigNumberish, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getAmountsIn",
+    values: [BigNumberish, string[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getAmountsOut",
+    values: [BigNumberish, string[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "liquidityPoolFactory",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "quote",
+    values: [BigNumberish, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "removeLiquidity",
+    values: [
+      string,
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "removeLiquidityAVAX",
+    values: [
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "swapAVAXForExactTokens",
+    values: [BigNumberish, string[], string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "swapExactAVAXForTokens",
+    values: [BigNumberish, string[], string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "swapExactAVAXForTokensSupportingFeeOnTransferTokens",
+    values: [BigNumberish, string[], string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "swapExactTokensForAVAX",
+    values: [BigNumberish, BigNumberish, string[], string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "swapExactTokensForAVAXSupportingFeeOnTransferTokens",
+    values: [BigNumberish, BigNumberish, string[], string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "swapExactTokensForTokens",
+    values: [BigNumberish, BigNumberish, string[], string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+    values: [BigNumberish, BigNumberish, string[], string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "swapTokensForExactAVAX",
+    values: [BigNumberish, BigNumberish, string[], string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "swapTokensForExactTokens",
+    values: [BigNumberish, BigNumberish, string[], string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "wrappedBitcoin",
+    values?: undefined
+  ): string;
 
-    decodeFunctionResult(functionFragment: "WAVAX", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "addLiquidity", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "addLiquidityETH", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "bitcoinInstantPool", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getAmountIn", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getAmountOut", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getAmountsIn", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getAmountsOut", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "liquidityPoolFactory", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "quote", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "removeLiquidity", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "removeLiquidityETH", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "swapETHForExactTokens", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "swapExactETHForTokens", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "swapExactTokensForETH", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "swapExactTokensForTokens", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "swapTokensForExactETH", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "swapTokensForExactTokens", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "wrappedBitcoin", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "WAVAX", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "addLiquidity",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "addLiquidityAVAX",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "bitcoinInstantPool",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getAmountIn",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getAmountOut",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getAmountsIn",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getAmountsOut",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "liquidityPoolFactory",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "quote", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "removeLiquidity",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "removeLiquidityAVAX",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "swapAVAXForExactTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "swapExactAVAXForTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "swapExactAVAXForTokensSupportingFeeOnTransferTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "swapExactTokensForAVAX",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "swapExactTokensForAVAXSupportingFeeOnTransferTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "swapExactTokensForTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "swapTokensForExactAVAX",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "swapTokensForExactTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "wrappedBitcoin",
+    data: BytesLike
+  ): Result;
 
-    events: {};
+  events: {};
 }
 
 export class ExchangeRouter extends BaseContract {
-    connect(signerOrProvider: Signer | Provider | string): this;
-    attach(addressOrName: string): this;
-    deployed(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-    listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
-    off<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    on<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    once<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): this;
+  listeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
+  off<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  on<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  once<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): this;
 
-    listeners(eventName?: string): Array<Listener>;
-    off(eventName: string, listener: Listener): this;
-    on(eventName: string, listener: Listener): this;
-    once(eventName: string, listener: Listener): this;
-    removeListener(eventName: string, listener: Listener): this;
-    removeAllListeners(eventName?: string): this;
+  listeners(eventName?: string): Array<Listener>;
+  off(eventName: string, listener: Listener): this;
+  on(eventName: string, listener: Listener): this;
+  once(eventName: string, listener: Listener): this;
+  removeListener(eventName: string, listener: Listener): this;
+  removeAllListeners(eventName?: string): this;
 
-    queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
-        event: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        fromBlockOrBlockhash?: string | number | undefined,
-        toBlock?: string | number | undefined,
-    ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
+  queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
+    event: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-    interface: ExchangeRouterInterface;
+  interface: ExchangeRouterInterface;
 
-    functions: {
-        WAVAX(overrides?: CallOverrides): Promise<[string]>;
+  functions: {
+    WAVAX(overrides?: CallOverrides): Promise<[string]>;
 
-        addLiquidity(
-            tokenA: string,
-            tokenB: string,
-            amountADesired: BigNumberish,
-            amountBDesired: BigNumberish,
-            amountAMin: BigNumberish,
-            amountBMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    addLiquidity(
+      tokenA: string,
+      tokenB: string,
+      amountADesired: BigNumberish,
+      amountBDesired: BigNumberish,
+      amountAMin: BigNumberish,
+      amountBMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        addLiquidityETH(
-            token: string,
-            amountTokenDesired: BigNumberish,
-            amountTokenMin: BigNumberish,
-            amountETHMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: PayableOverrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    addLiquidityAVAX(
+      token: string,
+      amountTokenDesired: BigNumberish,
+      amountTokenMin: BigNumberish,
+      amountAVAXMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        bitcoinInstantPool(overrides?: CallOverrides): Promise<[string]>;
+    bitcoinInstantPool(overrides?: CallOverrides): Promise<[string]>;
 
-        getAmountIn(
-            amountOut: BigNumberish,
-            reserveIn: BigNumberish,
-            reserveOut: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<[BigNumber] & { amountIn: BigNumber }>;
+    getAmountIn(
+      amountOut: BigNumberish,
+      reserveIn: BigNumberish,
+      reserveOut: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { amountIn: BigNumber }>;
 
-        getAmountOut(
-            amountIn: BigNumberish,
-            reserveIn: BigNumberish,
-            reserveOut: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<[BigNumber] & { amountOut: BigNumber }>;
+    getAmountOut(
+      amountIn: BigNumberish,
+      reserveIn: BigNumberish,
+      reserveOut: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { amountOut: BigNumber }>;
 
-        getAmountsIn(
-            amountOut: BigNumberish,
-            path: string[],
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    getAmountsIn(
+      amountOut: BigNumberish,
+      path: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        getAmountsOut(
-            amountIn: BigNumberish,
-            path: string[],
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    getAmountsOut(
+      amountIn: BigNumberish,
+      path: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        liquidityPoolFactory(overrides?: CallOverrides): Promise<[string]>;
+    liquidityPoolFactory(overrides?: CallOverrides): Promise<[string]>;
 
-        quote(
-            amountA: BigNumberish,
-            reserveA: BigNumberish,
-            reserveB: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<[BigNumber] & { amountB: BigNumber }>;
+    quote(
+      amountA: BigNumberish,
+      reserveA: BigNumberish,
+      reserveB: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { amountB: BigNumber }>;
 
-        removeLiquidity(
-            tokenA: string,
-            tokenB: string,
-            liquidity: BigNumberish,
-            amountAMin: BigNumberish,
-            amountBMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    removeLiquidity(
+      tokenA: string,
+      tokenB: string,
+      liquidity: BigNumberish,
+      amountAMin: BigNumberish,
+      amountBMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        removeLiquidityETH(
-            token: string,
-            liquidity: BigNumberish,
-            amountTokenMin: BigNumberish,
-            amountETHMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    removeLiquidityAVAX(
+      token: string,
+      liquidity: BigNumberish,
+      amountTokenMin: BigNumberish,
+      amountAVAXMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        swapETHForExactTokens(
-            amountOut: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: PayableOverrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    swapAVAXForExactTokens(
+      amountOut: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        swapExactETHForTokens(
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: PayableOverrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    swapExactAVAXForTokens(
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        swapExactTokensForETH(
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    swapExactAVAXForTokensSupportingFeeOnTransferTokens(
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        swapExactTokensForTokens(
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    swapExactTokensForAVAX(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        swapTokensForExactETH(
-            amountOut: BigNumberish,
-            amountInMax: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    swapExactTokensForAVAXSupportingFeeOnTransferTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        swapTokensForExactTokens(
-            amountOut: BigNumberish,
-            amountInMax: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    swapExactTokensForTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        wrappedBitcoin(overrides?: CallOverrides): Promise<[string]>;
-    };
+    swapExactTokensForTokensSupportingFeeOnTransferTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
+    swapTokensForExactAVAX(
+      amountOut: BigNumberish,
+      amountInMax: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    swapTokensForExactTokens(
+      amountOut: BigNumberish,
+      amountInMax: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    wrappedBitcoin(overrides?: CallOverrides): Promise<[string]>;
+  };
+
+  WAVAX(overrides?: CallOverrides): Promise<string>;
+
+  addLiquidity(
+    tokenA: string,
+    tokenB: string,
+    amountADesired: BigNumberish,
+    amountBDesired: BigNumberish,
+    amountAMin: BigNumberish,
+    amountBMin: BigNumberish,
+    to: string,
+    deadline: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  addLiquidityAVAX(
+    token: string,
+    amountTokenDesired: BigNumberish,
+    amountTokenMin: BigNumberish,
+    amountAVAXMin: BigNumberish,
+    to: string,
+    deadline: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  bitcoinInstantPool(overrides?: CallOverrides): Promise<string>;
+
+  getAmountIn(
+    amountOut: BigNumberish,
+    reserveIn: BigNumberish,
+    reserveOut: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  getAmountOut(
+    amountIn: BigNumberish,
+    reserveIn: BigNumberish,
+    reserveOut: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  getAmountsIn(
+    amountOut: BigNumberish,
+    path: string[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  getAmountsOut(
+    amountIn: BigNumberish,
+    path: string[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  liquidityPoolFactory(overrides?: CallOverrides): Promise<string>;
+
+  quote(
+    amountA: BigNumberish,
+    reserveA: BigNumberish,
+    reserveB: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  removeLiquidity(
+    tokenA: string,
+    tokenB: string,
+    liquidity: BigNumberish,
+    amountAMin: BigNumberish,
+    amountBMin: BigNumberish,
+    to: string,
+    deadline: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  removeLiquidityAVAX(
+    token: string,
+    liquidity: BigNumberish,
+    amountTokenMin: BigNumberish,
+    amountAVAXMin: BigNumberish,
+    to: string,
+    deadline: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  swapAVAXForExactTokens(
+    amountOut: BigNumberish,
+    path: string[],
+    to: string,
+    deadline: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  swapExactAVAXForTokens(
+    amountOutMin: BigNumberish,
+    path: string[],
+    to: string,
+    deadline: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  swapExactAVAXForTokensSupportingFeeOnTransferTokens(
+    amountOutMin: BigNumberish,
+    path: string[],
+    to: string,
+    deadline: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  swapExactTokensForAVAX(
+    amountIn: BigNumberish,
+    amountOutMin: BigNumberish,
+    path: string[],
+    to: string,
+    deadline: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  swapExactTokensForAVAXSupportingFeeOnTransferTokens(
+    amountIn: BigNumberish,
+    amountOutMin: BigNumberish,
+    path: string[],
+    to: string,
+    deadline: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  swapExactTokensForTokens(
+    amountIn: BigNumberish,
+    amountOutMin: BigNumberish,
+    path: string[],
+    to: string,
+    deadline: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  swapExactTokensForTokensSupportingFeeOnTransferTokens(
+    amountIn: BigNumberish,
+    amountOutMin: BigNumberish,
+    path: string[],
+    to: string,
+    deadline: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  swapTokensForExactAVAX(
+    amountOut: BigNumberish,
+    amountInMax: BigNumberish,
+    path: string[],
+    to: string,
+    deadline: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  swapTokensForExactTokens(
+    amountOut: BigNumberish,
+    amountInMax: BigNumberish,
+    path: string[],
+    to: string,
+    deadline: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  wrappedBitcoin(overrides?: CallOverrides): Promise<string>;
+
+  callStatic: {
     WAVAX(overrides?: CallOverrides): Promise<string>;
 
     addLiquidity(
-        tokenA: string,
-        tokenB: string,
-        amountADesired: BigNumberish,
-        amountBDesired: BigNumberish,
-        amountAMin: BigNumberish,
-        amountBMin: BigNumberish,
-        to: string,
-        deadline: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      tokenA: string,
+      tokenB: string,
+      amountADesired: BigNumberish,
+      amountBDesired: BigNumberish,
+      amountAMin: BigNumberish,
+      amountBMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        amountA: BigNumber;
+        amountB: BigNumber;
+        liquidity: BigNumber;
+      }
+    >;
 
-    addLiquidityETH(
-        token: string,
-        amountTokenDesired: BigNumberish,
-        amountTokenMin: BigNumberish,
-        amountETHMin: BigNumberish,
-        to: string,
-        deadline: BigNumberish,
-        overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    addLiquidityAVAX(
+      token: string,
+      amountTokenDesired: BigNumberish,
+      amountTokenMin: BigNumberish,
+      amountAVAXMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        amountToken: BigNumber;
+        amountAVAX: BigNumber;
+        liquidity: BigNumber;
+      }
+    >;
 
     bitcoinInstantPool(overrides?: CallOverrides): Promise<string>;
 
     getAmountIn(
-        amountOut: BigNumberish,
-        reserveIn: BigNumberish,
-        reserveOut: BigNumberish,
-        overrides?: CallOverrides,
+      amountOut: BigNumberish,
+      reserveIn: BigNumberish,
+      reserveOut: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getAmountOut(
-        amountIn: BigNumberish,
-        reserveIn: BigNumberish,
-        reserveOut: BigNumberish,
-        overrides?: CallOverrides,
+      amountIn: BigNumberish,
+      reserveIn: BigNumberish,
+      reserveOut: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getAmountsIn(
-        amountOut: BigNumberish,
-        path: string[],
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      amountOut: BigNumberish,
+      path: string[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     getAmountsOut(
-        amountIn: BigNumberish,
-        path: string[],
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      amountIn: BigNumberish,
+      path: string[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     liquidityPoolFactory(overrides?: CallOverrides): Promise<string>;
 
     quote(
-        amountA: BigNumberish,
-        reserveA: BigNumberish,
-        reserveB: BigNumberish,
-        overrides?: CallOverrides,
+      amountA: BigNumberish,
+      reserveA: BigNumberish,
+      reserveB: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     removeLiquidity(
-        tokenA: string,
-        tokenB: string,
-        liquidity: BigNumberish,
-        amountAMin: BigNumberish,
-        amountBMin: BigNumberish,
-        to: string,
-        deadline: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      tokenA: string,
+      tokenB: string,
+      liquidity: BigNumberish,
+      amountAMin: BigNumberish,
+      amountBMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & { amountA: BigNumber; amountB: BigNumber }
+    >;
 
-    removeLiquidityETH(
-        token: string,
-        liquidity: BigNumberish,
-        amountTokenMin: BigNumberish,
-        amountETHMin: BigNumberish,
-        to: string,
-        deadline: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    removeLiquidityAVAX(
+      token: string,
+      liquidity: BigNumberish,
+      amountTokenMin: BigNumberish,
+      amountAVAXMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & { amountToken: BigNumber; amountAVAX: BigNumber }
+    >;
 
-    swapETHForExactTokens(
-        amountOut: BigNumberish,
-        path: string[],
-        to: string,
-        deadline: BigNumberish,
-        overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    swapAVAXForExactTokens(
+      amountOut: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
-    swapExactETHForTokens(
-        amountOutMin: BigNumberish,
-        path: string[],
-        to: string,
-        deadline: BigNumberish,
-        overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    swapExactAVAXForTokens(
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
-    swapExactTokensForETH(
-        amountIn: BigNumberish,
-        amountOutMin: BigNumberish,
-        path: string[],
-        to: string,
-        deadline: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    swapExactAVAXForTokensSupportingFeeOnTransferTokens(
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    swapExactTokensForAVAX(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
+
+    swapExactTokensForAVAXSupportingFeeOnTransferTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     swapExactTokensForTokens(
-        amountIn: BigNumberish,
-        amountOutMin: BigNumberish,
-        path: string[],
-        to: string,
-        deadline: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
-    swapTokensForExactETH(
-        amountOut: BigNumberish,
-        amountInMax: BigNumberish,
-        path: string[],
-        to: string,
-        deadline: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    swapExactTokensForTokensSupportingFeeOnTransferTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    swapTokensForExactAVAX(
+      amountOut: BigNumberish,
+      amountInMax: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     swapTokensForExactTokens(
-        amountOut: BigNumberish,
-        amountInMax: BigNumberish,
-        path: string[],
-        to: string,
-        deadline: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      amountOut: BigNumberish,
+      amountInMax: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     wrappedBitcoin(overrides?: CallOverrides): Promise<string>;
+  };
 
-    callStatic: {
-        WAVAX(overrides?: CallOverrides): Promise<string>;
+  filters: {};
 
-        addLiquidity(
-            tokenA: string,
-            tokenB: string,
-            amountADesired: BigNumberish,
-            amountBDesired: BigNumberish,
-            amountAMin: BigNumberish,
-            amountBMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<
-            [BigNumber, BigNumber, BigNumber] & {
-                amountA: BigNumber;
-                amountB: BigNumber;
-                liquidity: BigNumber;
-            }
-        >;
+  estimateGas: {
+    WAVAX(overrides?: CallOverrides): Promise<BigNumber>;
 
-        addLiquidityETH(
-            token: string,
-            amountTokenDesired: BigNumberish,
-            amountTokenMin: BigNumberish,
-            amountETHMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<
-            [BigNumber, BigNumber, BigNumber] & {
-                amountToken: BigNumber;
-                amountETH: BigNumber;
-                liquidity: BigNumber;
-            }
-        >;
+    addLiquidity(
+      tokenA: string,
+      tokenB: string,
+      amountADesired: BigNumberish,
+      amountBDesired: BigNumberish,
+      amountAMin: BigNumberish,
+      amountBMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        bitcoinInstantPool(overrides?: CallOverrides): Promise<string>;
+    addLiquidityAVAX(
+      token: string,
+      amountTokenDesired: BigNumberish,
+      amountTokenMin: BigNumberish,
+      amountAVAXMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        getAmountIn(
-            amountOut: BigNumberish,
-            reserveIn: BigNumberish,
-            reserveOut: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber>;
+    bitcoinInstantPool(overrides?: CallOverrides): Promise<BigNumber>;
 
-        getAmountOut(
-            amountIn: BigNumberish,
-            reserveIn: BigNumberish,
-            reserveOut: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber>;
+    getAmountIn(
+      amountOut: BigNumberish,
+      reserveIn: BigNumberish,
+      reserveOut: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-        getAmountsIn(amountOut: BigNumberish, path: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    getAmountOut(
+      amountIn: BigNumberish,
+      reserveIn: BigNumberish,
+      reserveOut: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-        getAmountsOut(amountIn: BigNumberish, path: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    getAmountsIn(
+      amountOut: BigNumberish,
+      path: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        liquidityPoolFactory(overrides?: CallOverrides): Promise<string>;
+    getAmountsOut(
+      amountIn: BigNumberish,
+      path: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        quote(
-            amountA: BigNumberish,
-            reserveA: BigNumberish,
-            reserveB: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber>;
+    liquidityPoolFactory(overrides?: CallOverrides): Promise<BigNumber>;
 
-        removeLiquidity(
-            tokenA: string,
-            tokenB: string,
-            liquidity: BigNumberish,
-            amountAMin: BigNumberish,
-            amountBMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<[BigNumber, BigNumber] & { amountA: BigNumber; amountB: BigNumber }>;
+    quote(
+      amountA: BigNumberish,
+      reserveA: BigNumberish,
+      reserveB: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-        removeLiquidityETH(
-            token: string,
-            liquidity: BigNumberish,
-            amountTokenMin: BigNumberish,
-            amountETHMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<[BigNumber, BigNumber] & { amountToken: BigNumber; amountETH: BigNumber }>;
+    removeLiquidity(
+      tokenA: string,
+      tokenB: string,
+      liquidity: BigNumberish,
+      amountAMin: BigNumberish,
+      amountBMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        swapETHForExactTokens(
-            amountOut: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber[]>;
+    removeLiquidityAVAX(
+      token: string,
+      liquidity: BigNumberish,
+      amountTokenMin: BigNumberish,
+      amountAVAXMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        swapExactETHForTokens(
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber[]>;
+    swapAVAXForExactTokens(
+      amountOut: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        swapExactTokensForETH(
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber[]>;
+    swapExactAVAXForTokens(
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        swapExactTokensForTokens(
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber[]>;
+    swapExactAVAXForTokensSupportingFeeOnTransferTokens(
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        swapTokensForExactETH(
-            amountOut: BigNumberish,
-            amountInMax: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber[]>;
+    swapExactTokensForAVAX(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        swapTokensForExactTokens(
-            amountOut: BigNumberish,
-            amountInMax: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber[]>;
+    swapExactTokensForAVAXSupportingFeeOnTransferTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        wrappedBitcoin(overrides?: CallOverrides): Promise<string>;
-    };
+    swapExactTokensForTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-    filters: {};
+    swapExactTokensForTokensSupportingFeeOnTransferTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-    estimateGas: {
-        WAVAX(overrides?: CallOverrides): Promise<BigNumber>;
+    swapTokensForExactAVAX(
+      amountOut: BigNumberish,
+      amountInMax: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        addLiquidity(
-            tokenA: string,
-            tokenB: string,
-            amountADesired: BigNumberish,
-            amountBDesired: BigNumberish,
-            amountAMin: BigNumberish,
-            amountBMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    swapTokensForExactTokens(
+      amountOut: BigNumberish,
+      amountInMax: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        addLiquidityETH(
-            token: string,
-            amountTokenDesired: BigNumberish,
-            amountTokenMin: BigNumberish,
-            amountETHMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: PayableOverrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    wrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
+  };
 
-        bitcoinInstantPool(overrides?: CallOverrides): Promise<BigNumber>;
+  populateTransaction: {
+    WAVAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        getAmountIn(
-            amountOut: BigNumberish,
-            reserveIn: BigNumberish,
-            reserveOut: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber>;
+    addLiquidity(
+      tokenA: string,
+      tokenB: string,
+      amountADesired: BigNumberish,
+      amountBDesired: BigNumberish,
+      amountAMin: BigNumberish,
+      amountBMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        getAmountOut(
-            amountIn: BigNumberish,
-            reserveIn: BigNumberish,
-            reserveOut: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber>;
+    addLiquidityAVAX(
+      token: string,
+      amountTokenDesired: BigNumberish,
+      amountTokenMin: BigNumberish,
+      amountAVAXMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        getAmountsIn(
-            amountOut: BigNumberish,
-            path: string[],
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    bitcoinInstantPool(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-        getAmountsOut(
-            amountIn: BigNumberish,
-            path: string[],
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    getAmountIn(
+      amountOut: BigNumberish,
+      reserveIn: BigNumberish,
+      reserveOut: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-        liquidityPoolFactory(overrides?: CallOverrides): Promise<BigNumber>;
+    getAmountOut(
+      amountIn: BigNumberish,
+      reserveIn: BigNumberish,
+      reserveOut: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-        quote(
-            amountA: BigNumberish,
-            reserveA: BigNumberish,
-            reserveB: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber>;
+    getAmountsIn(
+      amountOut: BigNumberish,
+      path: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        removeLiquidity(
-            tokenA: string,
-            tokenB: string,
-            liquidity: BigNumberish,
-            amountAMin: BigNumberish,
-            amountBMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    getAmountsOut(
+      amountIn: BigNumberish,
+      path: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        removeLiquidityETH(
-            token: string,
-            liquidity: BigNumberish,
-            amountTokenMin: BigNumberish,
-            amountETHMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    liquidityPoolFactory(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-        swapETHForExactTokens(
-            amountOut: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: PayableOverrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    quote(
+      amountA: BigNumberish,
+      reserveA: BigNumberish,
+      reserveB: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-        swapExactETHForTokens(
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: PayableOverrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    removeLiquidity(
+      tokenA: string,
+      tokenB: string,
+      liquidity: BigNumberish,
+      amountAMin: BigNumberish,
+      amountBMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        swapExactTokensForETH(
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    removeLiquidityAVAX(
+      token: string,
+      liquidity: BigNumberish,
+      amountTokenMin: BigNumberish,
+      amountAVAXMin: BigNumberish,
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        swapExactTokensForTokens(
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    swapAVAXForExactTokens(
+      amountOut: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        swapTokensForExactETH(
-            amountOut: BigNumberish,
-            amountInMax: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    swapExactAVAXForTokens(
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        swapTokensForExactTokens(
-            amountOut: BigNumberish,
-            amountInMax: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    swapExactAVAXForTokensSupportingFeeOnTransferTokens(
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        wrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
-    };
+    swapExactTokensForAVAX(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-    populateTransaction: {
-        WAVAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    swapExactTokensForAVAXSupportingFeeOnTransferTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        addLiquidity(
-            tokenA: string,
-            tokenB: string,
-            amountADesired: BigNumberish,
-            amountBDesired: BigNumberish,
-            amountAMin: BigNumberish,
-            amountBMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
+    swapExactTokensForTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        addLiquidityETH(
-            token: string,
-            amountTokenDesired: BigNumberish,
-            amountTokenMin: BigNumberish,
-            amountETHMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: PayableOverrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
+    swapExactTokensForTokensSupportingFeeOnTransferTokens(
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        bitcoinInstantPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    swapTokensForExactAVAX(
+      amountOut: BigNumberish,
+      amountInMax: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        getAmountIn(
-            amountOut: BigNumberish,
-            reserveIn: BigNumberish,
-            reserveOut: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<PopulatedTransaction>;
+    swapTokensForExactTokens(
+      amountOut: BigNumberish,
+      amountInMax: BigNumberish,
+      path: string[],
+      to: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        getAmountOut(
-            amountIn: BigNumberish,
-            reserveIn: BigNumberish,
-            reserveOut: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<PopulatedTransaction>;
-
-        getAmountsIn(
-            amountOut: BigNumberish,
-            path: string[],
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        getAmountsOut(
-            amountIn: BigNumberish,
-            path: string[],
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        liquidityPoolFactory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        quote(
-            amountA: BigNumberish,
-            reserveA: BigNumberish,
-            reserveB: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<PopulatedTransaction>;
-
-        removeLiquidity(
-            tokenA: string,
-            tokenB: string,
-            liquidity: BigNumberish,
-            amountAMin: BigNumberish,
-            amountBMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        removeLiquidityETH(
-            token: string,
-            liquidity: BigNumberish,
-            amountTokenMin: BigNumberish,
-            amountETHMin: BigNumberish,
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        swapETHForExactTokens(
-            amountOut: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: PayableOverrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        swapExactETHForTokens(
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: PayableOverrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        swapExactTokensForETH(
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        swapExactTokensForTokens(
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        swapTokensForExactETH(
-            amountOut: BigNumberish,
-            amountInMax: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        swapTokensForExactTokens(
-            amountOut: BigNumberish,
-            amountInMax: BigNumberish,
-            path: string[],
-            to: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        wrappedBitcoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-    };
+    wrappedBitcoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+  };
 }

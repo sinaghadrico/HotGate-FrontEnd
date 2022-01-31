@@ -3,213 +3,346 @@
 /* eslint-disable */
 
 import { ethers } from "ethers";
-import { FactoryOptions, HardhatEthersHelpers as HardhatEthersHelpersBase } from "@nomiclabs/hardhat-ethers/types";
+import {
+  FactoryOptions,
+  HardhatEthersHelpers as HardhatEthersHelpersBase,
+} from "@nomiclabs/hardhat-ethers/types";
 
 import * as Contracts from ".";
 
 declare module "hardhat/types/runtime" {
-    interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
-        getContractFactory(
-            name: "ERC20",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.ERC20__factory>;
-        getContractFactory(
-            name: "IERC20",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.IERC20__factory>;
-        getContractFactory(
-            name: "IWETH",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.IWETH__factory>;
-        getContractFactory(
-            name: "IWrappedToken",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.IWrappedToken__factory>;
-        getContractFactory(
-            name: "WETH",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.WETH__factory>;
-        getContractFactory(
-            name: "WrappedToken",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.WrappedToken__factory>;
-        getContractFactory(
-            name: "FastPool",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.FastPool__factory>;
-        getContractFactory(
-            name: "InstantPool",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.InstantPool__factory>;
-        getContractFactory(
-            name: "IFastPool",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.IFastPool__factory>;
-        getContractFactory(
-            name: "IHotGateCallee",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.IHotGateCallee__factory>;
-        getContractFactory(
-            name: "IInstantPool",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.IInstantPool__factory>;
-        getContractFactory(
-            name: "ILiquidityPool",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.ILiquidityPool__factory>;
-        getContractFactory(
-            name: "ILiquidityPoolFactory",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.ILiquidityPoolFactory__factory>;
-        getContractFactory(
-            name: "LiquidityPool",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.LiquidityPool__factory>;
-        getContractFactory(
-            name: "LiquidityPoolFactory",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.LiquidityPoolFactory__factory>;
-        getContractFactory(
-            name: "BitcoinRelay",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.BitcoinRelay__factory>;
-        getContractFactory(
-            name: "IBitcoinRelay",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.IBitcoinRelay__factory>;
-        getContractFactory(
-            name: "TypedMemView",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.TypedMemView__factory>;
-        getContractFactory(
-            name: "ViewBTC",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.ViewBTC__factory>;
-        getContractFactory(
-            name: "CCExchangeRouter",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.CCExchangeRouter__factory>;
-        getContractFactory(
-            name: "CCTransferRouter",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.CCTransferRouter__factory>;
-        getContractFactory(
-            name: "ExchangeRouter",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.ExchangeRouter__factory>;
-        getContractFactory(
-            name: "FastRouter",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.FastRouter__factory>;
-        getContractFactory(
-            name: "InstantRouter",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.InstantRouter__factory>;
-        getContractFactory(
-            name: "ICCExchangeRouter",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.ICCExchangeRouter__factory>;
-        getContractFactory(
-            name: "ICCTransferRouter",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.ICCTransferRouter__factory>;
-        getContractFactory(
-            name: "IExchangeRouter",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.IExchangeRouter__factory>;
-        getContractFactory(
-            name: "IFastRouter",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.IFastRouter__factory>;
-        getContractFactory(
-            name: "IInstantRouter",
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<Contracts.IInstantRouter__factory>;
+  interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
+    getContractFactory(
+      name: "ERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC20__factory>;
+    getContractFactory(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20__factory>;
+    getContractFactory(
+      name: "IWAVAX",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWAVAX__factory>;
+    getContractFactory(
+      name: "IWrappedToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWrappedToken__factory>;
+    getContractFactory(
+      name: "WAVAX",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.WAVAX__factory>;
+    getContractFactory(
+      name: "WrappedToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.WrappedToken__factory>;
+    getContractFactory(
+      name: "TypedMemView",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TypedMemView__factory>;
+    getContractFactory(
+      name: "ViewBTC",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ViewBTC__factory>;
+    getContractFactory(
+      name: "FastPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FastPool__factory>;
+    getContractFactory(
+      name: "InstantPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.InstantPool__factory>;
+    getContractFactory(
+      name: "IFastPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IFastPool__factory>;
+    getContractFactory(
+      name: "IInstantPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IInstantPool__factory>;
+    getContractFactory(
+      name: "ILiquidityPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ILiquidityPool__factory>;
+    getContractFactory(
+      name: "ILiquidityPoolFactory",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ILiquidityPoolFactory__factory>;
+    getContractFactory(
+      name: "ITeleportDAOCallee",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ITeleportDAOCallee__factory>;
+    getContractFactory(
+      name: "LiquidityPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.LiquidityPool__factory>;
+    getContractFactory(
+      name: "LiquidityPoolFactory",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.LiquidityPoolFactory__factory>;
+    getContractFactory(
+      name: "BitcoinRelay",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BitcoinRelay__factory>;
+    getContractFactory(
+      name: "IBitcoinRelay",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IBitcoinRelay__factory>;
+    getContractFactory(
+      name: "CCBurnRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CCBurnRouter__factory>;
+    getContractFactory(
+      name: "CCExchangeRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CCExchangeRouter__factory>;
+    getContractFactory(
+      name: "CCTransferRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CCTransferRouter__factory>;
+    getContractFactory(
+      name: "ExchangeRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ExchangeRouter__factory>;
+    getContractFactory(
+      name: "FastRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FastRouter__factory>;
+    getContractFactory(
+      name: "InstantRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.InstantRouter__factory>;
+    getContractFactory(
+      name: "ICCBurnRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ICCBurnRouter__factory>;
+    getContractFactory(
+      name: "ICCExchangeRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ICCExchangeRouter__factory>;
+    getContractFactory(
+      name: "ICCTransferRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ICCTransferRouter__factory>;
+    getContractFactory(
+      name: "IExchangeRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IExchangeRouter__factory>;
+    getContractFactory(
+      name: "IFastRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IFastRouter__factory>;
+    getContractFactory(
+      name: "IInstantRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IInstantRouter__factory>;
+    getContractFactory(
+      name: "IStaking",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IStaking__factory>;
+    getContractFactory(
+      name: "Staking",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Staking__factory>;
+    getContractFactory(
+      name: "BitcoinTeleporter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BitcoinTeleporter__factory>;
+    getContractFactory(
+      name: "IBitcoinTeleporter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IBitcoinTeleporter__factory>;
 
-        getContractAt(name: "ERC20", address: string, signer?: ethers.Signer): Promise<Contracts.ERC20>;
-        getContractAt(name: "IERC20", address: string, signer?: ethers.Signer): Promise<Contracts.IERC20>;
-        getContractAt(name: "IWETH", address: string, signer?: ethers.Signer): Promise<Contracts.IWETH>;
-        getContractAt(name: "IWrappedToken", address: string, signer?: ethers.Signer): Promise<Contracts.IWrappedToken>;
-        getContractAt(name: "WETH", address: string, signer?: ethers.Signer): Promise<Contracts.WETH>;
-        getContractAt(name: "WrappedToken", address: string, signer?: ethers.Signer): Promise<Contracts.WrappedToken>;
-        getContractAt(name: "FastPool", address: string, signer?: ethers.Signer): Promise<Contracts.FastPool>;
-        getContractAt(name: "InstantPool", address: string, signer?: ethers.Signer): Promise<Contracts.InstantPool>;
-        getContractAt(name: "IFastPool", address: string, signer?: ethers.Signer): Promise<Contracts.IFastPool>;
-        getContractAt(
-            name: "IHotGateCallee",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.IHotGateCallee>;
-        getContractAt(name: "IInstantPool", address: string, signer?: ethers.Signer): Promise<Contracts.IInstantPool>;
-        getContractAt(
-            name: "ILiquidityPool",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.ILiquidityPool>;
-        getContractAt(
-            name: "ILiquidityPoolFactory",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.ILiquidityPoolFactory>;
-        getContractAt(name: "LiquidityPool", address: string, signer?: ethers.Signer): Promise<Contracts.LiquidityPool>;
-        getContractAt(
-            name: "LiquidityPoolFactory",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.LiquidityPoolFactory>;
-        getContractAt(name: "BitcoinRelay", address: string, signer?: ethers.Signer): Promise<Contracts.BitcoinRelay>;
-        getContractAt(name: "IBitcoinRelay", address: string, signer?: ethers.Signer): Promise<Contracts.IBitcoinRelay>;
-        getContractAt(name: "TypedMemView", address: string, signer?: ethers.Signer): Promise<Contracts.TypedMemView>;
-        getContractAt(name: "ViewBTC", address: string, signer?: ethers.Signer): Promise<Contracts.ViewBTC>;
-        getContractAt(
-            name: "CCExchangeRouter",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.CCExchangeRouter>;
-        getContractAt(
-            name: "CCTransferRouter",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.CCTransferRouter>;
-        getContractAt(
-            name: "ExchangeRouter",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.ExchangeRouter>;
-        getContractAt(name: "FastRouter", address: string, signer?: ethers.Signer): Promise<Contracts.FastRouter>;
-        getContractAt(name: "InstantRouter", address: string, signer?: ethers.Signer): Promise<Contracts.InstantRouter>;
-        getContractAt(
-            name: "ICCExchangeRouter",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.ICCExchangeRouter>;
-        getContractAt(
-            name: "ICCTransferRouter",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.ICCTransferRouter>;
-        getContractAt(
-            name: "IExchangeRouter",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.IExchangeRouter>;
-        getContractAt(name: "IFastRouter", address: string, signer?: ethers.Signer): Promise<Contracts.IFastRouter>;
-        getContractAt(
-            name: "IInstantRouter",
-            address: string,
-            signer?: ethers.Signer,
-        ): Promise<Contracts.IInstantRouter>;
+    getContractAt(
+      name: "ERC20",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC20>;
+    getContractAt(
+      name: "IERC20",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20>;
+    getContractAt(
+      name: "IWAVAX",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWAVAX>;
+    getContractAt(
+      name: "IWrappedToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWrappedToken>;
+    getContractAt(
+      name: "WAVAX",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.WAVAX>;
+    getContractAt(
+      name: "WrappedToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.WrappedToken>;
+    getContractAt(
+      name: "TypedMemView",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TypedMemView>;
+    getContractAt(
+      name: "ViewBTC",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ViewBTC>;
+    getContractAt(
+      name: "FastPool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FastPool>;
+    getContractAt(
+      name: "InstantPool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.InstantPool>;
+    getContractAt(
+      name: "IFastPool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IFastPool>;
+    getContractAt(
+      name: "IInstantPool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IInstantPool>;
+    getContractAt(
+      name: "ILiquidityPool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ILiquidityPool>;
+    getContractAt(
+      name: "ILiquidityPoolFactory",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ILiquidityPoolFactory>;
+    getContractAt(
+      name: "ITeleportDAOCallee",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ITeleportDAOCallee>;
+    getContractAt(
+      name: "LiquidityPool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.LiquidityPool>;
+    getContractAt(
+      name: "LiquidityPoolFactory",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.LiquidityPoolFactory>;
+    getContractAt(
+      name: "BitcoinRelay",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BitcoinRelay>;
+    getContractAt(
+      name: "IBitcoinRelay",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IBitcoinRelay>;
+    getContractAt(
+      name: "CCBurnRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CCBurnRouter>;
+    getContractAt(
+      name: "CCExchangeRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CCExchangeRouter>;
+    getContractAt(
+      name: "CCTransferRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CCTransferRouter>;
+    getContractAt(
+      name: "ExchangeRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ExchangeRouter>;
+    getContractAt(
+      name: "FastRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FastRouter>;
+    getContractAt(
+      name: "InstantRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.InstantRouter>;
+    getContractAt(
+      name: "ICCBurnRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ICCBurnRouter>;
+    getContractAt(
+      name: "ICCExchangeRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ICCExchangeRouter>;
+    getContractAt(
+      name: "ICCTransferRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ICCTransferRouter>;
+    getContractAt(
+      name: "IExchangeRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IExchangeRouter>;
+    getContractAt(
+      name: "IFastRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IFastRouter>;
+    getContractAt(
+      name: "IInstantRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IInstantRouter>;
+    getContractAt(
+      name: "IStaking",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IStaking>;
+    getContractAt(
+      name: "Staking",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Staking>;
+    getContractAt(
+      name: "BitcoinTeleporter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BitcoinTeleporter>;
+    getContractAt(
+      name: "IBitcoinTeleporter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IBitcoinTeleporter>;
 
-        // default types
-        getContractFactory(
-            name: string,
-            signerOrOptions?: ethers.Signer | FactoryOptions,
-        ): Promise<ethers.ContractFactory>;
-        getContractFactory(
-            abi: any[],
-            bytecode: ethers.utils.BytesLike,
-            signer?: ethers.Signer,
-        ): Promise<ethers.ContractFactory>;
-        getContractAt(nameOrAbi: string | any[], address: string, signer?: ethers.Signer): Promise<ethers.Contract>;
-    }
+    // default types
+    getContractFactory(
+      name: string,
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<ethers.ContractFactory>;
+    getContractFactory(
+      abi: any[],
+      bytecode: ethers.utils.BytesLike,
+      signer?: ethers.Signer
+    ): Promise<ethers.ContractFactory>;
+    getContractAt(
+      nameOrAbi: string | any[],
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<ethers.Contract>;
+  }
 }

@@ -7,77 +7,86 @@ import { Provider, TransactionRequest } from "@ethersproject/providers";
 import type { ViewBTC, ViewBTCInterface } from "../ViewBTC";
 
 const _abi = [
-    {
-        inputs: [],
-        name: "DIFF1_TARGET",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "RETARGET_PERIOD",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "RETARGET_PERIOD_BLOCKS",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
+  {
+    inputs: [],
+    name: "DIFF1_TARGET",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "RETARGET_PERIOD",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "RETARGET_PERIOD_BLOCKS",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ];
 
 const _bytecode =
-    "0x610103610026600b82828239805160001a60731461001957fe5b30600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361060475760003560e01c8063056e04ec14604c5780638cc71569146068578063d4258ca7146084575b600080fd5b605260a0565b6040518082815260200191505060405180910390f35b606e60a7565b6040518082815260200191505060405180910390f35b608a60ad565b6040518082815260200191505060405180910390f35b6212750081565b6107e081565b7bffff00000000000000000000000000000000000000000000000000008156fea2646970667358221220251fccda2823dd7c5e21184dcd425d4332561e947cfa34e052fce1b6630e492064736f6c63430007060033";
+  "0x610103610026600b82828239805160001a60731461001957fe5b30600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361060475760003560e01c8063056e04ec14604c5780638cc71569146068578063d4258ca7146084575b600080fd5b605260a0565b6040518082815260200191505060405180910390f35b606e60a7565b6040518082815260200191505060405180910390f35b608a60ad565b6040518082815260200191505060405180910390f35b6212750081565b6107e081565b7bffff00000000000000000000000000000000000000000000000000008156fea2646970667358221220a74ffbdce5efc14295f85f75dcb711bdb0bab51158566f78fc78db81b747b9ae64736f6c63430007060033";
 
 export class ViewBTC__factory extends ContractFactory {
-    constructor(...args: [signer: Signer] | ConstructorParameters<typeof ContractFactory>) {
-        if (args.length === 1) {
-            super(_abi, _bytecode, args[0]);
-        } else {
-            super(...args);
-        }
+  constructor(
+    ...args: [signer: Signer] | ConstructorParameters<typeof ContractFactory>
+  ) {
+    if (args.length === 1) {
+      super(_abi, _bytecode, args[0]);
+    } else {
+      super(...args);
     }
+  }
 
-    deploy(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ViewBTC> {
-        return super.deploy(overrides || {}) as Promise<ViewBTC>;
-    }
-    getDeployTransaction(overrides?: Overrides & { from?: string | Promise<string> }): TransactionRequest {
-        return super.getDeployTransaction(overrides || {});
-    }
-    attach(address: string): ViewBTC {
-        return super.attach(address) as ViewBTC;
-    }
-    connect(signer: Signer): ViewBTC__factory {
-        return super.connect(signer) as ViewBTC__factory;
-    }
-    static readonly bytecode = _bytecode;
-    static readonly abi = _abi;
-    static createInterface(): ViewBTCInterface {
-        return new utils.Interface(_abi) as ViewBTCInterface;
-    }
-    static connect(address: string, signerOrProvider: Signer | Provider): ViewBTC {
-        return new Contract(address, _abi, signerOrProvider) as ViewBTC;
-    }
+  deploy(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ViewBTC> {
+    return super.deploy(overrides || {}) as Promise<ViewBTC>;
+  }
+  getDeployTransaction(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): TransactionRequest {
+    return super.getDeployTransaction(overrides || {});
+  }
+  attach(address: string): ViewBTC {
+    return super.attach(address) as ViewBTC;
+  }
+  connect(signer: Signer): ViewBTC__factory {
+    return super.connect(signer) as ViewBTC__factory;
+  }
+  static readonly bytecode = _bytecode;
+  static readonly abi = _abi;
+  static createInterface(): ViewBTCInterface {
+    return new utils.Interface(_abi) as ViewBTCInterface;
+  }
+  static connect(
+    address: string,
+    signerOrProvider: Signer | Provider
+  ): ViewBTC {
+    return new Contract(address, _abi, signerOrProvider) as ViewBTC;
+  }
 }

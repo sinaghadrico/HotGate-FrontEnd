@@ -3,16 +3,16 @@
 /* eslint-disable */
 
 import {
-    ethers,
-    EventFilter,
-    Signer,
-    BigNumber,
-    BigNumberish,
-    PopulatedTransaction,
-    BaseContract,
-    ContractTransaction,
-    Overrides,
-    CallOverrides,
+  ethers,
+  EventFilter,
+  Signer,
+  BigNumber,
+  BigNumberish,
+  PopulatedTransaction,
+  BaseContract,
+  ContractTransaction,
+  Overrides,
+  CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
@@ -20,198 +20,296 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface IWrappedTokenInterface extends ethers.utils.Interface {
-    functions: {
-        "CCTransferRouter()": FunctionFragment;
-        "allowance(address,address)": FunctionFragment;
-        "approve(address,uint256)": FunctionFragment;
-        "balanceOf(address)": FunctionFragment;
-        "burn(uint256,address,uint256)": FunctionFragment;
-        "decimals()": FunctionFragment;
-        "mint(address,uint256)": FunctionFragment;
-        "mintTestToken()": FunctionFragment;
-        "name()": FunctionFragment;
-        "symbol()": FunctionFragment;
-        "totalSupply()": FunctionFragment;
-        "transfer(address,uint256)": FunctionFragment;
-        "transferFrom(address,address,uint256)": FunctionFragment;
-    };
+  functions: {
+    "CCTransferRouter()": FunctionFragment;
+    "allowance(address,address)": FunctionFragment;
+    "approve(address,uint256)": FunctionFragment;
+    "balanceOf(address)": FunctionFragment;
+    "burn(uint256)": FunctionFragment;
+    "decimals()": FunctionFragment;
+    "mint(address,uint256)": FunctionFragment;
+    "mintTestToken()": FunctionFragment;
+    "name()": FunctionFragment;
+    "symbol()": FunctionFragment;
+    "totalSupply()": FunctionFragment;
+    "transfer(address,uint256)": FunctionFragment;
+    "transferFrom(address,address,uint256)": FunctionFragment;
+  };
 
-    encodeFunctionData(functionFragment: "CCTransferRouter", values?: undefined): string;
-    encodeFunctionData(functionFragment: "allowance", values: [string, string]): string;
-    encodeFunctionData(functionFragment: "approve", values: [string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-    encodeFunctionData(functionFragment: "burn", values: [BigNumberish, string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-    encodeFunctionData(functionFragment: "mint", values: [string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "mintTestToken", values?: undefined): string;
-    encodeFunctionData(functionFragment: "name", values?: undefined): string;
-    encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-    encodeFunctionData(functionFragment: "totalSupply", values?: undefined): string;
-    encodeFunctionData(functionFragment: "transfer", values: [string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "transferFrom", values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "CCTransferRouter",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allowance",
+    values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "approve",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "mint",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintTestToken",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transfer",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferFrom",
+    values: [string, string, BigNumberish]
+  ): string;
 
-    decodeFunctionResult(functionFragment: "CCTransferRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "mintTestToken", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "totalSupply", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "CCTransferRouter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "mintTestToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom",
+    data: BytesLike
+  ): Result;
 
-    events: {
-        "Approval(address,address,uint256)": EventFragment;
-        "Burn(address,uint256)": EventFragment;
-        "Mint(address,uint256)": EventFragment;
-        "Transfer(address,address,uint256)": EventFragment;
-    };
+  events: {
+    "Approval(address,address,uint256)": EventFragment;
+    "Burn(address,uint256)": EventFragment;
+    "Mint(address,uint256)": EventFragment;
+    "Transfer(address,address,uint256)": EventFragment;
+  };
 
-    getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-    getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
-    getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
-    getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
 export type ApprovalEvent = TypedEvent<
-    [string, string, BigNumber] & {
-        owner: string;
-        spender: string;
-        value: BigNumber;
-    }
+  [string, string, BigNumber] & {
+    owner: string;
+    spender: string;
+    value: BigNumber;
+  }
 >;
 
-export type BurnEvent = TypedEvent<[string, BigNumber] & { to: string; value: BigNumber }>;
+export type BurnEvent = TypedEvent<
+  [string, BigNumber] & { to: string; value: BigNumber }
+>;
 
-export type MintEvent = TypedEvent<[string, BigNumber] & { to: string; value: BigNumber }>;
+export type MintEvent = TypedEvent<
+  [string, BigNumber] & { to: string; value: BigNumber }
+>;
 
-export type TransferEvent = TypedEvent<[string, string, BigNumber] & { from: string; to: string; value: BigNumber }>;
+export type TransferEvent = TypedEvent<
+  [string, string, BigNumber] & { from: string; to: string; value: BigNumber }
+>;
 
 export class IWrappedToken extends BaseContract {
-    connect(signerOrProvider: Signer | Provider | string): this;
-    attach(addressOrName: string): this;
-    deployed(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-    listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
-    off<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    on<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    once<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): this;
+  listeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
+  off<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  on<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  once<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): this;
 
-    listeners(eventName?: string): Array<Listener>;
-    off(eventName: string, listener: Listener): this;
-    on(eventName: string, listener: Listener): this;
-    once(eventName: string, listener: Listener): this;
-    removeListener(eventName: string, listener: Listener): this;
-    removeAllListeners(eventName?: string): this;
+  listeners(eventName?: string): Array<Listener>;
+  off(eventName: string, listener: Listener): this;
+  on(eventName: string, listener: Listener): this;
+  once(eventName: string, listener: Listener): this;
+  removeListener(eventName: string, listener: Listener): this;
+  removeAllListeners(eventName?: string): this;
 
-    queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
-        event: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        fromBlockOrBlockhash?: string | number | undefined,
-        toBlock?: string | number | undefined,
-    ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
+  queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
+    event: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-    interface: IWrappedTokenInterface;
+  interface: IWrappedTokenInterface;
 
-    functions: {
-        CCTransferRouter(overrides?: CallOverrides): Promise<[string]>;
+  functions: {
+    CCTransferRouter(overrides?: CallOverrides): Promise<[string]>;
 
-        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        approve(
-            spender: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        burn(
-            amount: BigNumberish,
-            recipient: string,
-            keeperFee: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        decimals(overrides?: CallOverrides): Promise<[number]>;
-
-        mint(
-            receiver: string,
-            amount: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        mintTestToken(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-        name(overrides?: CallOverrides): Promise<[string]>;
-
-        symbol(overrides?: CallOverrides): Promise<[string]>;
-
-        totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-        transfer(
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        transferFrom(
-            from: string,
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-    };
-
-    CCTransferRouter(overrides?: CallOverrides): Promise<string>;
-
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     approve(
-        spender: string,
-        value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
+      spender: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    burn(
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    decimals(overrides?: CallOverrides): Promise<[number]>;
+
+    mint(
+      receiver: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    mintTestToken(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    name(overrides?: CallOverrides): Promise<[string]>;
+
+    symbol(overrides?: CallOverrides): Promise<[string]>;
+
+    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    transfer(
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    transferFrom(
+      from: string,
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+  };
+
+  CCTransferRouter(overrides?: CallOverrides): Promise<string>;
+
+  allowance(
+    owner: string,
+    spender: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  approve(
+    spender: string,
+    value: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  burn(
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  decimals(overrides?: CallOverrides): Promise<number>;
+
+  mint(
+    receiver: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  mintTestToken(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  name(overrides?: CallOverrides): Promise<string>;
+
+  symbol(overrides?: CallOverrides): Promise<string>;
+
+  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  transfer(
+    to: string,
+    value: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  transferFrom(
+    from: string,
+    to: string,
+    value: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  callStatic: {
+    CCTransferRouter(overrides?: CallOverrides): Promise<string>;
+
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    approve(
+      spender: string,
+      value: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    burn(
-        amount: BigNumberish,
-        recipient: string,
-        keeperFee: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    burn(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
     mint(
-        receiver: string,
-        amount: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      receiver: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
-    mintTestToken(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    mintTestToken(overrides?: CallOverrides): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -220,188 +318,185 @@ export class IWrappedToken extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-        to: string,
-        value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      to: string,
+      value: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     transferFrom(
-        from: string,
-        to: string,
-        value: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      from: string,
+      to: string,
+      value: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+  };
 
-    callStatic: {
-        CCTransferRouter(overrides?: CallOverrides): Promise<string>;
+  filters: {
+    "Approval(address,address,uint256)"(
+      owner?: string | null,
+      spender?: string | null,
+      value?: null
+    ): TypedEventFilter<
+      [string, string, BigNumber],
+      { owner: string; spender: string; value: BigNumber }
+    >;
 
-        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    Approval(
+      owner?: string | null,
+      spender?: string | null,
+      value?: null
+    ): TypedEventFilter<
+      [string, string, BigNumber],
+      { owner: string; spender: string; value: BigNumber }
+    >;
 
-        approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    "Burn(address,uint256)"(
+      to?: string | null,
+      value?: null
+    ): TypedEventFilter<[string, BigNumber], { to: string; value: BigNumber }>;
 
-        balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    Burn(
+      to?: string | null,
+      value?: null
+    ): TypedEventFilter<[string, BigNumber], { to: string; value: BigNumber }>;
 
-        burn(
-            amount: BigNumberish,
-            recipient: string,
-            keeperFee: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<void>;
+    "Mint(address,uint256)"(
+      to?: string | null,
+      value?: null
+    ): TypedEventFilter<[string, BigNumber], { to: string; value: BigNumber }>;
 
-        decimals(overrides?: CallOverrides): Promise<number>;
+    Mint(
+      to?: string | null,
+      value?: null
+    ): TypedEventFilter<[string, BigNumber], { to: string; value: BigNumber }>;
 
-        mint(receiver: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    "Transfer(address,address,uint256)"(
+      from?: string | null,
+      to?: string | null,
+      value?: null
+    ): TypedEventFilter<
+      [string, string, BigNumber],
+      { from: string; to: string; value: BigNumber }
+    >;
 
-        mintTestToken(overrides?: CallOverrides): Promise<void>;
+    Transfer(
+      from?: string | null,
+      to?: string | null,
+      value?: null
+    ): TypedEventFilter<
+      [string, string, BigNumber],
+      { from: string; to: string; value: BigNumber }
+    >;
+  };
 
-        name(overrides?: CallOverrides): Promise<string>;
+  estimateGas: {
+    CCTransferRouter(overrides?: CallOverrides): Promise<BigNumber>;
 
-        symbol(overrides?: CallOverrides): Promise<string>;
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-        totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-        transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-    };
+    burn(
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-    filters: {
-        "Approval(address,address,uint256)"(
-            owner?: string | null,
-            spender?: string | null,
-            value?: null,
-        ): TypedEventFilter<[string, string, BigNumber], { owner: string; spender: string; value: BigNumber }>;
+    decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-        Approval(
-            owner?: string | null,
-            spender?: string | null,
-            value?: null,
-        ): TypedEventFilter<[string, string, BigNumber], { owner: string; spender: string; value: BigNumber }>;
+    mint(
+      receiver: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        "Burn(address,uint256)"(
-            to?: string | null,
-            value?: null,
-        ): TypedEventFilter<[string, BigNumber], { to: string; value: BigNumber }>;
+    mintTestToken(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        Burn(to?: string | null, value?: null): TypedEventFilter<[string, BigNumber], { to: string; value: BigNumber }>;
+    name(overrides?: CallOverrides): Promise<BigNumber>;
 
-        "Mint(address,uint256)"(
-            to?: string | null,
-            value?: null,
-        ): TypedEventFilter<[string, BigNumber], { to: string; value: BigNumber }>;
+    symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-        Mint(to?: string | null, value?: null): TypedEventFilter<[string, BigNumber], { to: string; value: BigNumber }>;
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-        "Transfer(address,address,uint256)"(
-            from?: string | null,
-            to?: string | null,
-            value?: null,
-        ): TypedEventFilter<[string, string, BigNumber], { from: string; to: string; value: BigNumber }>;
+    transfer(
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        Transfer(
-            from?: string | null,
-            to?: string | null,
-            value?: null,
-        ): TypedEventFilter<[string, string, BigNumber], { from: string; to: string; value: BigNumber }>;
-    };
+    transferFrom(
+      from: string,
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+  };
 
-    estimateGas: {
-        CCTransferRouter(overrides?: CallOverrides): Promise<BigNumber>;
+  populateTransaction: {
+    CCTransferRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-        approve(
-            spender: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    approve(
+      spender: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(
+      owner: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-        burn(
-            amount: BigNumberish,
-            recipient: string,
-            keeperFee: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    burn(
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        decimals(overrides?: CallOverrides): Promise<BigNumber>;
+    decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        mint(
-            receiver: string,
-            amount: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    mint(
+      receiver: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        mintTestToken(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mintTestToken(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        name(overrides?: CallOverrides): Promise<BigNumber>;
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        symbol(overrides?: CallOverrides): Promise<BigNumber>;
+    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        transfer(
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    transfer(
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        transferFrom(
-            from: string,
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-    };
-
-    populateTransaction: {
-        CCTransferRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        approve(
-            spender: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        burn(
-            amount: BigNumberish,
-            recipient: string,
-            keeperFee: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        mint(
-            receiver: string,
-            amount: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        mintTestToken(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-        name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        transfer(
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        transferFrom(
-            from: string,
-            to: string,
-            value: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-    };
+    transferFrom(
+      from: string,
+      to: string,
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+  };
 }

@@ -3,16 +3,16 @@
 /* eslint-disable */
 
 import {
-    ethers,
-    EventFilter,
-    Signer,
-    BigNumber,
-    BigNumberish,
-    PopulatedTransaction,
-    BaseContract,
-    ContractTransaction,
-    Overrides,
-    CallOverrides,
+  ethers,
+  EventFilter,
+  Signer,
+  BigNumber,
+  BigNumberish,
+  PopulatedTransaction,
+  BaseContract,
+  ContractTransaction,
+  Overrides,
+  CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
@@ -20,110 +20,113 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface IHotGateCalleeInterface extends ethers.utils.Interface {
-    functions: {
-        "HotGateCall(address,uint256,uint256,bytes)": FunctionFragment;
-    };
+  functions: {
+    "HotGateCall(address,uint256,uint256,bytes)": FunctionFragment;
+  };
 
-    encodeFunctionData(
-        functionFragment: "HotGateCall",
-        values: [string, BigNumberish, BigNumberish, BytesLike],
-    ): string;
+  encodeFunctionData(
+    functionFragment: "HotGateCall",
+    values: [string, BigNumberish, BigNumberish, BytesLike]
+  ): string;
 
-    decodeFunctionResult(functionFragment: "HotGateCall", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "HotGateCall",
+    data: BytesLike
+  ): Result;
 
-    events: {};
+  events: {};
 }
 
 export class IHotGateCallee extends BaseContract {
-    connect(signerOrProvider: Signer | Provider | string): this;
-    attach(addressOrName: string): this;
-    deployed(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-    listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
-    off<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    on<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    once<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): this;
+  listeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
+  off<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  on<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  once<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): this;
 
-    listeners(eventName?: string): Array<Listener>;
-    off(eventName: string, listener: Listener): this;
-    on(eventName: string, listener: Listener): this;
-    once(eventName: string, listener: Listener): this;
-    removeListener(eventName: string, listener: Listener): this;
-    removeAllListeners(eventName?: string): this;
+  listeners(eventName?: string): Array<Listener>;
+  off(eventName: string, listener: Listener): this;
+  on(eventName: string, listener: Listener): this;
+  once(eventName: string, listener: Listener): this;
+  removeListener(eventName: string, listener: Listener): this;
+  removeAllListeners(eventName?: string): this;
 
-    queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
-        event: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        fromBlockOrBlockhash?: string | number | undefined,
-        toBlock?: string | number | undefined,
-    ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
+  queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
+    event: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-    interface: IHotGateCalleeInterface;
+  interface: IHotGateCalleeInterface;
 
-    functions: {
-        HotGateCall(
-            sender: string,
-            amount0: BigNumberish,
-            amount1: BigNumberish,
-            data: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-    };
-
+  functions: {
     HotGateCall(
-        sender: string,
-        amount0: BigNumberish,
-        amount1: BigNumberish,
-        data: BytesLike,
-        overrides?: Overrides & { from?: string | Promise<string> },
+      sender: string,
+      amount0: BigNumberish,
+      amount1: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+  };
 
-    callStatic: {
-        HotGateCall(
-            sender: string,
-            amount0: BigNumberish,
-            amount1: BigNumberish,
-            data: BytesLike,
-            overrides?: CallOverrides,
-        ): Promise<void>;
-    };
+  HotGateCall(
+    sender: string,
+    amount0: BigNumberish,
+    amount1: BigNumberish,
+    data: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
-    filters: {};
+  callStatic: {
+    HotGateCall(
+      sender: string,
+      amount0: BigNumberish,
+      amount1: BigNumberish,
+      data: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+  };
 
-    estimateGas: {
-        HotGateCall(
-            sender: string,
-            amount0: BigNumberish,
-            amount1: BigNumberish,
-            data: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-    };
+  filters: {};
 
-    populateTransaction: {
-        HotGateCall(
-            sender: string,
-            amount0: BigNumberish,
-            amount1: BigNumberish,
-            data: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-    };
+  estimateGas: {
+    HotGateCall(
+      sender: string,
+      amount0: BigNumberish,
+      amount1: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+  };
+
+  populateTransaction: {
+    HotGateCall(
+      sender: string,
+      amount0: BigNumberish,
+      amount1: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+  };
 }

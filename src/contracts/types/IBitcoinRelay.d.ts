@@ -3,16 +3,16 @@
 /* eslint-disable */
 
 import {
-    ethers,
-    EventFilter,
-    Signer,
-    BigNumber,
-    BigNumberish,
-    PopulatedTransaction,
-    BaseContract,
-    ContractTransaction,
-    Overrides,
-    CallOverrides,
+  ethers,
+  EventFilter,
+  Signer,
+  BigNumber,
+  BigNumberish,
+  PopulatedTransaction,
+  BaseContract,
+  ContractTransaction,
+  Overrides,
+  CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
@@ -20,373 +20,640 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface IBitcoinRelayInterface extends ethers.utils.Interface {
-    functions: {
-        "HotGateToken()": FunctionFragment;
-        "WAVAX()": FunctionFragment;
-        "addHeaders(bytes,bytes)": FunctionFragment;
-        "addHeadersWithRetarget(bytes,bytes,bytes)": FunctionFragment;
-        "addKeeper(bytes)": FunctionFragment;
-        "baseQueries()": FunctionFragment;
-        "buyBackPeriod()": FunctionFragment;
-        "changeOwner(address)": FunctionFragment;
-        "checkTxProof(bytes32,uint256,bytes,uint256,bool,uint256)": FunctionFragment;
-        "epochLength()": FunctionFragment;
-        "exchangeRouter()": FunctionFragment;
-        "feeRatio()": FunctionFragment;
-        "finalizationParameter()": FunctionFragment;
-        "findAncestor(bytes32,uint256)": FunctionFragment;
-        "findHeight(bytes32)": FunctionFragment;
-        "getBestKnownDigest()": FunctionFragment;
-        "getCurrentEpochDifficulty()": FunctionFragment;
-        "getLastReorgCommonAncestor()": FunctionFragment;
-        "getPrevEpochDifficulty()": FunctionFragment;
-        "getRelayGenesis()": FunctionFragment;
-        "initialHeight()": FunctionFragment;
-        "isAncestor(bytes32,bytes32,uint256)": FunctionFragment;
-        "lastBuyBack()": FunctionFragment;
-        "lastEpochQueries()": FunctionFragment;
-        "lastSubmittedHeight()": FunctionFragment;
-        "markNewHeaviest(bytes32,bytes,bytes,uint256)": FunctionFragment;
-        "multiSigAddress()": FunctionFragment;
-        "numberOfKeepers()": FunctionFragment;
-        "owner()": FunctionFragment;
-        "redeemScript()": FunctionFragment;
-        "redeemScriptHash()": FunctionFragment;
-        "removeKeeper(uint256)": FunctionFragment;
-        "setBaseQueries(uint256)": FunctionFragment;
-        "setBuyBackPeriod(uint256)": FunctionFragment;
-        "setEpochLength(uint256)": FunctionFragment;
-        "setExchangeRouter(address)": FunctionFragment;
-        "setFeeRatio(uint256)": FunctionFragment;
-        "setFinalizationParameter(uint256)": FunctionFragment;
-        "setSubmissionGasUsed(uint256)": FunctionFragment;
-        "submissionGasUsed()": FunctionFragment;
-    };
+  functions: {
+    "TeleportDAOToken()": FunctionFragment;
+    "WAVAX()": FunctionFragment;
+    "addHeaders(bytes,bytes)": FunctionFragment;
+    "addHeadersWithRetarget(bytes,bytes,bytes)": FunctionFragment;
+    "baseQueries()": FunctionFragment;
+    "buyBackPeriod()": FunctionFragment;
+    "changeOwner(address)": FunctionFragment;
+    "checkTxProof(bytes32,uint256,bytes,uint256,bool,uint256)": FunctionFragment;
+    "epochLength()": FunctionFragment;
+    "exchangeRouter()": FunctionFragment;
+    "feeRatio()": FunctionFragment;
+    "finalizationParameter()": FunctionFragment;
+    "findAncestor(bytes32,uint256)": FunctionFragment;
+    "findHeight(bytes32)": FunctionFragment;
+    "getBestKnownDigest()": FunctionFragment;
+    "getCurrentEpochDifficulty()": FunctionFragment;
+    "getLastReorgCommonAncestor()": FunctionFragment;
+    "getPrevEpochDifficulty()": FunctionFragment;
+    "getRelayGenesis()": FunctionFragment;
+    "initialHeight()": FunctionFragment;
+    "isAncestor(bytes32,bytes32,uint256)": FunctionFragment;
+    "lastBuyBack()": FunctionFragment;
+    "lastEpochQueries()": FunctionFragment;
+    "lastSubmittedHeight()": FunctionFragment;
+    "markNewHeaviest(bytes32,bytes,bytes,uint256)": FunctionFragment;
+    "owner()": FunctionFragment;
+    "setBaseQueries(uint256)": FunctionFragment;
+    "setBuyBackPeriod(uint256)": FunctionFragment;
+    "setEpochLength(uint256)": FunctionFragment;
+    "setExchangeRouter(address)": FunctionFragment;
+    "setFeeRatio(uint256)": FunctionFragment;
+    "setFinalizationParameter(uint256)": FunctionFragment;
+    "setSubmissionGasUsed(uint256)": FunctionFragment;
+    "submissionGasUsed()": FunctionFragment;
+  };
 
-    encodeFunctionData(functionFragment: "HotGateToken", values?: undefined): string;
-    encodeFunctionData(functionFragment: "WAVAX", values?: undefined): string;
-    encodeFunctionData(functionFragment: "addHeaders", values: [BytesLike, BytesLike]): string;
-    encodeFunctionData(functionFragment: "addHeadersWithRetarget", values: [BytesLike, BytesLike, BytesLike]): string;
-    encodeFunctionData(functionFragment: "addKeeper", values: [BytesLike]): string;
-    encodeFunctionData(functionFragment: "baseQueries", values?: undefined): string;
-    encodeFunctionData(functionFragment: "buyBackPeriod", values?: undefined): string;
-    encodeFunctionData(functionFragment: "changeOwner", values: [string]): string;
-    encodeFunctionData(
-        functionFragment: "checkTxProof",
-        values: [BytesLike, BigNumberish, BytesLike, BigNumberish, boolean, BigNumberish],
-    ): string;
-    encodeFunctionData(functionFragment: "epochLength", values?: undefined): string;
-    encodeFunctionData(functionFragment: "exchangeRouter", values?: undefined): string;
-    encodeFunctionData(functionFragment: "feeRatio", values?: undefined): string;
-    encodeFunctionData(functionFragment: "finalizationParameter", values?: undefined): string;
-    encodeFunctionData(functionFragment: "findAncestor", values: [BytesLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "findHeight", values: [BytesLike]): string;
-    encodeFunctionData(functionFragment: "getBestKnownDigest", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getCurrentEpochDifficulty", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getLastReorgCommonAncestor", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getPrevEpochDifficulty", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getRelayGenesis", values?: undefined): string;
-    encodeFunctionData(functionFragment: "initialHeight", values?: undefined): string;
-    encodeFunctionData(functionFragment: "isAncestor", values: [BytesLike, BytesLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "lastBuyBack", values?: undefined): string;
-    encodeFunctionData(functionFragment: "lastEpochQueries", values?: undefined): string;
-    encodeFunctionData(functionFragment: "lastSubmittedHeight", values?: undefined): string;
-    encodeFunctionData(
-        functionFragment: "markNewHeaviest",
-        values: [BytesLike, BytesLike, BytesLike, BigNumberish],
-    ): string;
-    encodeFunctionData(functionFragment: "multiSigAddress", values?: undefined): string;
-    encodeFunctionData(functionFragment: "numberOfKeepers", values?: undefined): string;
-    encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-    encodeFunctionData(functionFragment: "redeemScript", values?: undefined): string;
-    encodeFunctionData(functionFragment: "redeemScriptHash", values?: undefined): string;
-    encodeFunctionData(functionFragment: "removeKeeper", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setBaseQueries", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setBuyBackPeriod", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setEpochLength", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setExchangeRouter", values: [string]): string;
-    encodeFunctionData(functionFragment: "setFeeRatio", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setFinalizationParameter", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setSubmissionGasUsed", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "submissionGasUsed", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "TeleportDAOToken",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "WAVAX", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "addHeaders",
+    values: [BytesLike, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addHeadersWithRetarget",
+    values: [BytesLike, BytesLike, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "baseQueries",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "buyBackPeriod",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "changeOwner", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "checkTxProof",
+    values: [
+      BytesLike,
+      BigNumberish,
+      BytesLike,
+      BigNumberish,
+      boolean,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "epochLength",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "exchangeRouter",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "feeRatio", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "finalizationParameter",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "findAncestor",
+    values: [BytesLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "findHeight",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getBestKnownDigest",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getCurrentEpochDifficulty",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getLastReorgCommonAncestor",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPrevEpochDifficulty",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getRelayGenesis",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialHeight",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isAncestor",
+    values: [BytesLike, BytesLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lastBuyBack",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lastEpochQueries",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lastSubmittedHeight",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "markNewHeaviest",
+    values: [BytesLike, BytesLike, BytesLike, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "setBaseQueries",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setBuyBackPeriod",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setEpochLength",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setExchangeRouter",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setFeeRatio",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setFinalizationParameter",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setSubmissionGasUsed",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "submissionGasUsed",
+    values?: undefined
+  ): string;
 
-    decodeFunctionResult(functionFragment: "HotGateToken", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "WAVAX", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "addHeaders", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "addHeadersWithRetarget", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "addKeeper", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "baseQueries", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "buyBackPeriod", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "changeOwner", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "checkTxProof", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "epochLength", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "exchangeRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "feeRatio", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "finalizationParameter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "findAncestor", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "findHeight", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getBestKnownDigest", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getCurrentEpochDifficulty", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getLastReorgCommonAncestor", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getPrevEpochDifficulty", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getRelayGenesis", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "initialHeight", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "isAncestor", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "lastBuyBack", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "lastEpochQueries", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "lastSubmittedHeight", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "markNewHeaviest", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "multiSigAddress", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "numberOfKeepers", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "redeemScript", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "redeemScriptHash", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "removeKeeper", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setBaseQueries", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setBuyBackPeriod", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setEpochLength", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setExchangeRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setFeeRatio", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setFinalizationParameter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setSubmissionGasUsed", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "submissionGasUsed", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "TeleportDAOToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "WAVAX", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addHeaders", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "addHeadersWithRetarget",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "baseQueries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "buyBackPeriod",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "changeOwner",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "checkTxProof",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "epochLength",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "exchangeRouter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "feeRatio", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "finalizationParameter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "findAncestor",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "findHeight", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getBestKnownDigest",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getCurrentEpochDifficulty",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getLastReorgCommonAncestor",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPrevEpochDifficulty",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRelayGenesis",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "initialHeight",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "isAncestor", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "lastBuyBack",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "lastEpochQueries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "lastSubmittedHeight",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "markNewHeaviest",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setBaseQueries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setBuyBackPeriod",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setEpochLength",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setExchangeRouter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setFeeRatio",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setFinalizationParameter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setSubmissionGasUsed",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "submissionGasUsed",
+    data: BytesLike
+  ): Result;
 
-    events: {
-        "Extension(bytes32,bytes32)": EventFragment;
-        "NewTip(bytes32,bytes32,bytes32)": EventFragment;
-    };
+  events: {
+    "Extension(bytes32,bytes32)": EventFragment;
+    "NewTip(bytes32,bytes32,bytes32)": EventFragment;
+  };
 
-    getEvent(nameOrSignatureOrTopic: "Extension"): EventFragment;
-    getEvent(nameOrSignatureOrTopic: "NewTip"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Extension"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NewTip"): EventFragment;
 }
 
-export type ExtensionEvent = TypedEvent<[string, string] & { _first: string; _last: string }>;
+export type ExtensionEvent = TypedEvent<
+  [string, string] & { _first: string; _last: string }
+>;
 
-export type NewTipEvent = TypedEvent<[string, string, string] & { _from: string; _to: string; _gcd: string }>;
+export type NewTipEvent = TypedEvent<
+  [string, string, string] & { _from: string; _to: string; _gcd: string }
+>;
 
 export class IBitcoinRelay extends BaseContract {
-    connect(signerOrProvider: Signer | Provider | string): this;
-    attach(addressOrName: string): this;
-    deployed(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-    listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
-    off<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    on<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    once<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): this;
+  listeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
+  off<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  on<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  once<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): this;
 
-    listeners(eventName?: string): Array<Listener>;
-    off(eventName: string, listener: Listener): this;
-    on(eventName: string, listener: Listener): this;
-    once(eventName: string, listener: Listener): this;
-    removeListener(eventName: string, listener: Listener): this;
-    removeAllListeners(eventName?: string): this;
+  listeners(eventName?: string): Array<Listener>;
+  off(eventName: string, listener: Listener): this;
+  on(eventName: string, listener: Listener): this;
+  once(eventName: string, listener: Listener): this;
+  removeListener(eventName: string, listener: Listener): this;
+  removeAllListeners(eventName?: string): this;
 
-    queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
-        event: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        fromBlockOrBlockhash?: string | number | undefined,
-        toBlock?: string | number | undefined,
-    ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
+  queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
+    event: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-    interface: IBitcoinRelayInterface;
+  interface: IBitcoinRelayInterface;
 
-    functions: {
-        HotGateToken(overrides?: CallOverrides): Promise<[string]>;
+  functions: {
+    TeleportDAOToken(overrides?: CallOverrides): Promise<[string]>;
 
-        WAVAX(overrides?: CallOverrides): Promise<[string]>;
+    WAVAX(overrides?: CallOverrides): Promise<[string]>;
 
-        addHeaders(
-            _anchor: BytesLike,
-            _headers: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    addHeaders(
+      _anchor: BytesLike,
+      _headers: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        addHeadersWithRetarget(
-            _oldPeriodStartHeader: BytesLike,
-            _oldPeriodEndHeader: BytesLike,
-            _headers: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    addHeadersWithRetarget(
+      _oldPeriodStartHeader: BytesLike,
+      _oldPeriodEndHeader: BytesLike,
+      _headers: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        addKeeper(
-            keeperAddress: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    baseQueries(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        baseQueries(overrides?: CallOverrides): Promise<[BigNumber]>;
+    buyBackPeriod(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        buyBackPeriod(overrides?: CallOverrides): Promise<[BigNumber]>;
+    changeOwner(
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        changeOwner(
-            _owner: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    checkTxProof(
+      txid: BytesLike,
+      blockHeight: BigNumberish,
+      intermediateNodes: BytesLike,
+      index: BigNumberish,
+      payWithHGT: boolean,
+      neededConfirmations: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        checkTxProof(
-            txid: BytesLike,
-            blockHeight: BigNumberish,
-            intermediateNodes: BytesLike,
-            index: BigNumberish,
-            payWithHGT: boolean,
-            neededConfirmations: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    epochLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        epochLength(overrides?: CallOverrides): Promise<[BigNumber]>;
+    exchangeRouter(overrides?: CallOverrides): Promise<[string]>;
 
-        exchangeRouter(overrides?: CallOverrides): Promise<[string]>;
+    feeRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        feeRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
+    finalizationParameter(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        finalizationParameter(overrides?: CallOverrides): Promise<[BigNumber]>;
+    findAncestor(
+      _digest: BytesLike,
+      _offset: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
-        findAncestor(_digest: BytesLike, _offset: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    findHeight(
+      _digest: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
-        findHeight(_digest: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getBestKnownDigest(overrides?: CallOverrides): Promise<[string]>;
 
-        getBestKnownDigest(overrides?: CallOverrides): Promise<[string]>;
+    getCurrentEpochDifficulty(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        getCurrentEpochDifficulty(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getLastReorgCommonAncestor(overrides?: CallOverrides): Promise<[string]>;
 
-        getLastReorgCommonAncestor(overrides?: CallOverrides): Promise<[string]>;
+    getPrevEpochDifficulty(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        getPrevEpochDifficulty(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRelayGenesis(overrides?: CallOverrides): Promise<[string]>;
 
-        getRelayGenesis(overrides?: CallOverrides): Promise<[string]>;
+    initialHeight(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        initialHeight(overrides?: CallOverrides): Promise<[BigNumber]>;
+    isAncestor(
+      _ancestor: BytesLike,
+      _descendant: BytesLike,
+      _limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
-        isAncestor(
-            _ancestor: BytesLike,
-            _descendant: BytesLike,
-            _limit: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<[boolean]>;
+    lastBuyBack(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        lastBuyBack(overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastEpochQueries(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        lastEpochQueries(overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastSubmittedHeight(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-        lastSubmittedHeight(overrides?: CallOverrides): Promise<[BigNumber]>;
+    markNewHeaviest(
+      _ancestor: BytesLike,
+      _currentBest: BytesLike,
+      _newBest: BytesLike,
+      _limit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        markNewHeaviest(
-            _ancestor: BytesLike,
-            _currentBest: BytesLike,
-            _newBest: BytesLike,
-            _limit: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    owner(overrides?: CallOverrides): Promise<[string]>;
 
-        multiSigAddress(overrides?: CallOverrides): Promise<[string]>;
+    setBaseQueries(
+      _baseQueries: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        numberOfKeepers(overrides?: CallOverrides): Promise<[BigNumber]>;
+    setBuyBackPeriod(
+      _buyBackPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        owner(overrides?: CallOverrides): Promise<[string]>;
+    setEpochLength(
+      _epochLength: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        redeemScript(overrides?: CallOverrides): Promise<[string]>;
+    setExchangeRouter(
+      _exchangeRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        redeemScriptHash(overrides?: CallOverrides): Promise<[string]>;
+    setFeeRatio(
+      _feeRatio: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        removeKeeper(
-            keeperIndex: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    setFinalizationParameter(
+      _finalizationParameter: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        setBaseQueries(
-            _baseQueries: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    setSubmissionGasUsed(
+      _submissionGasUsed: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-        setBuyBackPeriod(
-            _buyBackPeriod: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+    submissionGasUsed(overrides?: CallOverrides): Promise<[BigNumber]>;
+  };
 
-        setEpochLength(
-            _epochLength: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+  TeleportDAOToken(overrides?: CallOverrides): Promise<string>;
 
-        setExchangeRouter(
-            _exchangeRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+  WAVAX(overrides?: CallOverrides): Promise<string>;
 
-        setFeeRatio(
-            _feeRatio: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+  addHeaders(
+    _anchor: BytesLike,
+    _headers: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
-        setFinalizationParameter(
-            _finalizationParameter: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+  addHeadersWithRetarget(
+    _oldPeriodStartHeader: BytesLike,
+    _oldPeriodEndHeader: BytesLike,
+    _headers: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
-        setSubmissionGasUsed(
-            _submissionGasUsed: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
+  baseQueries(overrides?: CallOverrides): Promise<BigNumber>;
 
-        submissionGasUsed(overrides?: CallOverrides): Promise<[BigNumber]>;
-    };
+  buyBackPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-    HotGateToken(overrides?: CallOverrides): Promise<string>;
+  changeOwner(
+    _owner: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  checkTxProof(
+    txid: BytesLike,
+    blockHeight: BigNumberish,
+    intermediateNodes: BytesLike,
+    index: BigNumberish,
+    payWithHGT: boolean,
+    neededConfirmations: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  epochLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+  exchangeRouter(overrides?: CallOverrides): Promise<string>;
+
+  feeRatio(overrides?: CallOverrides): Promise<BigNumber>;
+
+  finalizationParameter(overrides?: CallOverrides): Promise<BigNumber>;
+
+  findAncestor(
+    _digest: BytesLike,
+    _offset: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  findHeight(_digest: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+  getBestKnownDigest(overrides?: CallOverrides): Promise<string>;
+
+  getCurrentEpochDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
+
+  getLastReorgCommonAncestor(overrides?: CallOverrides): Promise<string>;
+
+  getPrevEpochDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
+
+  getRelayGenesis(overrides?: CallOverrides): Promise<string>;
+
+  initialHeight(overrides?: CallOverrides): Promise<BigNumber>;
+
+  isAncestor(
+    _ancestor: BytesLike,
+    _descendant: BytesLike,
+    _limit: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
+  lastBuyBack(overrides?: CallOverrides): Promise<BigNumber>;
+
+  lastEpochQueries(overrides?: CallOverrides): Promise<BigNumber>;
+
+  lastSubmittedHeight(overrides?: CallOverrides): Promise<BigNumber>;
+
+  markNewHeaviest(
+    _ancestor: BytesLike,
+    _currentBest: BytesLike,
+    _newBest: BytesLike,
+    _limit: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  setBaseQueries(
+    _baseQueries: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setBuyBackPeriod(
+    _buyBackPeriod: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setEpochLength(
+    _epochLength: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setExchangeRouter(
+    _exchangeRouter: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setFeeRatio(
+    _feeRatio: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setFinalizationParameter(
+    _finalizationParameter: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setSubmissionGasUsed(
+    _submissionGasUsed: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  submissionGasUsed(overrides?: CallOverrides): Promise<BigNumber>;
+
+  callStatic: {
+    TeleportDAOToken(overrides?: CallOverrides): Promise<string>;
 
     WAVAX(overrides?: CallOverrides): Promise<string>;
 
     addHeaders(
-        _anchor: BytesLike,
-        _headers: BytesLike,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _anchor: BytesLike,
+      _headers: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     addHeadersWithRetarget(
-        _oldPeriodStartHeader: BytesLike,
-        _oldPeriodEndHeader: BytesLike,
-        _headers: BytesLike,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    addKeeper(
-        keeperAddress: BytesLike,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _oldPeriodStartHeader: BytesLike,
+      _oldPeriodEndHeader: BytesLike,
+      _headers: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     baseQueries(overrides?: CallOverrides): Promise<BigNumber>;
 
     buyBackPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-    changeOwner(
-        _owner: string,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    changeOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
 
     checkTxProof(
-        txid: BytesLike,
-        blockHeight: BigNumberish,
-        intermediateNodes: BytesLike,
-        index: BigNumberish,
-        payWithHGT: boolean,
-        neededConfirmations: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      txid: BytesLike,
+      blockHeight: BigNumberish,
+      intermediateNodes: BytesLike,
+      index: BigNumberish,
+      payWithHGT: boolean,
+      neededConfirmations: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     epochLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -396,9 +663,16 @@ export class IBitcoinRelay extends BaseContract {
 
     finalizationParameter(overrides?: CallOverrides): Promise<BigNumber>;
 
-    findAncestor(_digest: BytesLike, _offset: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    findAncestor(
+      _digest: BytesLike,
+      _offset: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
-    findHeight(_digest: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    findHeight(
+      _digest: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getBestKnownDigest(overrides?: CallOverrides): Promise<string>;
 
@@ -413,10 +687,10 @@ export class IBitcoinRelay extends BaseContract {
     initialHeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     isAncestor(
-        _ancestor: BytesLike,
-        _descendant: BytesLike,
-        _limit: BigNumberish,
-        overrides?: CallOverrides,
+      _ancestor: BytesLike,
+      _descendant: BytesLike,
+      _limit: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     lastBuyBack(overrides?: CallOverrides): Promise<BigNumber>;
@@ -426,473 +700,350 @@ export class IBitcoinRelay extends BaseContract {
     lastSubmittedHeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     markNewHeaviest(
-        _ancestor: BytesLike,
-        _currentBest: BytesLike,
-        _newBest: BytesLike,
-        _limit: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    multiSigAddress(overrides?: CallOverrides): Promise<string>;
-
-    numberOfKeepers(overrides?: CallOverrides): Promise<BigNumber>;
+      _ancestor: BytesLike,
+      _currentBest: BytesLike,
+      _newBest: BytesLike,
+      _limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    redeemScript(overrides?: CallOverrides): Promise<string>;
-
-    redeemScriptHash(overrides?: CallOverrides): Promise<string>;
-
-    removeKeeper(
-        keeperIndex: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
     setBaseQueries(
-        _baseQueries: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _baseQueries: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setBuyBackPeriod(
-        _buyBackPeriod: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _buyBackPeriod: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setEpochLength(
-        _epochLength: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _epochLength: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setExchangeRouter(
-        _exchangeRouter: string,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _exchangeRouter: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setFeeRatio(
-        _feeRatio: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _feeRatio: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setFinalizationParameter(
-        _finalizationParameter: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _finalizationParameter: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setSubmissionGasUsed(
-        _submissionGasUsed: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _submissionGasUsed: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     submissionGasUsed(overrides?: CallOverrides): Promise<BigNumber>;
+  };
+
+  filters: {
+    "Extension(bytes32,bytes32)"(
+      _first?: BytesLike | null,
+      _last?: BytesLike | null
+    ): TypedEventFilter<[string, string], { _first: string; _last: string }>;
+
+    Extension(
+      _first?: BytesLike | null,
+      _last?: BytesLike | null
+    ): TypedEventFilter<[string, string], { _first: string; _last: string }>;
 
-    callStatic: {
-        HotGateToken(overrides?: CallOverrides): Promise<string>;
-
-        WAVAX(overrides?: CallOverrides): Promise<string>;
-
-        addHeaders(_anchor: BytesLike, _headers: BytesLike, overrides?: CallOverrides): Promise<boolean>;
-
-        addHeadersWithRetarget(
-            _oldPeriodStartHeader: BytesLike,
-            _oldPeriodEndHeader: BytesLike,
-            _headers: BytesLike,
-            overrides?: CallOverrides,
-        ): Promise<boolean>;
-
-        addKeeper(keeperAddress: BytesLike, overrides?: CallOverrides): Promise<boolean>;
-
-        baseQueries(overrides?: CallOverrides): Promise<BigNumber>;
-
-        buyBackPeriod(overrides?: CallOverrides): Promise<BigNumber>;
-
-        changeOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
-
-        checkTxProof(
-            txid: BytesLike,
-            blockHeight: BigNumberish,
-            intermediateNodes: BytesLike,
-            index: BigNumberish,
-            payWithHGT: boolean,
-            neededConfirmations: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<boolean>;
-
-        epochLength(overrides?: CallOverrides): Promise<BigNumber>;
-
-        exchangeRouter(overrides?: CallOverrides): Promise<string>;
-
-        feeRatio(overrides?: CallOverrides): Promise<BigNumber>;
-
-        finalizationParameter(overrides?: CallOverrides): Promise<BigNumber>;
-
-        findAncestor(_digest: BytesLike, _offset: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-        findHeight(_digest: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
-
-        getBestKnownDigest(overrides?: CallOverrides): Promise<string>;
-
-        getCurrentEpochDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
-
-        getLastReorgCommonAncestor(overrides?: CallOverrides): Promise<string>;
-
-        getPrevEpochDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
-
-        getRelayGenesis(overrides?: CallOverrides): Promise<string>;
-
-        initialHeight(overrides?: CallOverrides): Promise<BigNumber>;
-
-        isAncestor(
-            _ancestor: BytesLike,
-            _descendant: BytesLike,
-            _limit: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<boolean>;
-
-        lastBuyBack(overrides?: CallOverrides): Promise<BigNumber>;
-
-        lastEpochQueries(overrides?: CallOverrides): Promise<BigNumber>;
-
-        lastSubmittedHeight(overrides?: CallOverrides): Promise<BigNumber>;
-
-        markNewHeaviest(
-            _ancestor: BytesLike,
-            _currentBest: BytesLike,
-            _newBest: BytesLike,
-            _limit: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<boolean>;
-
-        multiSigAddress(overrides?: CallOverrides): Promise<string>;
-
-        numberOfKeepers(overrides?: CallOverrides): Promise<BigNumber>;
-
-        owner(overrides?: CallOverrides): Promise<string>;
-
-        redeemScript(overrides?: CallOverrides): Promise<string>;
-
-        redeemScriptHash(overrides?: CallOverrides): Promise<string>;
-
-        removeKeeper(keeperIndex: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-        setBaseQueries(_baseQueries: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-        setBuyBackPeriod(_buyBackPeriod: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-        setEpochLength(_epochLength: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-        setExchangeRouter(_exchangeRouter: string, overrides?: CallOverrides): Promise<void>;
-
-        setFeeRatio(_feeRatio: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-        setFinalizationParameter(_finalizationParameter: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-        setSubmissionGasUsed(_submissionGasUsed: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-        submissionGasUsed(overrides?: CallOverrides): Promise<BigNumber>;
-    };
-
-    filters: {
-        "Extension(bytes32,bytes32)"(
-            _first?: BytesLike | null,
-            _last?: BytesLike | null,
-        ): TypedEventFilter<[string, string], { _first: string; _last: string }>;
-
-        Extension(
-            _first?: BytesLike | null,
-            _last?: BytesLike | null,
-        ): TypedEventFilter<[string, string], { _first: string; _last: string }>;
-
-        "NewTip(bytes32,bytes32,bytes32)"(
-            _from?: BytesLike | null,
-            _to?: BytesLike | null,
-            _gcd?: BytesLike | null,
-        ): TypedEventFilter<[string, string, string], { _from: string; _to: string; _gcd: string }>;
-
-        NewTip(
-            _from?: BytesLike | null,
-            _to?: BytesLike | null,
-            _gcd?: BytesLike | null,
-        ): TypedEventFilter<[string, string, string], { _from: string; _to: string; _gcd: string }>;
-    };
-
-    estimateGas: {
-        HotGateToken(overrides?: CallOverrides): Promise<BigNumber>;
-
-        WAVAX(overrides?: CallOverrides): Promise<BigNumber>;
-
-        addHeaders(
-            _anchor: BytesLike,
-            _headers: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        addHeadersWithRetarget(
-            _oldPeriodStartHeader: BytesLike,
-            _oldPeriodEndHeader: BytesLike,
-            _headers: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        addKeeper(
-            keeperAddress: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        baseQueries(overrides?: CallOverrides): Promise<BigNumber>;
-
-        buyBackPeriod(overrides?: CallOverrides): Promise<BigNumber>;
-
-        changeOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-        checkTxProof(
-            txid: BytesLike,
-            blockHeight: BigNumberish,
-            intermediateNodes: BytesLike,
-            index: BigNumberish,
-            payWithHGT: boolean,
-            neededConfirmations: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        epochLength(overrides?: CallOverrides): Promise<BigNumber>;
-
-        exchangeRouter(overrides?: CallOverrides): Promise<BigNumber>;
-
-        feeRatio(overrides?: CallOverrides): Promise<BigNumber>;
-
-        finalizationParameter(overrides?: CallOverrides): Promise<BigNumber>;
-
-        findAncestor(_digest: BytesLike, _offset: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-        findHeight(_digest: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
-
-        getBestKnownDigest(overrides?: CallOverrides): Promise<BigNumber>;
-
-        getCurrentEpochDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
-
-        getLastReorgCommonAncestor(overrides?: CallOverrides): Promise<BigNumber>;
-
-        getPrevEpochDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
-
-        getRelayGenesis(overrides?: CallOverrides): Promise<BigNumber>;
-
-        initialHeight(overrides?: CallOverrides): Promise<BigNumber>;
-
-        isAncestor(
-            _ancestor: BytesLike,
-            _descendant: BytesLike,
-            _limit: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<BigNumber>;
-
-        lastBuyBack(overrides?: CallOverrides): Promise<BigNumber>;
-
-        lastEpochQueries(overrides?: CallOverrides): Promise<BigNumber>;
-
-        lastSubmittedHeight(overrides?: CallOverrides): Promise<BigNumber>;
-
-        markNewHeaviest(
-            _ancestor: BytesLike,
-            _currentBest: BytesLike,
-            _newBest: BytesLike,
-            _limit: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        multiSigAddress(overrides?: CallOverrides): Promise<BigNumber>;
-
-        numberOfKeepers(overrides?: CallOverrides): Promise<BigNumber>;
-
-        owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-        redeemScript(overrides?: CallOverrides): Promise<BigNumber>;
-
-        redeemScriptHash(overrides?: CallOverrides): Promise<BigNumber>;
-
-        removeKeeper(
-            keeperIndex: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setBaseQueries(
-            _baseQueries: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setBuyBackPeriod(
-            _buyBackPeriod: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setEpochLength(
-            _epochLength: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setExchangeRouter(
-            _exchangeRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setFeeRatio(
-            _feeRatio: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setFinalizationParameter(
-            _finalizationParameter: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        setSubmissionGasUsed(
-            _submissionGasUsed: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
-
-        submissionGasUsed(overrides?: CallOverrides): Promise<BigNumber>;
-    };
-
-    populateTransaction: {
-        HotGateToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        WAVAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        addHeaders(
-            _anchor: BytesLike,
-            _headers: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        addHeadersWithRetarget(
-            _oldPeriodStartHeader: BytesLike,
-            _oldPeriodEndHeader: BytesLike,
-            _headers: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        addKeeper(
-            keeperAddress: BytesLike,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        baseQueries(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        buyBackPeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        changeOwner(
-            _owner: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        checkTxProof(
-            txid: BytesLike,
-            blockHeight: BigNumberish,
-            intermediateNodes: BytesLike,
-            index: BigNumberish,
-            payWithHGT: boolean,
-            neededConfirmations: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        epochLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        exchangeRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        feeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        finalizationParameter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        findAncestor(
-            _digest: BytesLike,
-            _offset: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<PopulatedTransaction>;
-
-        findHeight(_digest: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        getBestKnownDigest(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        getCurrentEpochDifficulty(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        getLastReorgCommonAncestor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        getPrevEpochDifficulty(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        getRelayGenesis(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        initialHeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        isAncestor(
-            _ancestor: BytesLike,
-            _descendant: BytesLike,
-            _limit: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<PopulatedTransaction>;
-
-        lastBuyBack(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        lastEpochQueries(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        lastSubmittedHeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        markNewHeaviest(
-            _ancestor: BytesLike,
-            _currentBest: BytesLike,
-            _newBest: BytesLike,
-            _limit: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        multiSigAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        numberOfKeepers(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        redeemScript(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        redeemScriptHash(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        removeKeeper(
-            keeperIndex: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setBaseQueries(
-            _baseQueries: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setBuyBackPeriod(
-            _buyBackPeriod: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setEpochLength(
-            _epochLength: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setExchangeRouter(
-            _exchangeRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setFeeRatio(
-            _feeRatio: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setFinalizationParameter(
-            _finalizationParameter: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setSubmissionGasUsed(
-            _submissionGasUsed: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        submissionGasUsed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-    };
+    "NewTip(bytes32,bytes32,bytes32)"(
+      _from?: BytesLike | null,
+      _to?: BytesLike | null,
+      _gcd?: BytesLike | null
+    ): TypedEventFilter<
+      [string, string, string],
+      { _from: string; _to: string; _gcd: string }
+    >;
+
+    NewTip(
+      _from?: BytesLike | null,
+      _to?: BytesLike | null,
+      _gcd?: BytesLike | null
+    ): TypedEventFilter<
+      [string, string, string],
+      { _from: string; _to: string; _gcd: string }
+    >;
+  };
+
+  estimateGas: {
+    TeleportDAOToken(overrides?: CallOverrides): Promise<BigNumber>;
+
+    WAVAX(overrides?: CallOverrides): Promise<BigNumber>;
+
+    addHeaders(
+      _anchor: BytesLike,
+      _headers: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    addHeadersWithRetarget(
+      _oldPeriodStartHeader: BytesLike,
+      _oldPeriodEndHeader: BytesLike,
+      _headers: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    baseQueries(overrides?: CallOverrides): Promise<BigNumber>;
+
+    buyBackPeriod(overrides?: CallOverrides): Promise<BigNumber>;
+
+    changeOwner(
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    checkTxProof(
+      txid: BytesLike,
+      blockHeight: BigNumberish,
+      intermediateNodes: BytesLike,
+      index: BigNumberish,
+      payWithHGT: boolean,
+      neededConfirmations: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    epochLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+    exchangeRouter(overrides?: CallOverrides): Promise<BigNumber>;
+
+    feeRatio(overrides?: CallOverrides): Promise<BigNumber>;
+
+    finalizationParameter(overrides?: CallOverrides): Promise<BigNumber>;
+
+    findAncestor(
+      _digest: BytesLike,
+      _offset: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    findHeight(
+      _digest: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getBestKnownDigest(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getCurrentEpochDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getLastReorgCommonAncestor(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getPrevEpochDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getRelayGenesis(overrides?: CallOverrides): Promise<BigNumber>;
+
+    initialHeight(overrides?: CallOverrides): Promise<BigNumber>;
+
+    isAncestor(
+      _ancestor: BytesLike,
+      _descendant: BytesLike,
+      _limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    lastBuyBack(overrides?: CallOverrides): Promise<BigNumber>;
+
+    lastEpochQueries(overrides?: CallOverrides): Promise<BigNumber>;
+
+    lastSubmittedHeight(overrides?: CallOverrides): Promise<BigNumber>;
+
+    markNewHeaviest(
+      _ancestor: BytesLike,
+      _currentBest: BytesLike,
+      _newBest: BytesLike,
+      _limit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    setBaseQueries(
+      _baseQueries: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setBuyBackPeriod(
+      _buyBackPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setEpochLength(
+      _epochLength: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setExchangeRouter(
+      _exchangeRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setFeeRatio(
+      _feeRatio: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setFinalizationParameter(
+      _finalizationParameter: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setSubmissionGasUsed(
+      _submissionGasUsed: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    submissionGasUsed(overrides?: CallOverrides): Promise<BigNumber>;
+  };
+
+  populateTransaction: {
+    TeleportDAOToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    WAVAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    addHeaders(
+      _anchor: BytesLike,
+      _headers: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    addHeadersWithRetarget(
+      _oldPeriodStartHeader: BytesLike,
+      _oldPeriodEndHeader: BytesLike,
+      _headers: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    baseQueries(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    buyBackPeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    changeOwner(
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    checkTxProof(
+      txid: BytesLike,
+      blockHeight: BigNumberish,
+      intermediateNodes: BytesLike,
+      index: BigNumberish,
+      payWithHGT: boolean,
+      neededConfirmations: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    epochLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    exchangeRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    feeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    finalizationParameter(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    findAncestor(
+      _digest: BytesLike,
+      _offset: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    findHeight(
+      _digest: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getBestKnownDigest(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getCurrentEpochDifficulty(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getLastReorgCommonAncestor(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getPrevEpochDifficulty(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getRelayGenesis(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    initialHeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    isAncestor(
+      _ancestor: BytesLike,
+      _descendant: BytesLike,
+      _limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    lastBuyBack(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    lastEpochQueries(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    lastSubmittedHeight(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    markNewHeaviest(
+      _ancestor: BytesLike,
+      _currentBest: BytesLike,
+      _newBest: BytesLike,
+      _limit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    setBaseQueries(
+      _baseQueries: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setBuyBackPeriod(
+      _buyBackPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setEpochLength(
+      _epochLength: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setExchangeRouter(
+      _exchangeRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setFeeRatio(
+      _feeRatio: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setFinalizationParameter(
+      _finalizationParameter: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setSubmissionGasUsed(
+      _submissionGasUsed: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    submissionGasUsed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+  };
 }

@@ -3,16 +3,16 @@
 /* eslint-disable */
 
 import {
-    ethers,
-    EventFilter,
-    Signer,
-    BigNumber,
-    BigNumberish,
-    PopulatedTransaction,
-    BaseContract,
-    ContractTransaction,
-    Overrides,
-    CallOverrides,
+  ethers,
+  EventFilter,
+  Signer,
+  BigNumber,
+  BigNumberish,
+  PopulatedTransaction,
+  BaseContract,
+  ContractTransaction,
+  Overrides,
+  CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
@@ -20,224 +20,369 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface CCExchangeRouterInterface extends ethers.utils.Interface {
-    functions: {
-        "WAVAX()": FunctionFragment;
-        "bitcoinRelay()": FunctionFragment;
-        "ccExchange(bytes4,bytes,bytes,bytes4,uint256,bytes,uint256,bool)": FunctionFragment;
-        "ccTransferRouter()": FunctionFragment;
-        "changeOwner(address)": FunctionFragment;
-        "exchangeRouter()": FunctionFragment;
-        "instantCCExchangeWithPermit(address,bytes,uint256,uint256,address[],address,uint256)": FunctionFragment;
-        "instantRouter()": FunctionFragment;
-        "liquidityPoolFactory()": FunctionFragment;
-        "owner()": FunctionFragment;
-        "setBitcoinRelay(address)": FunctionFragment;
-        "setCCTransferRouter(address)": FunctionFragment;
-        "setExchangeRouter(address)": FunctionFragment;
-        "setInstantRouter(address)": FunctionFragment;
-        "wrappedBitcoin()": FunctionFragment;
-    };
+  functions: {
+    "WAVAX()": FunctionFragment;
+    "bitcoinTeleporter()": FunctionFragment;
+    "ccExchange(bytes4,bytes,bytes,bytes4,uint256,bytes,uint256,bool)": FunctionFragment;
+    "ccTransferRouter()": FunctionFragment;
+    "changeOwner(address)": FunctionFragment;
+    "exchangeRouter()": FunctionFragment;
+    "instantCCExchangeWithPermit(address,bytes,uint256,uint256,address[],address,uint256)": FunctionFragment;
+    "instantRouter()": FunctionFragment;
+    "liquidityPoolFactory()": FunctionFragment;
+    "owner()": FunctionFragment;
+    "setBitcoinTeleporter(address)": FunctionFragment;
+    "setCCTransferRouter(address)": FunctionFragment;
+    "setExchangeRouter(address)": FunctionFragment;
+    "setInstantRouter(address)": FunctionFragment;
+    "wrappedBitcoin()": FunctionFragment;
+  };
 
-    encodeFunctionData(functionFragment: "WAVAX", values?: undefined): string;
-    encodeFunctionData(functionFragment: "bitcoinRelay", values?: undefined): string;
-    encodeFunctionData(
-        functionFragment: "ccExchange",
-        values: [BytesLike, BytesLike, BytesLike, BytesLike, BigNumberish, BytesLike, BigNumberish, boolean],
-    ): string;
-    encodeFunctionData(functionFragment: "ccTransferRouter", values?: undefined): string;
-    encodeFunctionData(functionFragment: "changeOwner", values: [string]): string;
-    encodeFunctionData(functionFragment: "exchangeRouter", values?: undefined): string;
-    encodeFunctionData(
-        functionFragment: "instantCCExchangeWithPermit",
-        values: [string, BytesLike, BigNumberish, BigNumberish, string[], string, BigNumberish],
-    ): string;
-    encodeFunctionData(functionFragment: "instantRouter", values?: undefined): string;
-    encodeFunctionData(functionFragment: "liquidityPoolFactory", values?: undefined): string;
-    encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-    encodeFunctionData(functionFragment: "setBitcoinRelay", values: [string]): string;
-    encodeFunctionData(functionFragment: "setCCTransferRouter", values: [string]): string;
-    encodeFunctionData(functionFragment: "setExchangeRouter", values: [string]): string;
-    encodeFunctionData(functionFragment: "setInstantRouter", values: [string]): string;
-    encodeFunctionData(functionFragment: "wrappedBitcoin", values?: undefined): string;
+  encodeFunctionData(functionFragment: "WAVAX", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "bitcoinTeleporter",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "ccExchange",
+    values: [
+      BytesLike,
+      BytesLike,
+      BytesLike,
+      BytesLike,
+      BigNumberish,
+      BytesLike,
+      BigNumberish,
+      boolean
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "ccTransferRouter",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "changeOwner", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "exchangeRouter",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "instantCCExchangeWithPermit",
+    values: [
+      string,
+      BytesLike,
+      BigNumberish,
+      BigNumberish,
+      string[],
+      string,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "instantRouter",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "liquidityPoolFactory",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "setBitcoinTeleporter",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setCCTransferRouter",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setExchangeRouter",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setInstantRouter",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "wrappedBitcoin",
+    values?: undefined
+  ): string;
 
-    decodeFunctionResult(functionFragment: "WAVAX", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "bitcoinRelay", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "ccExchange", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "ccTransferRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "changeOwner", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "exchangeRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "instantCCExchangeWithPermit", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "instantRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "liquidityPoolFactory", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setBitcoinRelay", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setCCTransferRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setExchangeRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setInstantRouter", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "wrappedBitcoin", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "WAVAX", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "bitcoinTeleporter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "ccExchange", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "ccTransferRouter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "changeOwner",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "exchangeRouter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "instantCCExchangeWithPermit",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "instantRouter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "liquidityPoolFactory",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setBitcoinTeleporter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setCCTransferRouter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setExchangeRouter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setInstantRouter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "wrappedBitcoin",
+    data: BytesLike
+  ): Result;
 
-    events: {
-        "CCExchange(address,address,address,uint256,uint256,uint256)": EventFragment;
-    };
+  events: {
+    "CCExchange(address,address,address,uint256,uint256,uint256)": EventFragment;
+  };
 
-    getEvent(nameOrSignatureOrTopic: "CCExchange"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CCExchange"): EventFragment;
 }
 
 export type CCExchangeEvent = TypedEvent<
-    [string, string, string, BigNumber, BigNumber, BigNumber] & {
-        user: string;
-        inputToken: string;
-        outputToken: string;
-        inputAmount: BigNumber;
-        outputAmount: BigNumber;
-        speed: BigNumber;
-    }
+  [string, string, string, BigNumber, BigNumber, BigNumber] & {
+    user: string;
+    inputToken: string;
+    outputToken: string;
+    inputAmount: BigNumber;
+    outputAmount: BigNumber;
+    speed: BigNumber;
+  }
 >;
 
 export class CCExchangeRouter extends BaseContract {
-    connect(signerOrProvider: Signer | Provider | string): this;
-    attach(addressOrName: string): this;
-    deployed(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-    listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
-    off<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    on<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    once<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        listener: TypedListener<EventArgsArray, EventArgsObject>,
-    ): this;
-    removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-        eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    ): this;
+  listeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
+  off<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  on<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  once<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
+  ): this;
+  removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
+  ): this;
 
-    listeners(eventName?: string): Array<Listener>;
-    off(eventName: string, listener: Listener): this;
-    on(eventName: string, listener: Listener): this;
-    once(eventName: string, listener: Listener): this;
-    removeListener(eventName: string, listener: Listener): this;
-    removeAllListeners(eventName?: string): this;
+  listeners(eventName?: string): Array<Listener>;
+  off(eventName: string, listener: Listener): this;
+  on(eventName: string, listener: Listener): this;
+  once(eventName: string, listener: Listener): this;
+  removeListener(eventName: string, listener: Listener): this;
+  removeAllListeners(eventName?: string): this;
 
-    queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
-        event: TypedEventFilter<EventArgsArray, EventArgsObject>,
-        fromBlockOrBlockhash?: string | number | undefined,
-        toBlock?: string | number | undefined,
-    ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
+  queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
+    event: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-    interface: CCExchangeRouterInterface;
+  interface: CCExchangeRouterInterface;
 
-    functions: {
-        WAVAX(overrides?: CallOverrides): Promise<[string]>;
+  functions: {
+    WAVAX(overrides?: CallOverrides): Promise<[string]>;
 
-        bitcoinRelay(overrides?: CallOverrides): Promise<[string]>;
-
-        ccExchange(
-            version: BytesLike,
-            vin: BytesLike,
-            vout: BytesLike,
-            locktime: BytesLike,
-            blockNumber: BigNumberish,
-            intermediateNodes: BytesLike,
-            index: BigNumberish,
-            payWithHGT: boolean,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        ccTransferRouter(overrides?: CallOverrides): Promise<[string]>;
-
-        changeOwner(
-            _owner: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        exchangeRouter(overrides?: CallOverrides): Promise<[string]>;
-
-        instantCCExchangeWithPermit(
-            signer: string,
-            signature: BytesLike,
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            receiver: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        instantRouter(overrides?: CallOverrides): Promise<[string]>;
-
-        liquidityPoolFactory(overrides?: CallOverrides): Promise<[string]>;
-
-        owner(overrides?: CallOverrides): Promise<[string]>;
-
-        setBitcoinRelay(
-            _bitcoinRelay: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        setCCTransferRouter(
-            _ccTransferRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        setExchangeRouter(
-            _exchangeRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        setInstantRouter(
-            _instantRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<ContractTransaction>;
-
-        wrappedBitcoin(overrides?: CallOverrides): Promise<[string]>;
-    };
-
-    WAVAX(overrides?: CallOverrides): Promise<string>;
-
-    bitcoinRelay(overrides?: CallOverrides): Promise<string>;
+    bitcoinTeleporter(overrides?: CallOverrides): Promise<[string]>;
 
     ccExchange(
-        version: BytesLike,
-        vin: BytesLike,
-        vout: BytesLike,
-        locktime: BytesLike,
-        blockNumber: BigNumberish,
-        intermediateNodes: BytesLike,
-        index: BigNumberish,
-        payWithHGT: boolean,
-        overrides?: Overrides & { from?: string | Promise<string> },
+      version: BytesLike,
+      vin: BytesLike,
+      vout: BytesLike,
+      locktime: BytesLike,
+      blockNumber: BigNumberish,
+      intermediateNodes: BytesLike,
+      index: BigNumberish,
+      payWithHGT: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    ccTransferRouter(overrides?: CallOverrides): Promise<[string]>;
+
+    changeOwner(
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    exchangeRouter(overrides?: CallOverrides): Promise<[string]>;
+
+    instantCCExchangeWithPermit(
+      signer: string,
+      signature: BytesLike,
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      receiver: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    instantRouter(overrides?: CallOverrides): Promise<[string]>;
+
+    liquidityPoolFactory(overrides?: CallOverrides): Promise<[string]>;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    setBitcoinTeleporter(
+      _bitcoinTeleporter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setCCTransferRouter(
+      _ccTransferRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setExchangeRouter(
+      _exchangeRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setInstantRouter(
+      _instantRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    wrappedBitcoin(overrides?: CallOverrides): Promise<[string]>;
+  };
+
+  WAVAX(overrides?: CallOverrides): Promise<string>;
+
+  bitcoinTeleporter(overrides?: CallOverrides): Promise<string>;
+
+  ccExchange(
+    version: BytesLike,
+    vin: BytesLike,
+    vout: BytesLike,
+    locktime: BytesLike,
+    blockNumber: BigNumberish,
+    intermediateNodes: BytesLike,
+    index: BigNumberish,
+    payWithHGT: boolean,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  ccTransferRouter(overrides?: CallOverrides): Promise<string>;
+
+  changeOwner(
+    _owner: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  exchangeRouter(overrides?: CallOverrides): Promise<string>;
+
+  instantCCExchangeWithPermit(
+    signer: string,
+    signature: BytesLike,
+    amountIn: BigNumberish,
+    amountOutMin: BigNumberish,
+    path: string[],
+    receiver: string,
+    deadline: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  instantRouter(overrides?: CallOverrides): Promise<string>;
+
+  liquidityPoolFactory(overrides?: CallOverrides): Promise<string>;
+
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  setBitcoinTeleporter(
+    _bitcoinTeleporter: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setCCTransferRouter(
+    _ccTransferRouter: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setExchangeRouter(
+    _exchangeRouter: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setInstantRouter(
+    _instantRouter: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  wrappedBitcoin(overrides?: CallOverrides): Promise<string>;
+
+  callStatic: {
+    WAVAX(overrides?: CallOverrides): Promise<string>;
+
+    bitcoinTeleporter(overrides?: CallOverrides): Promise<string>;
+
+    ccExchange(
+      version: BytesLike,
+      vin: BytesLike,
+      vout: BytesLike,
+      locktime: BytesLike,
+      blockNumber: BigNumberish,
+      intermediateNodes: BytesLike,
+      index: BigNumberish,
+      payWithHGT: boolean,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     ccTransferRouter(overrides?: CallOverrides): Promise<string>;
 
-    changeOwner(
-        _owner: string,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    changeOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
 
     exchangeRouter(overrides?: CallOverrides): Promise<string>;
 
     instantCCExchangeWithPermit(
-        signer: string,
-        signature: BytesLike,
-        amountIn: BigNumberish,
-        amountOutMin: BigNumberish,
-        path: string[],
-        receiver: string,
-        deadline: BigNumberish,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      signer: string,
+      signature: BytesLike,
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      receiver: string,
+      deadline: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     instantRouter(overrides?: CallOverrides): Promise<string>;
 
@@ -245,245 +390,200 @@ export class CCExchangeRouter extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    setBitcoinRelay(
-        _bitcoinRelay: string,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    setBitcoinTeleporter(
+      _bitcoinTeleporter: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setCCTransferRouter(
-        _ccTransferRouter: string,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _ccTransferRouter: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setExchangeRouter(
-        _exchangeRouter: string,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _exchangeRouter: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setInstantRouter(
-        _instantRouter: string,
-        overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+      _instantRouter: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     wrappedBitcoin(overrides?: CallOverrides): Promise<string>;
+  };
 
-    callStatic: {
-        WAVAX(overrides?: CallOverrides): Promise<string>;
+  filters: {
+    "CCExchange(address,address,address,uint256,uint256,uint256)"(
+      user?: null,
+      inputToken?: null,
+      outputToken?: null,
+      inputAmount?: null,
+      outputAmount?: null,
+      speed?: null
+    ): TypedEventFilter<
+      [string, string, string, BigNumber, BigNumber, BigNumber],
+      {
+        user: string;
+        inputToken: string;
+        outputToken: string;
+        inputAmount: BigNumber;
+        outputAmount: BigNumber;
+        speed: BigNumber;
+      }
+    >;
 
-        bitcoinRelay(overrides?: CallOverrides): Promise<string>;
+    CCExchange(
+      user?: null,
+      inputToken?: null,
+      outputToken?: null,
+      inputAmount?: null,
+      outputAmount?: null,
+      speed?: null
+    ): TypedEventFilter<
+      [string, string, string, BigNumber, BigNumber, BigNumber],
+      {
+        user: string;
+        inputToken: string;
+        outputToken: string;
+        inputAmount: BigNumber;
+        outputAmount: BigNumber;
+        speed: BigNumber;
+      }
+    >;
+  };
 
-        ccExchange(
-            version: BytesLike,
-            vin: BytesLike,
-            vout: BytesLike,
-            locktime: BytesLike,
-            blockNumber: BigNumberish,
-            intermediateNodes: BytesLike,
-            index: BigNumberish,
-            payWithHGT: boolean,
-            overrides?: CallOverrides,
-        ): Promise<void>;
+  estimateGas: {
+    WAVAX(overrides?: CallOverrides): Promise<BigNumber>;
 
-        ccTransferRouter(overrides?: CallOverrides): Promise<string>;
+    bitcoinTeleporter(overrides?: CallOverrides): Promise<BigNumber>;
 
-        changeOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    ccExchange(
+      version: BytesLike,
+      vin: BytesLike,
+      vout: BytesLike,
+      locktime: BytesLike,
+      blockNumber: BigNumberish,
+      intermediateNodes: BytesLike,
+      index: BigNumberish,
+      payWithHGT: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        exchangeRouter(overrides?: CallOverrides): Promise<string>;
+    ccTransferRouter(overrides?: CallOverrides): Promise<BigNumber>;
 
-        instantCCExchangeWithPermit(
-            signer: string,
-            signature: BytesLike,
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            receiver: string,
-            deadline: BigNumberish,
-            overrides?: CallOverrides,
-        ): Promise<void>;
+    changeOwner(
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        instantRouter(overrides?: CallOverrides): Promise<string>;
+    exchangeRouter(overrides?: CallOverrides): Promise<BigNumber>;
 
-        liquidityPoolFactory(overrides?: CallOverrides): Promise<string>;
+    instantCCExchangeWithPermit(
+      signer: string,
+      signature: BytesLike,
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      receiver: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        owner(overrides?: CallOverrides): Promise<string>;
+    instantRouter(overrides?: CallOverrides): Promise<BigNumber>;
 
-        setBitcoinRelay(_bitcoinRelay: string, overrides?: CallOverrides): Promise<void>;
+    liquidityPoolFactory(overrides?: CallOverrides): Promise<BigNumber>;
 
-        setCCTransferRouter(_ccTransferRouter: string, overrides?: CallOverrides): Promise<void>;
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-        setExchangeRouter(_exchangeRouter: string, overrides?: CallOverrides): Promise<void>;
+    setBitcoinTeleporter(
+      _bitcoinTeleporter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        setInstantRouter(_instantRouter: string, overrides?: CallOverrides): Promise<void>;
+    setCCTransferRouter(
+      _ccTransferRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        wrappedBitcoin(overrides?: CallOverrides): Promise<string>;
-    };
+    setExchangeRouter(
+      _exchangeRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-    filters: {
-        "CCExchange(address,address,address,uint256,uint256,uint256)"(
-            user?: null,
-            inputToken?: null,
-            outputToken?: null,
-            inputAmount?: null,
-            outputAmount?: null,
-            speed?: null,
-        ): TypedEventFilter<
-            [string, string, string, BigNumber, BigNumber, BigNumber],
-            {
-                user: string;
-                inputToken: string;
-                outputToken: string;
-                inputAmount: BigNumber;
-                outputAmount: BigNumber;
-                speed: BigNumber;
-            }
-        >;
+    setInstantRouter(
+      _instantRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-        CCExchange(
-            user?: null,
-            inputToken?: null,
-            outputToken?: null,
-            inputAmount?: null,
-            outputAmount?: null,
-            speed?: null,
-        ): TypedEventFilter<
-            [string, string, string, BigNumber, BigNumber, BigNumber],
-            {
-                user: string;
-                inputToken: string;
-                outputToken: string;
-                inputAmount: BigNumber;
-                outputAmount: BigNumber;
-                speed: BigNumber;
-            }
-        >;
-    };
+    wrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
+  };
 
-    estimateGas: {
-        WAVAX(overrides?: CallOverrides): Promise<BigNumber>;
+  populateTransaction: {
+    WAVAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        bitcoinRelay(overrides?: CallOverrides): Promise<BigNumber>;
+    bitcoinTeleporter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        ccExchange(
-            version: BytesLike,
-            vin: BytesLike,
-            vout: BytesLike,
-            locktime: BytesLike,
-            blockNumber: BigNumberish,
-            intermediateNodes: BytesLike,
-            index: BigNumberish,
-            payWithHGT: boolean,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    ccExchange(
+      version: BytesLike,
+      vin: BytesLike,
+      vout: BytesLike,
+      locktime: BytesLike,
+      blockNumber: BigNumberish,
+      intermediateNodes: BytesLike,
+      index: BigNumberish,
+      payWithHGT: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        ccTransferRouter(overrides?: CallOverrides): Promise<BigNumber>;
+    ccTransferRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        changeOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    changeOwner(
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        exchangeRouter(overrides?: CallOverrides): Promise<BigNumber>;
+    exchangeRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        instantCCExchangeWithPermit(
-            signer: string,
-            signature: BytesLike,
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            receiver: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    instantCCExchangeWithPermit(
+      signer: string,
+      signature: BytesLike,
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      path: string[],
+      receiver: string,
+      deadline: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        instantRouter(overrides?: CallOverrides): Promise<BigNumber>;
+    instantRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        liquidityPoolFactory(overrides?: CallOverrides): Promise<BigNumber>;
+    liquidityPoolFactory(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-        owner(overrides?: CallOverrides): Promise<BigNumber>;
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-        setBitcoinRelay(
-            _bitcoinRelay: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    setBitcoinTeleporter(
+      _bitcoinTeleporter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        setCCTransferRouter(
-            _ccTransferRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    setCCTransferRouter(
+      _ccTransferRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        setExchangeRouter(
-            _exchangeRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    setExchangeRouter(
+      _exchangeRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        setInstantRouter(
-            _instantRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<BigNumber>;
+    setInstantRouter(
+      _instantRouter: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-        wrappedBitcoin(overrides?: CallOverrides): Promise<BigNumber>;
-    };
-
-    populateTransaction: {
-        WAVAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        bitcoinRelay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        ccExchange(
-            version: BytesLike,
-            vin: BytesLike,
-            vout: BytesLike,
-            locktime: BytesLike,
-            blockNumber: BigNumberish,
-            intermediateNodes: BytesLike,
-            index: BigNumberish,
-            payWithHGT: boolean,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        ccTransferRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        changeOwner(
-            _owner: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        exchangeRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        instantCCExchangeWithPermit(
-            signer: string,
-            signature: BytesLike,
-            amountIn: BigNumberish,
-            amountOutMin: BigNumberish,
-            path: string[],
-            receiver: string,
-            deadline: BigNumberish,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        instantRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        liquidityPoolFactory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-        setBitcoinRelay(
-            _bitcoinRelay: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setCCTransferRouter(
-            _ccTransferRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setExchangeRouter(
-            _exchangeRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        setInstantRouter(
-            _instantRouter: string,
-            overrides?: Overrides & { from?: string | Promise<string> },
-        ): Promise<PopulatedTransaction>;
-
-        wrappedBitcoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-    };
+    wrappedBitcoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+  };
 }
